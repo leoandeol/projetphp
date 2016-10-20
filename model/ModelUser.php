@@ -48,11 +48,17 @@ class ModelUser {
     
         $query = "SELECT * FROM Users";
         try{
-            
-        } catch (Exception $ex) {
-
-        }
-        
+            $rep = Model::$pdo->query($query);
+            $rep->setFechMode(PDO::FETCH_CLASS,'ModelUse');
+            $rep->Fetch();
+        } catch (PDOException $ex) {
+            if(Conf::getDebug()){
+                echo $ex->getMessage();
+            }
+            else{
+                echo "une erreur est survenue.";
+            }
+        }        
     }
     
 }
