@@ -49,7 +49,7 @@ class ModelUser {
         $query = "SELECT * FROM Users";
         try{
             $rep = Model::$pdo->query($query);
-            $rep->setFechMode(PDO::FETCH_CLASS,'ModelUse');
+            $rep->setFechMode(PDO::FETCH_CLASS,'ModelUser');
             $rep->Fetch();
         } catch (PDOException $ex) {
             if(Conf::getDebug()){
