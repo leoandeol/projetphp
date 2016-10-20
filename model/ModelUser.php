@@ -20,7 +20,12 @@ class ModelUser {
         }
     }
     
-    public static function displayById($id){
+    public function display(){
+        echo "User n° : "+$this->id+" name : "+$this->username+" firstname : "
+             +$this->userfirsname+" mail : "+$this->usermail+" birthdate : "+$this->birhtdate;
+    }
+    
+    public static function getUserById($id){
         
         $query = "SELECT * 
                   FROM Users
@@ -44,7 +49,7 @@ class ModelUser {
         }    
     }
     
-    public static function displayAll(){
+    public static function getAllUser(){
     
         $query = "SELECT * FROM Users";
         try{

@@ -5,8 +5,10 @@
         <title><?php echo $pagetitle ?></title>
     </head>
     <?php
+        $filepath = File::build_path(array('view',$controller,$view));
+        require $filepath;
     ?>
     <footer>
-        <p> Jesus INC.</p>  
+        <p> Team requêtes INC.</p>  
     </footer>
 </html>
