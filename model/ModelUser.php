@@ -4,27 +4,32 @@ require_once File::build_path(array('model','Model.php'));
 
 class ModelUser {
     
-    private $id;
+    private $idUser;
+    private $password;
     private $nickName;
     private $firstName;
     private $lastName;
     private $mail;
-    private $birthdate;
+    private $birthDate;
+    private $isAdmin;
     
-    public function __construct($id = NULL, $nickName = NULL, $firstName = NULL, $lastName = NULL, $mail = NULL, $bd = NULL){
-        if(!is_null($id) && !is_null($nickName) && !is_null($firstName) && !is_null($lastName) &&!is_null($mail) && !is_null($bd)){
-            $this->id = $id;
+    public function __construct($id = NULL, $nickName = NULL, $firstName = NULL, $lastName = NULL, $mail = NULL, $bd = NULL, $isAdmn = NULL){
+        if(!is_null($id) && !is_null($nickName) && !is_null($firstName) && !is_null($lastName) &&!is_null($mail) && !is_null($bd) && !is_null($isAdmn)
+                && !is_null($pwd)){
+            $this->idUser = $id;
             $this->nickName = $nickName;
             $this->firstName = $firstName;
             $this->lastName = $lastName;
             $this->mail = $mail;
             $this->birthdate = $bd;
+            $this->isAdmin = $isAdmn;
+            $this->password = $pwd;
         }
     }
     
     public function display(){
-        echo "User n° : ".$this->id." name : ".$this->username." firstname : "
-             .$this->userfirstname." mail : ".$this->mail." birthdate : ".$this->birthdate;
+        echo "User n° : ".$this->idUser." name : ".$this->lastName." firstname : "
+             .$this->firstName." mail : ".$this->mail." birthdate : ".$this->birthDate;
     }
     
     public static function getUserById($id){
