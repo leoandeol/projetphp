@@ -36,7 +36,12 @@ class ControllerUser{
     }
     
     public function created(){
-        
+        $user = new ModelUser(NULL, $_POST['nickname'], $_POST['firstname'], $_POST['lastname'], $_POST['email'], $_POST['birthdate'], 0);
+        $user->save();
+        $view = 'registered';
+        $controller = 'user';
+        $pagetitle = 'Compte créé';
+        require File::build_path(array('view','view.php'));
     }
 }
 
