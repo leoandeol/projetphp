@@ -9,10 +9,10 @@
         <header>
             <nav>
                 <div class='menu-item'>
-                    <a href='view.php?action=register&controller=user'>S'inscrire</a>
+                    <a href='index.php?action=register&controller=user'>S'inscrire</a>
                 </div>
                 <div class='menu-item'>
-                    <a href='view.php?action=connect&controller=user'>Se connecter</a>
+                    <a href='index.php?action=connect&controller=user'>Se connecter</a>
                 </div>
             </nav>
         </header>

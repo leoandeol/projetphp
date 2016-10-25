@@ -28,19 +28,42 @@ class ControllerUser{
         require File::build_path(array('view','view.php'));
     }
     
-    public function create(){
+    public function register(){
         $view = 'register';
         $controller = 'user';
         $pagetitle = 'Création de compte';
         require File::build_path(array('view','view.php'));
     }
     
-    public function created(){
-        $user = new ModelUser(NULL, $_POST['nickname'], $_POST['firstname'], $_POST['lastname'], $_POST['email'], $_POST['birthdate'], 0);
+    public function registered(){
+        $hashpass = hash('sha512',$_POST['password']);
+        $user = new ModelUser(NULL, $_POST['nickname'], $hashpass, $_POST['firstname'], $_POST['lastname'], $_POST['email'], $_POST['birthdate'], 0);
         $user->save();
         $view = 'registered';
         $controller = 'user';
         $pagetitle = 'Compte créé';
+        require File::build_path(array('view','view.php'));
+    }
+    
+    public function connect(){
+        $view = 'connect';
+        $controller = 'user';
+        $pagetitle = 'Connexion';
+        require File::build_path(array('view','view.php'));
+    }
+    
+    public function connected(){
+        // TODO cookies
+        $hashpass = hash('sha512',$_POST['password']);
+        $user = new ModelUser();
+        $user->connect($_POST['nickname'],hashpass);
+        if($user==false){
+            $view = 'error';
+        } else {
+            $view = 'connected';
+        }
+        $controller = 'user';
+        $pagetitle = 'Connecté';
         require File::build_path(array('view','view.php'));
     }
 }
