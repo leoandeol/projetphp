@@ -13,6 +13,64 @@ class ModelUser {
     private $birthDate;
     private $isAdmin;
     
+    function getIdUser() {
+        return $this->idUser;
+    }
+
+    function getPassword() {
+        return $this->password;
+    }
+
+    function getNickName() {
+        return $this->nickName;
+    }
+
+    function getFirstName() {
+        return $this->firstName;
+    }
+
+    function getLastName() {
+        return $this->lastName;
+    }
+
+    function getMail() {
+        return $this->mail;
+    }
+
+    function getBirthDate() {
+        return $this->birthDate;
+    }
+
+    function getIsAdmin() {
+        return $this->isAdmin;
+    }
+
+    function setNickName($nickName) {
+        $this->nickName = $nickName;
+    }
+
+    function setFirstName($firstName) {
+        $this->firstName = $firstName;
+    }
+
+    function setLastName($lastName) {
+        $this->lastName = $lastName;
+    }
+
+    function setMail($mail) {
+        $this->mail = $mail;
+    }
+
+    function setBirthDate($birthDate) {
+        $this->birthDate = $birthDate;
+    }
+
+    function setIsAdmin($isAdmin) {
+        $this->isAdmin = $isAdmin;
+    }
+
+
+    
     public function __construct($id = NULL, $nickName = NULL, $firstName = NULL, $lastName = NULL, $mail = NULL, $bd = NULL, $isAdmn = NULL){
         if(!is_null($id) && !is_null($nickName) && !is_null($firstName) && !is_null($lastName) &&!is_null($mail) && !is_null($bd) && !is_null($isAdmn)
                 && !is_null($pwd)){
@@ -27,10 +85,10 @@ class ModelUser {
         }
     }
     
-    public function display(){
+    /*public function display(){
         echo "User n° : ".$this->idUser." name : ".$this->lastName." firstname : "
              .$this->firstName." mail : ".$this->mail." birthdate : ".$this->birthDate;
-    }
+    }*/
     
     public static function getUserById($id){
         
@@ -39,7 +97,7 @@ class ModelUser {
                   WHERE idUser = :idUs";
         
         try{
-            $prepared = Model::$pdo->prepare($sql);
+            $prepared = Model::$pdo->prepare($query);
             $values = array (
                 'idUs'=>$id,
             );
