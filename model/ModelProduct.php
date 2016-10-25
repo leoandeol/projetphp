@@ -12,7 +12,7 @@ class Product{
     
  // ###################################################      
     // Getters
-    public function getIdProduct(){
+    public function getId(){
         return $this->idProduct;
     }
     public function getProductName(){
@@ -25,7 +25,7 @@ class Product{
     
  // ###################################################      
     // Setters  
-    public function setIdProduct($id){
+    public function setId($id){
         $this->idProduct = $id;
     }
     public function setProductName($bird){
@@ -44,6 +44,37 @@ class Product{
             $this->price = $p;
         }
     }
+    
+    public function getProductByName($name){
+        try {
+            $sql = "SELECT * FROM Products WHERE idProduct:n";
+            
+            $req_prep = Model::$pdo->prepare($sql);
+            
+            $values = array(
+              "n" => $name  
+            );
+            
+            $req_prep->execute($values);
+            
+            $req_prep->setFetchMode(PDO::FETCH_CLASS, 'ModelProduct');
+            $tab_p = $req_prep->fetchAll();
+            
+            if(empty($tab_p)){
+                return false;
+            }
+            return $tab_p[0];
+        } catch (PDOException $e) {
+             if (Conf::getDebug()) {
+                 echo $e->getMessage(); // affiche un message d'erreur
+             } else {
+                 echo 'Une erreur est survenue <a href=""> retour a la page d\'accueil </a>';
+             }
+             die();
+         }
+    }
+    
+    
     
     public function save(){
         try{

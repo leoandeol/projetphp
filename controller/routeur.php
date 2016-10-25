@@ -1,6 +1,7 @@
 <?php
 
 require_once File::build_path(array('controller','ControllerUser.php'));
+require_once File::build_path(array('controller','ControllerProduct.php'));
 
 if(!isset($_GET['action'])){
     $action = 'readAll';
@@ -14,6 +15,7 @@ if(!isset($_GET['controller'])){
 }
 
 $controllerClass = 'Controller' . ucfirst($controller);
+
 
 if(!(class_exists($controllerClass))){
     ControllerUser::error();

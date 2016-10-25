@@ -14,8 +14,21 @@ require_once File::build_path(array('model','ModelUser.php'));
  */
 class ControllerProduct {
     
-    function read(){
-        
+    public function read(){
+        $id = $_GET['id'];
+        $p = ModelProduct::getProductByName(1);
+        $view = 'displayProduct';
+        $controller = 'product';
+        $pagetitle = 'Description produit ' . $_GET['id'];
+        require File::build_path(array('view', 'view.php'));
+    }
+    
+    public function create(){
+        $view = 'createProduct';
+        $controller = 'product';
+        $pagetitle = 'Création de produit';      
+        require File::build_path(array('view', 'view.php'));
     }
     
 }
+?>
