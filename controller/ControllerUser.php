@@ -5,8 +5,8 @@ require_once File::build_path(array('model','ModelUser.php'));
 class ControllerUser{
     
     public function read(){        
-        $id = $_POST['idUser'];
-        $tab_user = ModelUser::getUserById($id);
+        $id = $_GET['idUser'];
+        $user = ModelUser::getUserById($id);
         $view = 'displayUser';
         $controller = 'user';
         $pagetitle = 'Description';
@@ -15,7 +15,7 @@ class ControllerUser{
     
     public function readAll(){
         $tab_user = ModelUser::getAllUser();
-        $view = 'displayUser';
+        $view = 'displayAllUser';
         $controller = 'user';
         $pagetitle = 'Description';
         require File::build_path(array('view','view.php'));
