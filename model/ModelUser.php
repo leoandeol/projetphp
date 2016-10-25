@@ -36,9 +36,9 @@ class ModelUser {
             $values = array (
                 'idUs'=>$id,
             );
-            $req_prep->execute($values);
-            $req_prep->setFetchMode(PDO::FETCH_CLASS,'ModelUser');
-            return $req_prep->fetch();
+            $prepared->execute($values);
+            $prepared->setFetchMode(PDO::FETCH_CLASS,'ModelUser');
+            return $prepared->fetch();
         } catch (PDOException $ex) {
             if(Conf::getDebug()){
                 echo $ex->getMessage();
@@ -53,9 +53,9 @@ class ModelUser {
     
         $query = "SELECT * FROM Users";
         try{
-            $rep = Model::$pdo->query($query);
-            $rep->setFechMode(PDO::FETCH_CLASS,'ModelUser');
-            $rep->Fetch();
+            $prep = Model::$pdo->query($query);
+            $prep->setFetchMode(PDO::FETCH_CLASS,'ModelUser');
+            $prep->Fetch();
         } catch (PDOException $ex) {
             if(Conf::getDebug()){
                 echo $ex->getMessage();

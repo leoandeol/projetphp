@@ -1,6 +1,6 @@
 <?php
 
-require_once File::build_path(array("Config","Conf.php"));
+require_once File::build_path(array('config','config.php'));
 
 class Model {
 
