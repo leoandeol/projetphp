@@ -23,8 +23,8 @@ class ModelUser {
     }
     
     public function display(){
-        echo "User n° : "+$this->id+" name : "+$this->username+" firstname : "
-             +$this->userfirsname+" mail : "+$this->usermail+" birthdate : "+$this->birhtdate;
+        echo "User n° : ".$this->id." name : ".$this->username." firstname : "
+             .$this->userfirstname." mail : ".$this->mail." birthdate : ".$this->birthdate;
     }
     
     public static function getUserById($id){
@@ -57,7 +57,7 @@ class ModelUser {
         try{
             $prep = Model::$pdo->query($query);
             $prep->setFetchMode(PDO::FETCH_CLASS,'ModelUser');
-            $prep->Fetch();
+            return $prep->fetchAll();
         } catch (PDOException $ex) {
             if(Conf::getDebug()){
                 echo $ex->getMessage();
