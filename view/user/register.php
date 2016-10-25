@@ -2,7 +2,7 @@
 
     <fieldset>
         <legend>S'inscrire :</legend>
-        <input type='hidden' name='action' value='created'>
+        <input type='hidden' name='action' value='registered'>
         <p>
             <label for="nick_id">Pseudonyme</label> :
             <input type="text" placeholder="Pseudonyme" name="nickname" id="nick_id" required/>

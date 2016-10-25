@@ -5,24 +5,26 @@ require_once File::build_path(array('model','Model.php'));
 class ModelUser {
     
     private $id;
-    private $username;
-    private $userfirstname;
+    private $nickName;
+    private $firstName;
+    private $lastName;
     private $mail;
     private $birthdate;
     
-    public function __construct($id = NULL, $userN = NULL, $userFN = NULL, $mail = NULL, $bd = NULL){
-        if(!is_null($id) && !is_null($userN) && !is_null($userFN) &&!is_null($mail) && !is_null($bd)){
+    public function __construct($id = NULL, $nickName = NULL, $firstName = NULL, $lastName = NULL, $mail = NULL, $bd = NULL){
+        if(!is_null($id) && !is_null($nickName) && !is_null($firstName) && !is_null($lastName) &&!is_null($mail) && !is_null($bd)){
             $this->id = $id;
-            $this->username = $userN;
-            $this->userfirstname = $userFN;
+            $this->nickName = $nickName;
+            $this->firstName = $firstName;
+            $this->lastName = $lastName;
             $this->mail = $mail;
             $this->birthdate = $bd;
         }
     }
     
     public function display(){
-        echo "User n° : "+$this->id+" name : "+$this->username+" firstname : "
-             +$this->userfirsname+" mail : "+$this->usermail+" birthdate : "+$this->birhtdate;
+        echo "User n° : ".$this->id." name : ".$this->username." firstname : "
+             .$this->userfirstname." mail : ".$this->mail." birthdate : ".$this->birthdate;
     }
     
     public static function getUserById($id){
@@ -55,7 +57,7 @@ class ModelUser {
         try{
             $prep = Model::$pdo->query($query);
             $prep->setFetchMode(PDO::FETCH_CLASS,'ModelUser');
-            $prep->Fetch();
+            return $prep->fetchAll();
         } catch (PDOException $ex) {
             if(Conf::getDebug()){
                 echo $ex->getMessage();

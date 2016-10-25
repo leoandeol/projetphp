@@ -24,8 +24,19 @@ class ControllerUser{
     public function error(){
         $view = 'error';
         $controller = 'user';
-        $pagetitle = 'Error';
+        $pagetitle = 'Erreur';
         require File::build_path(array('view','view.php'));
+    }
+    
+    public function create(){
+        $view = 'register';
+        $controller = 'user';
+        $pagetitle = 'Création de compte';
+        require File::build_path(array('view','view.php'));
+    }
+    
+    public function created(){
+        
     }
 }
 
