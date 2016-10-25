@@ -28,7 +28,8 @@ header,footer{
 
 main {
     flex:1;
-    background-color:turquoise;
+    padding:10px;
+    background-image:url('../res/background.jpg');
 }
 
 nav {
