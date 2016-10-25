@@ -8,17 +8,21 @@
     <body>
         <?php ?>
         
-        <form method = "get" action = "index.php?action=created">
+        <form method = "post" action = "index.php?action=created&controller=product">
             <fieldset>
                     <legend>Créer un produit :</legend>
                     <input type = 'hidden' name = 'action' value = 'created'>
                 <p>
+                    <label for = "id_produit">Nom du produit</label> :
+                    <input type = "text" pattern="^(0|[1-9][0-9]*)$" placeholder = "Ex : 15" name = "idP" id = "id_produit" required/>
+                </p>
+                <p>
                     <label for = "nom_produit">Nom du produit</label> :
-                    <input type = "text" placeholder = "Ex : Création de site web" name = "nom_produit" id = "nom_produit_id" required/>
+                    <input type = "text" placeholder = "Ex : Création de site web" name = "name" id = "nom_produit" required/>
                 </p>
                 <p>
                     <label for = "couleur_id">Prix du produit</label> :
-                    <input type = "text" placeholder = "Ex : 15" name = "prix_produit" id = "prix_produit_id" required/>
+                    <input type = "text" pattern="^(0|[1-9][0-9]*)$" placeholder = "Ex : 15" name = "price" id = "prix_produit" required/>
                 </p>
                 <p>
                  <input type = "submit" value = "Envoyer" />

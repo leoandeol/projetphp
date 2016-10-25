@@ -2,13 +2,12 @@
 
 require_once FILE::build_path(array('model', 'Model.php'));
 
-class Product{
+class ModelProduct{
     
     private $idProduct;
     private $productName;
     private $price;
     
-    private static $compteur = 0;
     
  // ###################################################      
     // Getters
@@ -37,9 +36,9 @@ class Product{
     
 // ###################################################      
     // Fonction    
-    public function __construc($id = NULL, $pn = NULL, $p = NULL){
+    public function __construct($id = NULL, $pn = NULL, $p = NULL){
         if (!is_null($id) && !is_null($pn) && !is_null($p)){
-            $this->idProduction = $id;
+            $this->idProduct = $id;
             $this->productName = $pn;
             $this->price = $p;
         }
@@ -47,7 +46,7 @@ class Product{
     
     public function getProductByName($name){
         try {
-            $sql = "SELECT * FROM Products WHERE idProduct:n";
+            $sql = "SELECT * FROM Products WHERE productName=:n";
             
             $req_prep = Model::$pdo->prepare($sql);
             
@@ -78,17 +77,18 @@ class Product{
     
     public function save(){
         try{
-            $sql = "INSERT INTO Products(idProduit, productName, price) VALUES(:id, :n, :p";
+            $sql = "INSERT INTO Products(idProduct, productName, price) VALUES(:id, :n, :p);";
             
             //préparation de la requête
             $req_prep = Model::$pdo->prepare($sql);
             
+
             $values = array(
-                "id" => self::compteur,
+                "id" => (int)$this->idProduct,
                 "n" => $this->productName,
-                "p" => $this->price
+                "p" => (int)$this->price
             );
-            
+
             return $req_prep->execute($values);
             
         } catch (PDOException $e) {
@@ -97,6 +97,7 @@ class Product{
                 return false;
             }
             else{
+                echo $e->getMessage();
                 echo '<br>Une erreur est survenue lors de la sauvegarde du produit. ';
             }
                 
@@ -105,7 +106,28 @@ class Product{
     }
     
   
-    
+       public function getAllProduct(){
+        try {
+            $sql = "SELECT * FROM Products";
+            
+            $req_prep = Model::$pdo->query($sql);
+            
+            $req_prep->setFetchMode(PDO::FETCH_CLASS, 'ModelProduct');
+            $tab_p = $req_prep->fetchAll();
+            
+            if(empty($tab_p)){
+                return false;
+            }
+            return $tab_p;
+        } catch (PDOException $e) {
+             if (Conf::getDebug()) {
+                 echo $e->getMessage(); // affiche un message d'erreur
+             } else {
+                 echo 'Une erreur est survenue <a href=""> retour a la page d\'accueil </a>';
+             }
+             die();
+         }
+    }
 }
 
 
