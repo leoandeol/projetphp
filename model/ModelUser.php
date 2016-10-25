@@ -5,16 +5,18 @@ require_once File::build_path(array('model','Model.php'));
 class ModelUser {
     
     private $id;
-    private $username;
-    private $userfirstname;
+    private $nickName;
+    private $firstName;
+    private $lastName;
     private $mail;
     private $birthdate;
     
-    public function __construct($id = NULL, $userN = NULL, $userFN = NULL, $mail = NULL, $bd = NULL){
-        if(!is_null($id) && !is_null($userN) && !is_null($userFN) &&!is_null($mail) && !is_null($bd)){
+    public function __construct($id = NULL, $nickName = NULL, $firstName = NULL, $lastName = NULL, $mail = NULL, $bd = NULL){
+        if(!is_null($id) && !is_null($nickName) && !is_null($firstName) && !is_null($lastName) &&!is_null($mail) && !is_null($bd)){
             $this->id = $id;
-            $this->username = $userN;
-            $this->userfirstname = $userFN;
+            $this->nickName = $nickName;
+            $this->firstName = $firstName;
+            $this->lastName = $lastName;
             $this->mail = $mail;
             $this->birthdate = $bd;
         }
