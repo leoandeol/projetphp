@@ -71,7 +71,7 @@ class ModelUser {
 
 
     
-    public function __construct($id = NULL, $nickName = NULL, $firstName = NULL, $lastName = NULL, $mail = NULL, $bd = NULL, $isAdmn = NULL){
+    public function __construct($id = NULL, $nickName = NULL,$pwd = NULL, $firstName = NULL, $lastName = NULL, $mail = NULL, $bd = NULL, $isAdmn = NULL){
         if(!is_null($id) && !is_null($nickName) && !is_null($firstName) && !is_null($lastName) &&!is_null($mail) && !is_null($bd) && !is_null($isAdmn)
                 && !is_null($pwd)){
             $this->idUser = $id;
@@ -129,6 +129,32 @@ class ModelUser {
                 echo "une erreur est survenue.";
             }
         }        
+    }
+    
+    public static function save(){
+        $query = " INSERT INTO Users VALUES (:id, :nickn, :lastn, :pwd, :firstn, :mail, :bdate, :admn) ";
+        try{
+            $prep = Model::$pdo->prepare($query);
+            $values = array (
+                    ':id'=>$this->getIdUser(),
+                    ':nickn'=>$this->getNickName(),
+                    ':lastn'=>$this->getLastName(),
+                    ':pwd'=>$this->getPassword(),
+                    'firstn'=>$this->getMail(),
+                    ':mail'=>$this->getMail(),
+                    ':bdate'=>$this->getBirthDate(),
+                    ':admn'=>$this->getIsAdmin(),
+                    
+                    );
+            $prep->execute($values);
+        } catch (PDOException $ex) {
+            if(Conf::getDebug()){
+                echo $ex->getMessage();
+            }
+            else{
+                echo "une erreur est survenue.";
+            }
+        }
     }
     
 }
