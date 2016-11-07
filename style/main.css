@@ -30,6 +30,7 @@ main {
     flex:1;
     padding:10px;
     background-image:url('../res/background.jpg');
+    color:white;
 }
 
 nav {
@@ -50,4 +51,53 @@ nav {
     display:flex;
     flex:1;
     width:100%;
+}
+
+/* #### Read*/
+
+main .read a:visited, main .read a{
+    color:white;
+    text-decoration: none;
+    text-align:right;
+}
+main .read{
+    display:flex;
+    flex-direction:column;
+
+}
+main .read .name{
+    font-size:1.5em;
+    font-weight: bold;
+}
+
+main .read .id{
+    font-style:italic;
+    font-size:0.85em;
+}
+main .read .price{
+    color:red;
+}
+main .read div{
+    padding-bottom: 4px;
+    
+}
+main .read div.name{
+    margin:5px;
+}
+/* #### ReadAll*/
+
+main .readAll{
+    border:1px solid white;
+
+    margin:10px;
+    padding:5px;
+}
+main .readAll div.detail{
+    font-weight: bold;
+    padding:5px 10px;
+    border:2px;
+    font-size:20px;
+    background-color:yellow;
+    color:black;
+    text-align: center;
 }

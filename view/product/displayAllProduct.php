@@ -6,6 +6,16 @@
         $pPrice = htmlspecialchars($p->getPrice());
         $securePName = rawurlencode($p->getProductName());
 
-        echo "<div><a href=\"index.php?controller=product&action=read&name=$securePName\">ID : " . $pId . "~/Nom : " . $pName . "~/Prix : " . $pPrice. "</a></div>";
+        echo <<< EOT
+                <div class="read readAll">
+                <div class="id">ID :  $pId ~</div>
+                <div class="name">$pName </div>
+                <div class="price">Prix :  $pPrice €</div>
+                <div class="description">###Futur description résumé du produit -> modifié la table en conséquence ###</div>
+                
+<a href="index.php?controller=product&action=read&name=$securePName"><div class="detail">Détails</div></a>
+</div>
+EOT;
+
     }
 ?>
