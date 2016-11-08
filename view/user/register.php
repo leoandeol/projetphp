@@ -3,6 +3,7 @@
     <fieldset>
         <legend>S'inscrire :</legend>
         <input type='hidden' name='action' value='registered'>
+        <input type='hidden' name='controller' value='user'>
         <p>
             <label for="nick_id">Pseudonyme</label> :
             <input type="text" placeholder="Pseudonyme" name="nickname" id="nick_id" required/>
