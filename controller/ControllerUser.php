@@ -37,7 +37,7 @@ class ControllerUser{
     
     public function registered(){
         $hashpass = hash('sha512',$_POST['password']);
-        $user = new ModelUser(NULL, $_POST['nickname'], $hashpass, $_POST['firstname'], $_POST['lastname'], $_POST['email'], $_POST['birthdate'], 0);
+        $user = new ModelUser(-1, $_POST['nickname'], $hashpass, $_POST['firstname'], $_POST['lastname'], $_POST['email'], $_POST['birthdate'], 0);
         $user->save();
         $view = 'registered';
         $controller = 'user';

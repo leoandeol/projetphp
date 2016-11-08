@@ -3,15 +3,19 @@
 require_once File::build_path(array('controller','ControllerUser.php'));
 require_once File::build_path(array('controller','ControllerProduct.php'));
 
-if(!isset($_GET['action'])){
-    $action = 'readAll';
-}else{
+if(isset($_GET['action'])){
     $action = $_GET['action'];
+}else if(isset($_POST['action'])){
+    $action = $_POST['action'];
+} else {
+    $action = 'readAll';
 }
-if(!isset($_GET['controller'])){
-    $controller = 'user';
-}else{
+if(isset($_GET['controller'])){
     $controller = $_GET['controller'];
+} else if(isset($_POST['controller'])){
+    $controller = $_POST['controller'];
+} else{
+    $controller = 'user';
 }
 
 $controllerClass = 'Controller' . ucfirst($controller);
