@@ -162,7 +162,7 @@ class ModelUser {
         try {
             $prep = Model::$pdo->prepare($query);
             $values = array(
-                ':nickn' => $nicl,
+                ':nickn' => $nick,
                 ':pwd' => $pass
             );
             $prep->execute($values);
@@ -182,6 +182,7 @@ class ModelUser {
 
                     );
                     $prep->execute($values);
+                    // need to bind columns
                     return $prep->fetch(PDO::FETCH_BOUND);
                     
                 } catch (PDOException $ex) {
