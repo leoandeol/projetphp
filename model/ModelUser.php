@@ -139,13 +139,15 @@ class ModelUser {
         $query = " INSERT INTO Users(nickName,lastName,password,firstName,mail,birthDate,isAdmin) VALUES (:nickn, :lastn, :pwd, :firstn, :mail, :bdate, :admn) ";
         try{
             $prep = Model::$pdo->prepare($query);
+            $dateFormated = split('/', $this->getBirthDate());
+            $date = $dateFormated[2].'-'.$dateFormated[0].'-'.$dateFormated[1];
             $values = array (
                     ':nickn'=>$this->getNickName(),
                     ':lastn'=>$this->getLastName(),
                     ':pwd'=>$this->getPassword(),
                     'firstn'=>$this->getFirstName(),
                     ':mail'=>$this->getMail(),
-                    ':bdate'=>$this->getBirthDate(),
+                    ':bdate'=>$date,
                     ':admn'=>$this->getIsAdmin()
                     
                     );
