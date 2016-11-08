@@ -72,7 +72,7 @@ class ModelUser {
     }
 
     public static function getSeed(){
-        return $seed;
+        return self::$seed;
     }
     
     public function __construct($id = NULL, $nickName = NULL,$pwd = NULL, $firstName = NULL, $lastName = NULL, $mail = NULL, $bd = NULL, $isAdmn = NULL){
