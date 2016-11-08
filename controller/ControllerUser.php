@@ -56,7 +56,7 @@ class ControllerUser{
         // TODO cookies
         $hashpass = hash('sha512',$_POST['password'].ModelUser::getSeed());
         $user = new ModelUser();
-        $user->connect($_POST['nickname'],hashpass);
+        $user->connect($_POST['nickname'],$hashpass);
         if($user==false){
             $view = 'error';
         } else {

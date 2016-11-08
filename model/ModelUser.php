@@ -1,11 +1,10 @@
 <?php
 
-require_once File::build_path(array('model','Model.php'));
+require_once File::build_path(array('model', 'Model.php'));
 
 class ModelUser {
-    
+
     private static $seed = 'wowsuchseedmuchwow';
-    
     private $idUser;
     private $password;
     private $nickName;
@@ -14,7 +13,7 @@ class ModelUser {
     private $mail;
     private $birthDate;
     private $isAdmin;
-    
+
     function getIdUser() {
         return $this->idUser;
     }
@@ -71,13 +70,12 @@ class ModelUser {
         $this->isAdmin = $isAdmin;
     }
 
-    public static function getSeed(){
+    public static function getSeed() {
         return self::$seed;
     }
-    
-    public function __construct($id = NULL, $nickName = NULL,$pwd = NULL, $firstName = NULL, $lastName = NULL, $mail = NULL, $bd = NULL, $isAdmn = NULL){
-        if(!is_null($id) && !is_null($nickName) && !is_null($firstName) && !is_null($lastName) &&!is_null($mail) && !is_null($bd) && !is_null($isAdmn)
-                && !is_null($pwd)){
+
+    public function __construct($id = NULL, $nickName = NULL, $pwd = NULL, $firstName = NULL, $lastName = NULL, $mail = NULL, $bd = NULL, $isAdmn = NULL) {
+        if (!is_null($id) && !is_null($nickName) && !is_null($firstName) && !is_null($lastName) && !is_null($mail) && !is_null($bd) && !is_null($isAdmn) && !is_null($pwd)) {
             $this->idUser = $id;
             $this->nickName = $nickName;
             $this->firstName = $firstName;
@@ -88,56 +86,56 @@ class ModelUser {
             $this->password = $pwd;
         }
     }
-    
-    /*public function display(){
-        echo "User n° : ".$this->idUser." name : ".$this->lastName." firstname : "
-             .$this->firstName." mail : ".$this->mail." birthdate : ".$this->birthDate;
-    }*/
-    
-    public static function getUserById($id){
-        
+
+    /* public function display(){
+      echo "User n° : ".$this->idUser." name : ".$this->lastName." firstname : "
+      .$this->firstName." mail : ".$this->mail." birthdate : ".$this->birthDate;
+      } */
+
+    public static function getUserById($id) {
+
         $query = "SELECT * 
                   FROM Users
                   WHERE idUser = :idUs";
-        
-        try{
+
+        try {
             $prepared = Model::$pdo->prepare($query);
-            $values = array (
-                'idUs'=>$id,
+            $values = array(
+                'idUs' => $id,
             );
             $prepared->execute($values);
-            $prepared->setFetchMode(PDO::FETCH_CLASS,'ModelUser');
+            $prepared->setFetchMode(PDO::FETCH_CLASS, 'ModelUser');
             return $prepared->fetch();
         } catch (PDOException $ex) {
-            if(Conf::getDebug()){
+            if (Conf::getDebug()) {
                 echo $ex->getMessage();
-            }
-            else{
+            } else {
                 echo "une erreur est survenue.";
             }
-        }    
+        }
     }
-    
-    public static function getAllUser(){
-    
+
+    public static function getAllUser() {
+
         $query = "SELECT * FROM Users";
-        try{
+        try {
             $prep = Model::$pdo->query($query);
-            $prep->setFetchMode(PDO::FETCH_CLASS,'ModelUser');
+            $prep->setFetchMode(PDO::FETCH_CLASS, 'ModelUser');
             return $prep->fetchAll();
         } catch (PDOException $ex) {
-            if(Conf::getDebug()){
+            if (Conf::getDebug()) {
                 echo $ex->getMessage();
-            }
-            else{
+            } else {
                 echo "une erreur est survenue.";
             }
-        }        
+        }
     }
-    
-    public function save(){
+
+    public function save() {
+        
+        // a faire : en cas d'inscription, check si quelqu'un utilise deja le login
         $query = " INSERT INTO Users(nickName,lastName,password,firstName,mail,birthDate,isAdmin) VALUES (:nickn, :lastn, :pwd, :firstn, :mail, :bdate, :admn) ";
-        try{
+        try {
             $prep = Model::$pdo->prepare($query);
             $dateFormated = split('/', $this->getBirthDate());
             $date = $dateFormated[2].'-'.$dateFormated[0].'-'.$dateFormated[1];
@@ -147,22 +145,73 @@ class ModelUser {
                     ':pwd'=>$this->getPassword(),
                     'firstn'=>$this->getFirstName(),
                     ':mail'=>$this->getMail(),
-                    ':bdate'=>$date,
+                    ':bdate'=>$this->getBirthDate(),
                     ':admn'=>$this->getIsAdmin()
                     
                     );
             $prep->execute($values);
         } catch (PDOException $ex) {
-            if(Conf::getDebug()){
+            if (Conf::getDebug()) {
                 echo $ex->getMessage();
-            }
-            else{
+            } else {
                 echo "une erreur est survenue.";
             }
             return false;
         }
     }
-    
+
+    public function connect($nick, $pass) {
+        $query = "Select count(idUser) From Users Where nickname=:nickn and password=:pwd";
+        try {
+            $prep = Model::$pdo->prepare($query);
+            $values = array(
+                ':nickn' => $nick,
+                ':pwd' => $pass
+            );
+            $prep->execute($values);
+            $result = $prep->fetch(PDO::FETCH_NUM);
+            if ($result[0] == 1) {
+                $query = "Select * From Users Where nickname=:nickn and password=:pwd";
+                try {
+                    $prep = Model::$pdo->prepare($query);
+                    $values = array (
+                    ':nickn' => $this->getNickName(),
+                    ':lastn' => $this->getLastName(),
+                    ':pwd' => $this->getPassword(),
+                    'firstn' => $this->getFirstName(),
+                    ':mail' => $this->getMail(),
+                    ':bdate' => $this->getBirthDate(),
+                    ':admn' => $this->getIsAdmin()
+
+                    );
+                    $prep->execute($values);
+                    // need to bind columns
+                    return $prep->fetch(PDO::FETCH_BOUND);
+                    
+                } catch (PDOException $ex) {
+                    if (Conf::getDebug()) {
+                        echo $ex->getMessage();
+                    } else {
+                        echo "une erreur est survenue.";
+                    }
+                    return false;
+                }
+            } else if ($result[0] >= 1) {
+                return false;
+            } else {
+                return false;
+            }
+        } catch (PDOException $ex) {
+            if (Conf::getDebug()) {
+                echo $ex->getMessage();
+            } else {
+                echo "une erreur est survenue.";
+            }
+            return false;
+        }
+        return false;
+    }
+
 }
 
 ?>
