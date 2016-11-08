@@ -83,7 +83,7 @@ class ModelUser {
             $this->firstName = $firstName;
             $this->lastName = $lastName;
             $this->mail = $mail;
-            $this->birthdate = $bd;
+            $this->birthDate = $bd;
             $this->isAdmin = $isAdmn;
             $this->password = $pwd;
         }
@@ -135,19 +135,18 @@ class ModelUser {
         }        
     }
     
-    public static function save(){
-        $query = " INSERT INTO Users VALUES (:id, :nickn, :lastn, :pwd, :firstn, :mail, :bdate, :admn) ";
+    public function save(){
+        $query = " INSERT INTO Users(nickName,lastName,password,firstName,mail,birthDate,isAdmin) VALUES (:nickn, :lastn, :pwd, :firstn, :mail, :bdate, :admn) ";
         try{
             $prep = Model::$pdo->prepare($query);
             $values = array (
-                    ':id'=>$this->getIdUser(),
                     ':nickn'=>$this->getNickName(),
                     ':lastn'=>$this->getLastName(),
                     ':pwd'=>$this->getPassword(),
-                    'firstn'=>$this->getMail(),
+                    'firstn'=>$this->getFirstName(),
                     ':mail'=>$this->getMail(),
                     ':bdate'=>$this->getBirthDate(),
-                    ':admn'=>$this->getIsAdmin(),
+                    ':admn'=>$this->getIsAdmin()
                     
                     );
             $prep->execute($values);
@@ -158,6 +157,7 @@ class ModelUser {
             else{
                 echo "une erreur est survenue.";
             }
+            return false;
         }
     }
     
