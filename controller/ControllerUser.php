@@ -36,8 +36,13 @@ class ControllerUser{
     }
     
     public function registered(){
+<<<<<<< HEAD
         $hashpass = hash('sha512',$_POST['password']);
         $user = new ModelUser(-1, $_POST['nickname'], $hashpass, $_POST['firstname'], $_POST['lastname'], $_POST['email'], $_POST['birthdate'], 0);
+=======
+        $hashpass = hash('sha512',$_POST['password']+ModelUser::getSeed());
+        $user = new ModelUser(NULL, $_POST['nickname'], $hashpass, $_POST['firstname'], $_POST['lastname'], $_POST['email'], $_POST['birthdate'], 0);
+>>>>>>> 3f773996decf7d7e9a36b96317cafc8ede2479ce
         $user->save();
         $view = 'registered';
         $controller = 'user';
@@ -54,7 +59,7 @@ class ControllerUser{
     
     public function connected(){
         // TODO cookies
-        $hashpass = hash('sha512',$_POST['password']);
+        $hashpass = hash('sha512',$_POST['password']+ModelUser::getSeed());
         $user = new ModelUser();
         $user->connect($_POST['nickname'],hashpass);
         if($user==false){

@@ -4,6 +4,8 @@ require_once File::build_path(array('model','Model.php'));
 
 class ModelUser {
     
+    private static $seed = 'wowsuchseedmuchwow';
+    
     private $idUser;
     private $password;
     private $nickName;
@@ -69,7 +71,9 @@ class ModelUser {
         $this->isAdmin = $isAdmin;
     }
 
-
+    public static function getSeed(){
+        return $seed;
+    }
     
     public function __construct($id = NULL, $nickName = NULL,$pwd = NULL, $firstName = NULL, $lastName = NULL, $mail = NULL, $bd = NULL, $isAdmn = NULL){
         if(!is_null($id) && !is_null($nickName) && !is_null($firstName) && !is_null($lastName) &&!is_null($mail) && !is_null($bd) && !is_null($isAdmn)
