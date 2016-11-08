@@ -15,11 +15,11 @@ require_once File::build_path(array('model','ModelProduct.php'));
 class ControllerProduct {
     
     public function read(){
-        $name = $_GET['name'];
-        $p = ModelProduct::getProductByName($name);
+        $label = $_GET['label'];
+        $p = ModelProduct::getProductByLabel($label);
         $view = 'displayProduct';
         $controller = 'product';
-        $pagetitle = 'Description produit ' . $name;
+        $pagetitle = 'Description produit ' . $label;
         require File::build_path(array('view', 'view.php'));
     }
         public function readAll(){
@@ -41,11 +41,13 @@ class ControllerProduct {
     public function created(){
         
         $pId = $_POST['idP'];
-        $pName = $_POST['name'];
+        $pLabel = $_POST['label'];
         $pPrice = $_POST['price'];
+        $pSDesc = $_POST['shortDesc'];
+        $pCDesc = $_POST['completeDesc'];
        
             
-        $p = new ModelProduct($pId, $pName, $pPrice);
+        $p = new ModelProduct($pId, $pName, $pPrice, $pSDesc, $pCDesc);
         
         var_dump($p);
         $p->save();

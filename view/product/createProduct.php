@@ -13,16 +13,28 @@
                     <legend>Créer un produit :</legend>
                     <input type = 'hidden' name = 'action' value = 'created'>
                 <p>
-                    <label for = "id_produit">Nom du produit</label> :
+                    <label for = "id_produit">ID</label> :
                     <input type = "text" pattern="^(0|[1-9][0-9]*)$" placeholder = "Ex : 15" name = "idP" id = "id_produit" required/>
                 </p>
                 <p>
-                    <label for = "nom_produit">Nom du produit</label> :
-                    <input type = "text" placeholder = "Ex : Création de site web" name = "name" id = "nom_produit" required/>
+                    <label for = "label_produit">Label du produit</label> :
+                    <input type = "text" placeholder = "Ex : Création de site web" name = "label" id = "label_produit" required/>
                 </p>
                 <p>
-                    <label for = "couleur_id">Prix du produit</label> :
-                    <input type = "text" pattern="^(0|[1-9][0-9]*)$" placeholder = "Ex : 15" name = "price" id = "prix_produit" required/>
+                    <label for = "prix_produit">Prix du produit</label> :
+                    <input type = "text" pattern="^(0|[1-9][0-9]*)$" placeholder = "Ex : 25" name = "price" id = "prix_produit" required/>
+                </p>
+                <p>
+                    <label for = "sDesc_produit">Résumé descriptif</label> :
+                    <textarea type = "text" placeholder = "Description résumé de mon produit" name = "shortDesc" id = "sDesc_produit" required>
+                    </textarea>
+                </p>
+                <p>
+                    <label for = "cDesc_produit">Description détaillé</label> :
+                    <textarea placeholder = "Description détaillé de mon produit" name = "completeDesc" id = "cDesc_produit" required></textarea>
+                </p>
+                <p>
+                    VOIR OPTION
                 </p>
                 <p>
                  <input type = "submit" value = "Envoyer" />

@@ -5,8 +5,10 @@ require_once FILE::build_path(array('model', 'Model.php'));
 class ModelProduct{
     
     private $idProduct;
-    private $productName;
+    private $label;
     private $price;
+    private $shortDesc;
+    private $completeDesc;
     
     
  // ###################################################      
@@ -14,44 +16,57 @@ class ModelProduct{
     public function getId(){
         return $this->idProduct;
     }
-    public function getProductName(){
-        return $this->productName;
+    public function getLabel(){
+        return $this->label;
     }
     public function getPrice(){
         return $this->price;
     }
-    
+    public function getShortDesc(){
+        return $this->shortDesc;
+    }
+    public function getCompleteDesc(){
+        return $this->completeDesc;
+    }
     
  // ###################################################      
     // Setters  
     public function setId($id){
         $this->idProduct = $id;
     }
-    public function setProductName($bird){
-        $this->productName = $bird;
+    public function setLabel($bird){
+        $this->label = $bird;
     }
     public function setPrice($bird){
         $this->price = $bird;
     }
+    public function setShortDesc($s){
+        $this->shortDesc = $s;
+    }
+    public function setCompleteDesc($d){
+       $this->completeDesc = $d;
+    }
     
 // ###################################################      
     // Fonction    
-    public function __construct($id = NULL, $pn = NULL, $p = NULL){
-        if (!is_null($id) && !is_null($pn) && !is_null($p)){
+    public function __construct($id = NULL, $l = NULL, $p = NULL, $sd = NULL, $cd = NULL){
+        if (!is_null($id) && !is_null($l) && !is_null($p) && !is_null($sd) && !is_null($cd)){
             $this->idProduct = $id;
-            $this->productName = $pn;
+            $this->label = $pn;
             $this->price = $p;
+            $this->shortDesc = $sd;
+            $this->completeDesc = $cd;
         }
     }
     
-    public function getProductByName($name){
+    public function getProductByLabel($label){
         try {
-            $sql = "SELECT * FROM Products WHERE productName=:n";
+            $sql = "SELECT * FROM Products WHERE label=:n";
             
             $req_prep = Model::$pdo->prepare($sql);
             
             $values = array(
-              "n" => $name  
+              "n" => $label 
             );
             
             $req_prep->execute($values);
@@ -77,7 +92,7 @@ class ModelProduct{
     
     public function save(){
         try{
-            $sql = "INSERT INTO Products(idProduct, productName, price) VALUES(:id, :n, :p);";
+            $sql = "INSERT INTO Products(idProduct, label, price, shortDesc, completeDesc) VALUES(:id, :l, :p, :sd, :cd);";
             
             //préparation de la requête
             $req_prep = Model::$pdo->prepare($sql);
@@ -86,7 +101,9 @@ class ModelProduct{
             $values = array(
                 "id" => (int)$this->idProduct,
                 "n" => $this->productName,
-                "p" => (int)$this->price
+                "p" => (int)$this->price,
+                "sd" => $this->shortDesc,
+                "cd" => $this->completeDesc
             );
 
             return $req_prep->execute($values);
@@ -128,6 +145,8 @@ class ModelProduct{
              die();
          }
     }
+    
+    
 }
 
 
