@@ -11,6 +11,3 @@
  *
  * @author govinc
  */
-class createdProduct {
-    //put your code here
-}

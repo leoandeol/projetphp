@@ -9,7 +9,7 @@ if ($tab_p != false) {
         $pSDesc = htmlspecialchars($p->getShortDesc());
 
         $securePLabel = rawurlencode($p->getLabel());
-
+        $secureId = rawurldecode($p->getId());
         echo <<< EOT
             <div class="read readAll">
                 <div class="id">ID :  $pId ~</div>
@@ -18,6 +18,7 @@ if ($tab_p != false) {
                 <div class="description">$pSDesc</div>
                 
                 <a href="index.php?controller=product&action=read&label=$securePLabel"><div class="detail">Détails</div></a>
+                <a href="index.php?controller=product&action=delete&idProduct=$secureId"><div class="detail">#Seul l'admin pourra le voir# Supprimer</div></a>
             </div>
 EOT;
     }

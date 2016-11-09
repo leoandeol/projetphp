@@ -123,7 +123,7 @@ class ModelProduct {
         }
     }
 
-    public function del($idProduct) {
+    public function delete($idProduct) {
         try {
             $sql = "DELETE FROM Products WHERE idProduct=:id";
             $req_prep = Model::$pdo->prepare($sql);
@@ -133,6 +133,8 @@ class ModelProduct {
             );
 
             $req_prep->execute($values);
+            
+            return true;
         } catch (Exception $e) {
             return false;
         }

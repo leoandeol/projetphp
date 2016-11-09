@@ -63,7 +63,15 @@ class ControllerProduct {
     }
     
     public function delete(){
+        $id = $_GET['idProduct'];
         
+        $p = ModelProduct::delete($id);
+        
+        $view = 'deleteProduct';
+        $controller = 'product';
+        $pagetitle = 'Produit supprimé';
+        
+        require File::build_path(array('view', 'view.php'));
     }
 
 }

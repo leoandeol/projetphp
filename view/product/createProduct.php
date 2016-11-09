@@ -1,13 +1,3 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8" />
-        <title> Insérer le titrer ici </title>
-    </head>
-
-    <body>
-        <?php ?>
-
         <form method = "post" action = "index.php?action=created&controller=product">
             <fieldset>
                 <legend>Créer un produit :</legend>
@@ -41,8 +31,3 @@
                 </p>
             </fieldset>
         </form>
-
-
-    </body>
-</html>
-
