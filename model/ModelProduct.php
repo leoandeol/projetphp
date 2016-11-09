@@ -52,7 +52,7 @@ class ModelProduct{
     public function __construct($id = NULL, $l = NULL, $p = NULL, $sd = NULL, $cd = NULL){
         if (!is_null($id) && !is_null($l) && !is_null($p) && !is_null($sd) && !is_null($cd)){
             $this->idProduct = $id;
-            $this->label = $pn;
+            $this->label = $l;
             $this->price = $p;
             $this->shortDesc = $sd;
             $this->completeDesc = $cd;
@@ -100,7 +100,7 @@ class ModelProduct{
 
             $values = array(
                 "id" => (int)$this->idProduct,
-                "n" => $this->productName,
+                "l" => $this->label,
                 "p" => (int)$this->price,
                 "sd" => $this->shortDesc,
                 "cd" => $this->completeDesc
@@ -125,12 +125,14 @@ class ModelProduct{
   
        public function getAllProduct(){
         try {
-            $sql = "SELECT * FROM Products";
+            $sql = "SELECT * FROM Products;";
             
             $req_prep = Model::$pdo->query($sql);
             
             $req_prep->setFetchMode(PDO::FETCH_CLASS, 'ModelProduct');
+
             $tab_p = $req_prep->fetchAll();
+           
             
             if(empty($tab_p)){
                 return false;

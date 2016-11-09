@@ -1,8 +1,9 @@
 <?php
 //Maybe n'afficher que le titre et l'ID -> revoir function readAll de produit
+if($tab_p != false){
     foreach ($tab_p as $p) {
         $pId = htmlspecialchars($p->getId());
-        $pLabel = htmlspecialchars($p->geLabel());
+        $pLabel = htmlspecialchars($p->getLabel());
         $pPrice = htmlspecialchars($p->getPrice());
         $pSDesc = htmlspecialchars($p->getShortDesc());
         
@@ -15,9 +16,10 @@
                 <div class="price">Prix :  $pPrice €</div>
                 <div class="description">$pSDesc</div>
                 
-                <a href="index.php?controller=product&action=read&name=$securePLabel"><div class="detail">Détails</div></a>
+                <a href="index.php?controller=product&action=read&label=$securePLabel"><div class="detail">Détails</div></a>
             </div>
 EOT;
 
     }
+}
 ?>

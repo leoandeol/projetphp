@@ -1,7 +1,7 @@
 
 <?php  
     $pId = htmlspecialchars($p->getId());
-    $pName = htmlspecialchars($p->getProductName());
+    $pLabel = htmlspecialchars($p->getLabel());
     $pPrice = htmlspecialchars($p->getPrice());
     $pCDesc = htmlspecialchars($p->getCompleteDesc());
 

@@ -14,6 +14,9 @@
                 <div class='menu-item'>
                     <a href='index.php?action=connect&controller=user'>Se connecter</a>
                 </div>
+                <div class="menu-item">
+                    <a href='index.php?action=readAll&controller=product'>Liste des produits</a>
+                </div>
             </nav>
         </header>
         <main>

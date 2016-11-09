@@ -27,7 +27,10 @@ class ControllerProduct {
         $view = 'displayAllProduct';
         $controller = 'product';
         $pagetitle = 'Description des produits';
+
         require File::build_path(array('view','view.php'));
+
+
     }
   
     public function create(){
@@ -47,9 +50,10 @@ class ControllerProduct {
         $pCDesc = $_POST['completeDesc'];
        
             
-        $p = new ModelProduct($pId, $pName, $pPrice, $pSDesc, $pCDesc);
+        $p = new ModelProduct($pId, $pLabel, $pPrice, $pSDesc, $pCDesc);
         
-        var_dump($p);
+       /* var_dump($p);
+        echo "<br>";*/
         $p->save();
         
         $view = 'createdProduct';
