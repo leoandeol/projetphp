@@ -74,6 +74,21 @@ class ControllerProduct {
         require File::build_path(array('view', 'view.php'));
     }
 
+    public function modify(){
+        $label = $_GET['label'];
+        $p = ModelProduct::getProductByLabel($label);
+        
+        $view = 'modifyProduct';
+        $controller = 'product';
+        $pagetitle = 'Modification d\' produit';
+        
+        require File::build_path(array('view', 'view.php'));
+    }
+    
+    public function modified(){
+        
+        
+    }
 }
 
 ?>
