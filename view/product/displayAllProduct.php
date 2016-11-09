@@ -1,12 +1,13 @@
 <?php
+
 //Maybe n'afficher que le titre et l'ID -> revoir function readAll de produit
-if($tab_p != false){
+if ($tab_p != false) {
     foreach ($tab_p as $p) {
         $pId = htmlspecialchars($p->getId());
         $pLabel = htmlspecialchars($p->getLabel());
         $pPrice = htmlspecialchars($p->getPrice());
         $pSDesc = htmlspecialchars($p->getShortDesc());
-        
+
         $securePLabel = rawurlencode($p->getLabel());
 
         echo <<< EOT
@@ -19,7 +20,6 @@ if($tab_p != false){
                 <a href="index.php?controller=product&action=read&label=$securePLabel"><div class="detail">Détails</div></a>
             </div>
 EOT;
-
     }
 }
 ?>
