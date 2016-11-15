@@ -1,7 +1,6 @@
 <?php
 
 require_once File::build_path(array('model', 'ModelUser.php'));
-require_once FIle::build_path(array('lib', 'Security.php'));
 
 class ControllerUser {
 
@@ -69,6 +68,7 @@ class ControllerUser {
             $view = 'connected';    
             $_SESSION['login'] = $_POST['nickname'];
             $_SESSION['admin'] = Session::is_admin();
+            Session::connect();
         }
         $controller = 'user';
         $pagetitle = 'Connecté';
@@ -109,6 +109,12 @@ class ControllerUser {
             'isAdmin'  => $_POST['isAdmin']
         );
         echo $data['isAdmin'];
+    }
+    
+    public function validate()
+    {
+        $login = $_GET['login'];
+        $nonce = $_GET['nonce'];
     }
     
 }

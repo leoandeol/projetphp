@@ -186,7 +186,7 @@ class ModelUser {
     }
 
     public function connect($nick, $pass) {
-        $query = "Select count(idUser) From Users Where nickname=:nickn and password=:pwd";
+        $query = "Select count(idUser),nonce From Users Where nickname=:nickn and password=:pwd";
         try {
             $prep = Model::$pdo->prepare($query);
             $values = array(
@@ -195,7 +195,7 @@ class ModelUser {
             );
             $prep->execute($values);
             $result = $prep->fetch(PDO::FETCH_NUM);
-            if ($result[0] == 1) {
+            if ($result[0] == 1 && $result[1]==NULL) {
                 $query = "Select * From Users Where nickname=:nickn and password=:pwd";
                 try {
                     $prep = Model::$pdo->prepare($query);

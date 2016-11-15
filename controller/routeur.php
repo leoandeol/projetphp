@@ -2,6 +2,8 @@
 
 require_once File::build_path(array('controller','ControllerUser.php'));
 require_once File::build_path(array('controller','ControllerProduct.php'));
+require_once FIle::build_path(array('lib', 'Security.php'));
+require_once FIle::build_path(array('lib', 'Session.php'));
 
 if(isset($_GET['action'])){
     $action = $_GET['action'];
