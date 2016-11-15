@@ -55,7 +55,7 @@ class ControllerUser {
     }
 
     public function connected() {
-        // TODO cookies
+        // TODO cookies And view connected
         $hashpass = Security::encrypt($_POST['password']);
         $user = new ModelUser();
         $user->connect($_POST['nickname'], $hashpass);
@@ -88,16 +88,23 @@ class ControllerUser {
     }
     
     public function updated() {
+        if(!isset($_POST['isAdmin'])){
+            $_POST['isAdmin']='false';
+        } else{
+            $_POST['isAdmin']='true';
+        }
         $data = array (
             'lastName' => $_POST['lastName'],
             'firstName'=> $_POST['firstName'],
             'nickName' => $_POST['nickName'],
             'password' => $_POST['newPassword'],
             'oldPass'  => $_POST['oldPassword'],
+            'confPass' => $_POST['confPassword'],
             'mail'     => $_POST['mail'],
-            'birthDate'=> $_POST['birthDate']            
+            'birthDate'=> $_POST['birthDate'],
+            'isAdmin'  => $_POST['isAdmin']
         );
-        
+        echo $data['isAdmin'];
     }
     
 }
