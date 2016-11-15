@@ -185,6 +185,27 @@ class ModelUser {
         return false;     
     }
 
+    public function checkPassword($nick,$pass){
+        $query = "Select count(idUser),nonce From Users Where nickname=:nickn and password=:pwd";
+        try {
+            $prep = Model::$pdo->prepare($query);
+            $values = array(
+                ':nickn' => $nick,
+                ':pwd' => $pass
+            );
+            $prep->execute($values);
+            $result = $prep->fetch(PDO::FETCH_NUM);
+        } catch (PDOException $ex){
+            if (Conf::getDebug()) {
+                echo $ex->getMessage();
+            } else {
+                echo "une erreur est survenue.";
+            }
+            return false;
+        }
+        return false;
+    }
+    
     public function connect($nick, $pass) {
         $query = "Select count(idUser),nonce From Users Where nickname=:nickn and password=:pwd";
         try {

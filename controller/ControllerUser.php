@@ -115,6 +115,7 @@ class ControllerUser {
             } else {
                 $_POST['isAdmin'] = 'true';
             }
+            
             $data = array(
                 'lastName' => $_POST['lastName'],
                 'firstName' => $_POST['firstName'],
@@ -126,6 +127,9 @@ class ControllerUser {
                 'birthDate' => $_POST['birthDate'],
                 'isAdmin' => $_POST['isAdmin']
             );
+            
+            if(ModelUser::)
+            
         } else {
             $this->error();
         }
@@ -136,5 +140,6 @@ class ControllerUser {
         }
 
     }
-    ?>
+}
+?>
 
