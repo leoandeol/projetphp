@@ -38,6 +38,10 @@ class ControllerUser {
 
     public function registered() {
         //TODO comparer les 2 mots de passes + verifier si utilisateur existe deja
+        if(!filter_var($_POST['email'],FILTER_VALIDATE_EMAIL))
+        {
+            //do smthing if bad mail
+        }
         $hashpass = Security::encrypt($_POST['password']);
         $user = new ModelUser(-1, $_POST['nickname'], $hashpass, $_POST['firstname'], $_POST['lastname'], $_POST['email'], $_POST['birthdate'], 0);
         $user->save();
