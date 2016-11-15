@@ -3,8 +3,7 @@
 require_once File::build_path(array('model', 'Model.php'));
 
 class ModelUser {
-
-    private static $seed = 'wowsuchseedmuchwow';
+ 
     private $idUser;
     private $password;
     private $nickName;
