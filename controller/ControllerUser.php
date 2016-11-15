@@ -2,9 +2,16 @@
 
 require_once File::build_path(array('model', 'ModelUser.php'));
 require_once FIle::build_path(array('lib', 'Security.php'));
+require_once FIle::build_path(array('lib', 'Session.php'));
 
 class ControllerUser {
 
+    if(Session::is_admin() && Session::is_connected()){
+    private $checkBoxAdmin = '<p>
+                                 <label for="isAd">isAdmin</label>
+                                 <input type="checkbox" name="isAdmin" for="isAd"/>
+                              </p>';
+    
     public function read() {
         $id = $_GET['idUser'];
         $user = ModelUser::getUserById($id);
@@ -60,16 +67,16 @@ class ControllerUser {
         $user = new ModelUser();
         $user->connect($_POST['nickname'], $hashpass);
         if ($user == false) {
-            $view = 'error';
+            $this->error();
         } else {
-            $view = 'connected';    
+            $view = 'connected';
             $_SESSION['login'] = $_POST['nickname'];
             $_SESSION['admin'] = Session::is_admin();
         }
         $controller = 'user';
         $pagetitle = 'Connecté';
-        require File::build_path(array('view','view.php'));
-    } 
+        require File::build_path(array('view', 'view.php'));
+    }
 
     public function disconnect() {
         session_destroy();
@@ -81,32 +88,40 @@ class ControllerUser {
     }
 
     public function update() {
-        $view = 'update';
-        $controller = 'user';
-        $pagetitle = 'Update';
-        require File::build_path(array('view','view.php'));        
-    }
-    
-    public function updated() {
-        if(!isset($_POST['isAdmin'])){
-            $_POST['isAdmin']='false';
-        } else{
-            $_POST['isAdmin']='true';
+        if (Session::is_connected()) {
+            $view = 'update';
+            $pagetitle = 'Update';
+
+            $controller = 'user';
+            require File::build_path(array('view', 'view.php'));
+        } else {
+            $this->error();
         }
-        $data = array (
-            'lastName' => $_POST['lastName'],
-            'firstName'=> $_POST['firstName'],
-            'nickName' => $_POST['nickName'],
-            'password' => $_POST['newPassword'],
-            'oldPass'  => $_POST['oldPassword'],
-            'confPass' => $_POST['confPassword'],
-            'mail'     => $_POST['mail'],
-            'birthDate'=> $_POST['birthDate'],
-            'isAdmin'  => $_POST['isAdmin']
-        );
-        echo $data['isAdmin'];
     }
-    
+
+    public function updated() {
+        if (Session::is_connected()) {
+            if (!isset($_POST['isAdmin'])) {
+                $_POST['isAdmin'] = 'false';
+            } else {
+                $_POST['isAdmin'] = 'true';
+            }
+            $data = array(
+                'lastName' => $_POST['lastName'],
+                'firstName' => $_POST['firstName'],
+                'nickName' => $_POST['nickName'],
+                'password' => $_POST['newPassword'],
+                'oldPass' => $_POST['oldPassword'],
+                'confPass' => $_POST['confPassword'],
+                'mail' => $_POST['mail'],
+                'birthDate' => $_POST['birthDate'],
+                'isAdmin' => $_POST['isAdmin']
+            );
+        } else {
+            $this->error();
+        }
+    }
+
 }
 ?>
 
