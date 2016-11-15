@@ -78,6 +78,26 @@ class ControllerUser {
         require File::build_path(array('view', 'view.php'));
     }
 
+    public function update() {
+        $view = 'update';
+        $controller = 'user';
+        $pagetitle = 'Update';
+        require File::build_path(array('view','view.php'));        
+    }
+    
+    public function updated() {
+        $data = array (
+            'lastName' => $_POST['lastName'],
+            'firstName'=> $_POST['firstName'],
+            'nickName' => $_POST['nickName'],
+            'password' => $_POST['newPassword'],
+            'oldPass'  => $_POST['oldPassword'],
+            'mail'     => $_POST['mail'],
+            'birthDate'=> $_POST['birthDate']            
+        );
+        
+    }
+    
 }
 ?>
 

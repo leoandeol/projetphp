@@ -158,6 +158,32 @@ class ModelUser {
             return false;
         }
     }
+    
+    public function update($data){
+        $query = "UPDATE Users 
+                SET lastName = :lastN, firstName = :firstN, nickName = :nickN, password = :pass, mail = :mailu, brithDate = :bDate
+                WHERE idUser = :id";
+        try{
+            $prep = Model::$pdo->prepare($query);
+            $values = array(
+                'lastN' => $data['lastName'],
+                'firstN'=> $data['firstName'],
+                'nickN' => $data['nickName'],
+                'pass'  => $data['password'],
+                'mailu' => $data['mail'],
+                'bDate' => $data['birthDate']
+            );
+            $prep->execute($values);
+        } catch (PDOException $ex) {
+            if (Conf::getDebug()) {
+                echo $ex->getMessage();
+            } else {
+                echo "une erreur est survenue.";
+            }
+            return false;
+        }
+        return false;     
+    }
 
     public function connect($nick, $pass) {
         $query = "Select count(idUser) From Users Where nickname=:nickn and password=:pwd";
