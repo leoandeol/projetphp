@@ -62,14 +62,16 @@ class ControllerUser {
         if ($user == false) {
             $view = 'error';
         } else {
-            $view = 'connected';
+            $view = 'connected';    
+            $_SESSION['login'] = $_POST['nickname'];
+            $_SESSION['admin'] = Session::is_admin();
         }
         $controller = 'user';
         $pagetitle = 'Connecté';
         require File::build_path(array('view','view.php'));
     } 
 
-    public function deconnect() {
+    public function disconnect() {
         session_destroy();
         $user = null;
         $pagetitle = 'Accueil';

@@ -15,10 +15,7 @@
                     <a href='index.php?action=connect&controller=user'>Se connecter</a>
                 </div>
                 <div class='menu-item'>
-                    <a href='index.php?action=connect&controller=user'>Se connecter</a>
-                </div>
-                <div class='menu-item'>
-                    <a href='index.php?action=connect&controller=user'>Se connecter</a>
+                    <a href='index.php?action=disconnect&controller=user'>Se déconnecter</a>
                 </div>
                 <div class="menu-item">
                     <a href='index.php?action=readAll&controller=product'>Liste des produits</a>
