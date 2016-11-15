@@ -13,6 +13,10 @@
             <input type="password" placeholder="Mot de passe" name="password" id="pass_id" required/>
         </p>
         <p>
+            <label for="pass_id2">Encore</label> :
+            <input type="password" placeholder="Mot de passe" name="password2" id="pass_id2" required/>
+        </p>
+        <p>
             <label for="lastname_id">Nom de famille</label> :
             <input type="text" placeholder="Ex : Dupont" name="lastname" id="lastname_id" required/>
         </p>
