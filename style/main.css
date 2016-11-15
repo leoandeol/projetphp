@@ -31,6 +31,10 @@ main {
     padding:10px;
     background-image:url('../res/background.jpg');
     color:white;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:space-around;
+    align-items:stretch;
 }
 
 nav {
@@ -61,9 +65,11 @@ main .read a:visited, main .read a{
     text-align:right;
 }
 main .read{
+    height:300px;
     display:flex;
     flex-direction:column;
-
+    background-color: darkslateblue;
+    flex-basis:31%;
 }
 main .read .name{
     font-size:1.5em;
@@ -77,9 +83,13 @@ main .read .id{
 main .read .price{
     color:red;
 }
+
+main .read .description{
+    flex:1;
+}
+
 main .read div{
     padding-bottom: 4px;
-    
 }
 main .read div.name{
     margin:5px;
@@ -88,7 +98,7 @@ main .read div.name{
 
 main .readAll{
     border:1px solid white;
-
+    
     margin:10px;
     padding:5px;
 }
