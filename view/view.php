@@ -9,16 +9,19 @@
         <header>
             <nav>
                 <div class='menu-item'>
-                    <a href='index.php?action=register&controller=user'>S'inscrire</a>
+                    <a href='index.php'>Accueil</a>
                 </div>
-                <div class='menu-item'>
-                    <a href='index.php?action=connect&controller=user'>Se connecter</a>
-                </div>
-                <div class='menu-item'>
-                    <a href='index.php?action=disconnect&controller=user'>Se déconnecter</a>
-                </div>
-                <div class="menu-item">
-                    <a href='index.php?action=readAll&controller=product'>Liste des produits</a>
+                <div class='menu-dropdown'>
+                    <a href='index.php?controller=user'>Compte</a>
+                     <div class='menu-dropdown-content'>
+                        <a href='index.php?action=connect&controller=user'>Se connecter</a>
+                    </div>
+                     <div class='menu-dropdown-content'>
+                        <a href='index.php?action=update&controller=user'>Paramètres</a>
+                    </div>
+                     <div class='menu-dropdown-content'>
+                        <a href='index.php?action=disconnect&controller=user'>Se déconnecter</a>
+                    </div>
                 </div>
             </nav>
         </header>
