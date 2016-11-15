@@ -1,17 +1,22 @@
 <?php
 
 require_once File::build_path(array('model', 'ModelUser.php'));
-require_once FIle::build_path(array('lib', 'Security.php'));
-require_once FIle::build_path(array('lib', 'Session.php'));
 
 class ControllerUser {
 
-    if(Session::is_admin() && Session::is_connected()){
-    private $checkBoxAdmin = '<p>
-                                 <label for="isAd">isAdmin</label>
-                                 <input type="checkbox" name="isAdmin" for="isAd"/>
-                              </p>';
-    
+    private $checkBoxAdmin;
+
+    public function setCheckBox() {
+        if (Session::is_admin() && Session::is_connected()) {
+            $checkBoxAdmin = '<p>
+                         <label for="isAd">isAdmin</label>
+                         <input type="checkbox" name="isAdmin" for="isAd"/>
+                         </p>';
+        } else {
+            $checkBox = '';
+        }
+    }
+
     public function read() {
         $id = $_GET['idUser'];
         $user = ModelUser::getUserById($id);
@@ -44,7 +49,10 @@ class ControllerUser {
     }
 
     public function registered() {
-        //TODO comparer les 2 mots de passes + verifier si utilisateur existe deja
+//TODO comparer les 2 mots de passes + verifier si utilisateur existe deja
+        if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+//do smthing if bad mail
+        }
         $hashpass = Security::encrypt($_POST['password']);
         $user = new ModelUser(-1, $_POST['nickname'], $hashpass, $_POST['firstname'], $_POST['lastname'], $_POST['email'], $_POST['birthdate'], 0);
         $user->save();
@@ -62,7 +70,7 @@ class ControllerUser {
     }
 
     public function connected() {
-        // TODO cookies And view connected
+// TODO cookies And view connected
         $hashpass = Security::encrypt($_POST['password']);
         $user = new ModelUser();
         $user->connect($_POST['nickname'], $hashpass);
@@ -72,6 +80,7 @@ class ControllerUser {
             $view = 'connected';
             $_SESSION['login'] = $_POST['nickname'];
             $_SESSION['admin'] = Session::is_admin();
+            Session::connect();
         }
         $controller = 'user';
         $pagetitle = 'Connecté';
@@ -120,8 +129,12 @@ class ControllerUser {
         } else {
             $this->error();
         }
-    }
 
-}
-?>
+        function validate() {
+            $login = $_GET['login'];
+            $nonce = $_GET['nonce'];
+        }
+
+    }
+    ?>
 

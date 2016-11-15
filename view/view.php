@@ -13,15 +13,24 @@
                 </div>
                 <div class='menu-dropdown'>
                     <a href='index.php?controller=user'>Compte</a>
-                     <div class='menu-dropdown-content'>
+                    <?php
+                    if (!Session::is_connected()) {
+                        echo <<< EOT
+                    <div class='menu-dropdown-content'>
                         <a href='index.php?action=connect&controller=user'>Se connecter</a>
                     </div>
+EOT;
+                    } else {
+                        echo <<< EOT
                      <div class='menu-dropdown-content'>
                         <a href='index.php?action=update&controller=user'>Paramètres</a>
                     </div>
                      <div class='menu-dropdown-content'>
                         <a href='index.php?action=disconnect&controller=user'>Se déconnecter</a>
                     </div>
+EOT;
+                    }
+                    ?>
                 </div>
             </nav>
         </header>
