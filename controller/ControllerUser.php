@@ -65,7 +65,7 @@ class ControllerUser{
         $controller = 'user';
         $pagetitle = 'Connecté';
         require File::build_path(array('view','view.php'));
-    }
+    } 
 }
 
 ?>
