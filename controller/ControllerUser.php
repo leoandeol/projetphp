@@ -18,7 +18,7 @@ class ControllerUser {
     }
 
     public function read() {
-        $id = $_GET['idUser'];
+        $id = $_GET['nickName'];
         $user = ModelUser::getUserById($id);
         $view = 'displayUser';
         $controller = 'user';
@@ -54,7 +54,7 @@ class ControllerUser {
 //do smthing if bad mail
         }
         $hashpass = Security::encrypt($_POST['password']);
-        $user = new ModelUser(-1, $_POST['nickname'], $hashpass, $_POST['firstname'], $_POST['lastname'], $_POST['email'], $_POST['birthdate'], 0);
+        $user = new ModelUser($_POST['nickname'], $hashpass, $_POST['firstname'], $_POST['lastname'], $_POST['email'], $_POST['birthdate'], 0);
         $user->save();
         $view = 'registered';
         $controller = 'user';
@@ -98,9 +98,9 @@ class ControllerUser {
 
     public function update() {
         if (Session::is_connected()) {
+            $this->setCheckBox();
             $view = 'update';
             $pagetitle = 'Update';
-
             $controller = 'user';
             require File::build_path(array('view', 'view.php'));
         } else {
@@ -128,7 +128,6 @@ class ControllerUser {
                 'isAdmin' => $_POST['isAdmin']
             );
             
-            if(ModelUser::)
             
         } else {
             $this->error();

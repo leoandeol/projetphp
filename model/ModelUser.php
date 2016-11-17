@@ -4,7 +4,6 @@ require_once File::build_path(array('model', 'Model.php'));
 
 class ModelUser {
  
-    private $idUser;
     private $password;
     private $nickName;
     private $firstName;
@@ -12,10 +11,6 @@ class ModelUser {
     private $mail;
     private $birthDate;
     private $isAdmin;
-
-    function getIdUser() {
-        return $this->idUser;
-    }
 
     function getPassword() {
         return $this->password;
@@ -73,9 +68,8 @@ class ModelUser {
         return self::$seed;
     }
 
-    public function __construct($id = NULL, $nickName = NULL, $pwd = NULL, $firstName = NULL, $lastName = NULL, $mail = NULL, $bd = NULL, $isAdmn = NULL) {
-        if (!is_null($id) && !is_null($nickName) && !is_null($firstName) && !is_null($lastName) && !is_null($mail) && !is_null($bd) && !is_null($isAdmn) && !is_null($pwd)) {
-            $this->idUser = $id;
+    public function __construct($nickName = NULL, $pwd = NULL, $firstName = NULL, $lastName = NULL, $mail = NULL, $bd = NULL, $isAdmn = NULL) {
+        if (!is_null($nickName) && !is_null($firstName) && !is_null($lastName) && !is_null($mail) && !is_null($bd) && !is_null($isAdmn) && !is_null($pwd)) {
             $this->nickName = $nickName;
             $this->firstName = $firstName;
             $this->lastName = $lastName;
@@ -95,7 +89,7 @@ class ModelUser {
 
         $query = "SELECT * 
                   FROM Users
-                  WHERE idUser = :idUs";
+                  WHERE nickName = :idUs";
 
         try {
             $prepared = Model::$pdo->prepare($query);
@@ -133,7 +127,7 @@ class ModelUser {
     public function save() {
         
         // a faire : en cas d'inscription, check si quelqu'un utilise deja le login
-        $query = " INSERT INTO Users(nickName,lastName,password,firstName,mail,birthDate,isAdmin) VALUES (:nickn, :lastn, :pwd, :firstn, :mail, :bdate, :admn) ";
+        $query = " INSERT INTO Users(nickName,lastName,firstName,password,mail,birthDate,isAdmin) VALUES (:nickn, :lastn, :firstn, :pwd, :mail, :bdate, :admn) ";
         try {
             $prep = Model::$pdo->prepare($query);
             $dateFormated = split('/', $this->getBirthDate());
@@ -161,8 +155,8 @@ class ModelUser {
     
     public function update($data){
         $query = "UPDATE Users 
-                SET lastName = :lastN, firstName = :firstN, nickName = :nickN, password = :pass, mail = :mailu, brithDate = :bDate
-                WHERE idUser = :id";
+                SET lastName = :lastN, firstName = :firstN, password = :pass, mail = :mailu, brithDate = :bDate
+                WHERE nickName = :nickN";
         try{
             $prep = Model::$pdo->prepare($query);
             $values = array(
@@ -186,7 +180,7 @@ class ModelUser {
     }
 
     public function checkPassword($nick,$pass){
-        $query = "Select count(idUser),nonce From Users Where nickname=:nickn and password=:pwd";
+        $query = "Select count(nickName),nonce From Users Where nickName=:nickn and password=:pwd";
         try {
             $prep = Model::$pdo->prepare($query);
             $values = array(
@@ -207,7 +201,7 @@ class ModelUser {
     }
     
     public function connect($nick, $pass) {
-        $query = "Select count(idUser),nonce From Users Where nickname=:nickn and password=:pwd";
+        $query = "Select count(nickName),nonce From Users Where nickName=:nickn and password=:pwd";
         try {
             $prep = Model::$pdo->prepare($query);
             $values = array(
@@ -217,7 +211,7 @@ class ModelUser {
             $prep->execute($values);
             $result = $prep->fetch(PDO::FETCH_NUM);
             if ($result[0] == 1 && $result[1]==NULL) {
-                $query = "Select * From Users Where nickname=:nickn and password=:pwd";
+                $query = "Select * From Users Where nickName=:nickn and password=:pwd";
                 try {
                     $prep = Model::$pdo->prepare($query);
                     $values = array (
