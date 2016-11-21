@@ -66,7 +66,7 @@ class ControllerProduct {
 
     public function udpate() {
         $label = $_GET['label'];
-        $p = ModelProduct::getProductByLabel($label);
+        $p = ModelProduct::select($label);
 
         $cerise = "update";
 
@@ -96,7 +96,7 @@ class ControllerProduct {
         if (ModelProduct::update($data)) {
             $view = "displayAllProduct";
             $pagetitle = 'Modification d\' produit';
-            $tab_p = ModelProduct::getAllProduct();
+            $tab_p = ModelProduct::selectAll();
             require FILE::build_path(array('view', 'view.php'));
         } else {
             $view = "error";
@@ -131,7 +131,7 @@ class ControllerProduct {
 
             require File::build_path(array('view', 'view.php'));
         }else{
-            echo "BITEUUUX";
+         
         }
     }
 
