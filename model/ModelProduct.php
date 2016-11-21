@@ -164,6 +164,18 @@ class ModelProduct {
             die();
         }
     }
+    
+    public function update($data){
+        try{
+            $sql = "UPDATE Products SET label=:label, price=:price, shortDesc=:shortDesc, completeDesc=:completeDesc WHERE idProduct=:idProduct;";
+            $req_prep = Model::$pdo->prepare($sql);
+            $req_prep->execute($data);
+
+            return true;
+        } catch (PDOException $e) {
+           return false;
+        }
+    }
 
 }
 ?>
