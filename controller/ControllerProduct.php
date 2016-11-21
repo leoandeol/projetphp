@@ -13,7 +13,25 @@ require_once File::build_path(array('model', 'ModelProduct.php'));
  * @author govinc
  */
 class ControllerProduct {
-
+    
+     public static function viewPanier(){
+        $view = 'displayPanier';
+        $controller = 'product';
+        $pagetitle = 'Description du panier';
+        require File::build_path(array('view', 'view.php'));
+    }
+    public static function ajoutPanier(){
+        $label = $_GET['label'];
+        $price = $_GET['price'];
+       Panier::ajoutArticle($label, $price);
+       self::viewPanier();
+    }
+    public static function supprimerPanier(){
+        $label = $_GET['label'];
+       Panier::supprimerArticle($label);
+       self::viewPanier();
+    }
+    
     public function read() {
         $label = $_GET['label'];
         $p = ModelProduct::getProductByLabel($label);

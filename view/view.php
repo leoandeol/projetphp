@@ -11,6 +11,10 @@
                 <div class='menu-item'>
                     <a href='index.php'>Accueil</a>
                 </div>
+                
+                <div class="menu-item">
+                    <a href="index.php?controller=product">Liste article</a>
+                </div>
                 <div class='menu-dropdown'>
                     <a href='index.php?controller=user'>Compte</a>
                     <?php
