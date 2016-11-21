@@ -1,6 +1,6 @@
 <?php
 
-require_once File::build_path(array('config','config.php'));
+require_once File::build_path(array('config', 'config.php'));
 
 class Model {
 
@@ -28,6 +28,161 @@ class Model {
                 echo 'Une erreur est survenue <a href=""> retour a la page d\'accueil </a>';
             }
             die();
+        }
+    }
+
+    public static function update($data) {
+        try {
+            $table_name = ucfirst(static::$object);
+            $class_name = 'Model' . $table_name;
+            $table_name = $table_name . "s";
+
+
+
+            $sql = "UPDATE $table_name SET ";
+
+            foreach ($data as $cle => $valeur) {
+                $sql = $sql . $cle . "=:" . $cle . ", ";
+            }
+
+            $sql = rtrim($sql, ' ,');
+
+            $primary_key = static::$primary;
+
+            $sql = $sql . " WHERE $primary_key=:$primary_key;";
+            echo $sql;
+
+            $req_prep = Model::$pdo->prepare($sql);
+
+            $req_prep->execute($data);
+            return true;
+        } catch (PDOException $e) {
+
+            return false;
+        }
+    }
+
+    public function selectAll() {
+        try {
+
+            $table_name = ucfirst(static::$object);
+            $class_name = 'Model' . $table_name;
+            $table_name = $table_name . "s";
+
+            $sql = "SELECT * FROM $table_name;";
+
+            $req_prep = Model::$pdo->query($sql);
+
+            $req_prep->setFetchMode(PDO::FETCH_CLASS, $class_name);
+
+            $tab_p = $req_prep->fetchAll();
+
+
+            if (empty($tab_p)) {
+                return false;
+            }
+            return $tab_p;
+        } catch (PDOException $e) {
+            if (Conf::getDebug()) {
+                echo $e->getMessage(); // affiche un message d'erreur
+            } else {
+                echo 'Une erreur est survenue <a href=""> retour a la page d\'accueil </a>';
+            }
+            die();
+        }
+    }
+
+    public function select($data) {
+        try {
+
+            $table_name = ucfirst(static::$object);
+            $class_name = 'Model' . $table_name;
+            $table_name = $table_name . "s";
+            $primary_key = static::$primary;
+
+            if ($table_name = 'Products') {
+                $primary_key = 'label';
+            }
+
+            $sql = "SELECT * FROM Products WHERE $primary_key=:p";
+
+            $req_prep = Model::$pdo->prepare($sql);
+
+            $values = array(
+                "p" => $data
+            );
+
+            $req_prep->execute($values);
+
+            $req_prep->setFetchMode(PDO::FETCH_CLASS, 'ModelProduct');
+            $tab_p = $req_prep->fetchAll();
+
+            if (empty($tab_p)) {
+                return false;
+            }
+            return $tab_p[0];
+        } catch (PDOException $e) {
+            if (Conf::getDebug()) {
+                echo $e->getMessage(); // affiche un message d'erreur
+            } else {
+                echo 'Une erreur est survenue <a href=""> retour a la page d\'accueil </a>';
+            }
+            die();
+        }
+    }
+
+    public static function delete($primary) {
+        try {
+            $table_name = ucfirst(static::$object);
+            $class_name = 'Model' . $table_name;
+            $table_name = $table_name . "s";
+
+            $primary_key = static::$primary;
+
+            $sql = "DELETE FROM $table_name WHERE $primary_key=:p";
+            $req_prep = Model::$pdo->prepare($sql);
+
+            $values = array(
+                "p" => $primary
+            );
+
+            $req_prep->execute($values);
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
+    public function save($data) {
+        try {
+            $table_name = ucfirst(static::$object);
+            $class_name = 'Model' . $table_name;
+            $table_name = $table_name . "s";
+
+
+            $sql = "INSERT INTO $table_name(";
+
+
+            
+            $sql = "INSERT INTO $table_name VALUES(";
+
+            foreach ($data as $cle=>$valeur){
+                $sql = $sql.":".$cle. ", ";
+            }
+            $sql = rtrim($sql, " ,").");";
+            
+            //préparation de la requête
+            $req_prep = Model::$pdo->prepare($sql);
+
+            return $req_prep->execute($data);
+        } catch (PDOException $e) {
+            if ($e->getCode() == 23000) {
+                echo '<br>Le produit existe déjà. ';
+                return false;
+            } else {
+                echo $e->getMessage();
+                echo '<br>Une erreur est survenue lors de la sauvegarde du produit. ';
+            }
         }
     }
 

@@ -1,13 +1,13 @@
 
 <?php
-if(isset($p)){
+
+if (isset($p)) {
     $pId = htmlspecialchars($p->getId());
     $pLabel = htmlspecialchars($p->getLabel());
     $pPrice = htmlspecialchars($p->getPrice());
     $pSDesc = htmlspecialchars($p->getShortDesc());
     $pCDesc = htmlspecialchars($p->getCompleteDesc());
-}
-else{
+} else {
     $pId = "";
     $pLabel = "";
     $pPrice = "";
@@ -32,7 +32,7 @@ if ($cerise == 'update') {
         </p>
 EOT;
 } else {
-        echo <<<EOT
+    echo <<<EOT
         <legend>Nouveau produit</legend>
         <input type = 'hidden' name = 'action' value = 'created'>
         <p>
@@ -67,10 +67,22 @@ echo <<<EOT
         <p>
             VOIR OPTION
         </p>
-        <p>
+EOT;
+if ($cerise == 'update') {
+    echo <<<EOT
+    <p>
             <input type = "submit" value = "Modifier" />
         </p>
     </fieldset>
 </form>
 EOT;
+} else {
+    echo <<<EOT
+    <p>
+            <input type = "submit" value = "Créer" />
+        </p>
+    </fieldset>
+</form>
+EOT;
+}
 ?>

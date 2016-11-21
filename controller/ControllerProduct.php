@@ -14,6 +14,8 @@ require_once File::build_path(array('model', 'ModelProduct.php'));
  */
 class ControllerProduct {
 
+    protected static $object = 'product';
+
     public static function viewPanier() {
         $view = 'displayPanier';
         $controller = 'product';
@@ -36,7 +38,7 @@ class ControllerProduct {
 
     public function read() {
         $label = $_GET['label'];
-        $p = ModelProduct::getProductByLabel($label);
+        $p = ModelProduct::select($label);
         $view = 'displayProduct';
         $controller = 'product';
         $pagetitle = 'Description produit ' . $label;
@@ -44,7 +46,7 @@ class ControllerProduct {
     }
 
     public function readAll() {
-        $tab_p = ModelProduct::getAllProduct();
+        $tab_p = ModelProduct::selectAll();
         $view = 'displayAllProduct';
         $controller = 'product';
         $pagetitle = 'Description des produits';
@@ -81,15 +83,15 @@ class ControllerProduct {
         $pPrice = $_POST['price'];
         $pSDesc = $_POST['shortDesc'];
         $pCDesc = $_POST['completeDesc'];
-        
+
         $data = array(
-          'idProduct'=>$pId,
-          'label' => $pLabel,
-          'price' => $pPrice,
-          'shortDesc' => $pSDesc,
-          'completeDesc' => $pCDesc
+            'idProduct' => $pId,
+            'label' => $pLabel,
+            'price' => $pPrice,
+            'shortDesc' => $pSDesc,
+            'completeDesc' => $pCDesc
         );
-       
+
         $controller = 'product';
         if (ModelProduct::update($data)) {
             $view = "displayAllProduct";
@@ -100,9 +102,6 @@ class ControllerProduct {
             $view = "error";
             self::readAll();
         }
-        
-        
-
     }
 
     public function created() {
@@ -113,18 +112,27 @@ class ControllerProduct {
         $pSDesc = $_POST['shortDesc'];
         $pCDesc = $_POST['completeDesc'];
 
+        $data = array(
+            'idProduct' => $pId,
+            'label' => $pLabel,
+            'price' => $pPrice,
+            'shortDesc' => $pSDesc,
+            'completeDesc' => $pCDesc
+        );
 
-        $p = new ModelProduct($pId, $pLabel, $pPrice, $pSDesc, $pCDesc);
+
 
         /* var_dump($p);
           echo "<br>"; */
-        $p->save();
+        if (ModelProduct::save($data)) {
+            $view = 'createdProduct';
+            $controller = 'product';
+            $pagetitle = 'Produit créé';
 
-        $view = 'createdProduct';
-        $controller = 'product';
-        $pagetitle = 'Produit créé';
-
-        require File::build_path(array('view', 'view.php'));
+            require File::build_path(array('view', 'view.php'));
+        }else{
+            echo "BITEUUUX";
+        }
     }
 
     public function delete() {
