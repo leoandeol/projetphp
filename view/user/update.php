@@ -9,10 +9,6 @@
         <input type="text" name="lastName" for="lName"/>
     </p>
     <p>
-        <label for="nName">Pseudonyme</label>
-        <input type="text" name="nickName" for="nName"/>
-    </p>
-    <p>
         <label for="oPass">Mot de passe actuel</label>
         <input type="text" name="oldPassword" for="oPass"/>
     </p>
@@ -29,7 +25,7 @@
         <input type="text" name="mail" for="mail"/>
     </p>
     <p>
-        <label for="bDate">date de </label>
+        <label for="bDate">Date de naissance</label>
         <input type="date" name="birthDate" for="bDate"/>
     </p>
     <?php echo $checkBoxAdmin; ?>

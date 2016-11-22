@@ -126,13 +126,10 @@ class ControllerUser {
         if (Session::is_connected()) {
             if (!isset($_POST['isAdmin'])) {
                 $_POST['isAdmin'] = 'false';
-            } else {
-                $_POST['isAdmin'] = 'true';
             }
-            $data = array(
+            $dataNotOk = array(
                 'lastName' => $_POST['lastName'],
                 'firstName' => $_POST['firstName'],
-                'nickName' => $_POST['nickName'],
                 'password' => $_POST['newPassword'],
                 'oldPass' => $_POST['oldPassword'],
                 'confPass' => $_POST['confPassword'],
@@ -140,7 +137,32 @@ class ControllerUser {
                 'birthDate' => $_POST['birthDate'],
                 'isAdmin' => $_POST['isAdmin']
             );
-            ModelUser::update($data);
+            $hashpass = Security::encrypt($dataNotOk['oldPass']);
+            if (ModelUser::checkPassword($_SESSION['login'], $hashpass)) {
+                if ($dataNotOk['password'] == $dataNotOk['confPass']) {
+                    $hashpassOk = Security::encrypt($dataNotOk['password']);
+                    $dataOk = array(
+                        'lastName' => $_POST['lastName'],
+                        'firstName' => $_POST['firstName'],
+                        'password' => $hashpassOk,
+                        'mail' => $_POST['mail'],
+                        'birthDate' => $_POST['birthDate'],
+                        'isAdmin' => $_POST['isAdmin']
+                    );
+                    if (ModelUser::update($dataOk)) {
+                        $view = 'updated';
+                        $pagetitle = 'Updated';
+                        $controller = 'user';
+                        require File::build_path(array('view', 'view.php'));
+                    } else {
+                        ControllerUser::error();
+                    }
+                } else {
+                    ControllerUser::error();
+                }
+            } else {
+                ControllerUser::error();
+            }
         } else {
             ControllerUser::error();
         }

@@ -40,7 +40,7 @@ class Model {
 
 
             $sql = "UPDATE $table_name SET ";
-
+            
             foreach ($data as $cle => $valeur) {
                 $sql = $sql . $cle . "=:" . $cle . ", ";
             }
@@ -50,7 +50,6 @@ class Model {
             $primary_key = static::$primary;
 
             $sql = $sql . " WHERE $primary_key=:$primary_key;";
-            echo $sql;
 
             $req_prep = Model::$pdo->prepare($sql);
 
