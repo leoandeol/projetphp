@@ -5,10 +5,12 @@ class Panier {
     public static function creerPanier() {
         
         if(!isset($_SESSION['panier'])){
-            $_SESSION['panier']=array();
-            $_SESSION['panier']['label']=array();
-            $_SESSION['panier']['price']=array();
-            $_SESSION['panier']['verrou']=false;
+            
+            $_SESSION['panier']=array(
+                'label' => array(),
+                'price' => array(),
+                'verroy' => false
+            );
         }
         return true;
     }
@@ -57,6 +59,7 @@ class Panier {
             return false;
         }
     }
+    
     public static function compterArticles(){
         if(self::creerPanier()){
             return count($_SESSION['panier']['label']);
