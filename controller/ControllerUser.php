@@ -57,9 +57,9 @@ class ControllerUser {
         $nonce = Security::generateRandomHex();
         $user = new ModelUser($_POST['nickname'], $hashpass, $_POST['firstname'], $_POST['lastname'], $_POST['email'], $_POST['birthdate'], 0, $nonce);
         $user->save();
-        
+
         //MAIL
-        $mail="<!DOCTYPE html><body><a href=\"http://infolimon.iutmontp.univ-montp2.fr/~andeoll/projetphp/index.php?action=validate&controller=user&login=".$_POST['nickname']."&nonce=$nonce\">pls click link</a></body>";
+        $mail = "<!DOCTYPE html><body><a href=\"http://infolimon.iutmontp.univ-montp2.fr/~andeoll/projetphp/index.php?action=validate&controller=user&login=" . $_POST['nickname'] . "&nonce=$nonce\">pls click link</a></body>";
         mail($_POST['email'], "Please confirm your email", $mail);
         $view = 'registered';
         $controller = 'user';
@@ -120,7 +120,7 @@ class ControllerUser {
             } else {
                 $_POST['isAdmin'] = 'true';
             }
-            
+
             $data = array(
                 'lastName' => $_POST['lastName'],
                 'firstName' => $_POST['firstName'],
@@ -132,8 +132,6 @@ class ControllerUser {
                 'birthDate' => $_POST['birthDate'],
                 'isAdmin' => $_POST['isAdmin']
             );
-            
-            
         } else {
             $this->error();
         }
@@ -143,6 +141,7 @@ class ControllerUser {
         $login = $_GET['login'];
         $nonce = $_GET['nonce'];
     }
+
 }
 ?>
 
