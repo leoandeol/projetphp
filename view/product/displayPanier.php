@@ -1,7 +1,7 @@
 
 <?php
 
-if (!Session::is_connected()) {
+if (Session::is_connected()) {
     echo <<<EOT
 <form method="post" action="panier.php">
 <table style="width: 400px">
@@ -17,15 +17,15 @@ if (!Session::is_connected()) {
 
 EOT;
 
-    if (Panier::creerPanier()) {
-        $nbArticles = Panier::compterArticles();
+    if (Panier::createPanier()) {
+        $nbArticles = Panier::countArticles();
         if ($nbArticles <= 0) {
             echo "<tr><td>Votre panier est vide </ td></tr>";
         } else {
+            $totalPrice = Panier::totalPrice();
             for ($i = 0; $i < $nbArticles; $i++) {
                 $pLabel = htmlspecialchars($_SESSION['panier']['label'][$i]);
                 $pPrice = htmlspecialchars($_SESSION['panier']['price'][$i]);
-                $montantGlobal = Panier::montantGlobal();
 
                 $sLabel = rawurldecode($_SESSION['panier']['label'][$i]);
 
@@ -41,7 +41,7 @@ EOT;
 			<tr>
 				<td colspan="2"> </td>
 				<td colspan="2">
-					Total : $montantGlobal
+					Total : $totalPrice
 				</td>
 			</tr>
 

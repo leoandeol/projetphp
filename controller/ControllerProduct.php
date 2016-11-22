@@ -23,16 +23,16 @@ class ControllerProduct {
         require File::build_path(array('view', 'view.php'));
     }
 
-    public static function ajoutPanier() {
+    public static function addPanier() {
         $label = $_GET['label'];
         $price = $_GET['price'];
-        Panier::ajoutArticle($label, $price);
+        Panier::addArticle($label, $price);
         self::viewPanier();
     }
 
-    public static function supprimerPanier() {
+    public static function deletePanier() {
         $label = $_GET['label'];
-        Panier::supprimerArticle($label);
+        Panier::deleteArticle($label);
         self::viewPanier();
     }
 
