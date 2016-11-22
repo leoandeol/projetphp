@@ -137,34 +137,12 @@ class ControllerUser {
         } else {
             $this->error();
         }
-<<<<<<< HEAD
-        $data = array (
-            'lastName' => $_POST['lastName'],
-            'firstName'=> $_POST['firstName'],
-            'nickName' => $_POST['nickName'],
-            'password' => $_POST['newPassword'],
-            'oldPass'  => $_POST['oldPassword'],
-            'confPass' => $_POST['confPassword'],
-            'mail'     => $_POST['mail'],
-            'birthDate'=> $_POST['birthDate'],
-            'isAdmin'  => $_POST['isAdmin']
-        );
-        echo $data['isAdmin'];
     }
-    
-    public function validate()
-    {
-        $login = $_GET['login'];
-        $nonce = $_GET['nonce'];
-        $success = $user->validate($login,$nonce);
-=======
 
-        function validate() {
+    function validate() {
             $login = $_GET['login'];
             $nonce = $_GET['nonce'];
         }
-
->>>>>>> 9bec34a2ed96c95a6b2107c8668f596261736047
     }
 }
 ?>
