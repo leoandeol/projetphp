@@ -140,9 +140,8 @@ class ControllerUser {
     }
 
     function validate() {
-            $login = $_GET['login'];
-            $nonce = $_GET['nonce'];
-        }
+        $login = $_GET['login'];
+        $nonce = $_GET['nonce'];
     }
 }
 ?>
