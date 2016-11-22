@@ -42,8 +42,13 @@ class ControllerUser {
             //do smthing if bad mail
         }
         $hashpass = Security::encrypt($_POST['password']);
-        $user = new ModelUser(-1, $_POST['nickname'], $hashpass, $_POST['firstname'], $_POST['lastname'], $_POST['email'], $_POST['birthdate'], 0);
+        $nonce = Security::generateRandomHex();
+        $user = new ModelUser($_POST['nickname'], $hashpass, $_POST['firstname'], $_POST['lastname'], $_POST['email'], $_POST['birthdate'], 0, $nonce);
         $user->save();
+        
+        //MAIL
+        $mail="<!DOCTYPE html><body><a href=\"http://infolimon.iutmontp.univ-montp2.fr/~andeoll/projetphp/index.php?action=validate&controller=user&login=".$_POST['nickname']."&nonce=$nonce\">pls click link</a></body>";
+        mail($_POST['email'], "Please confirm your email", $mail);
         $view = 'registered';
         $controller = 'user';
         $pagetitle = 'Compte créé';
@@ -115,6 +120,7 @@ class ControllerUser {
     {
         $login = $_GET['login'];
         $nonce = $_GET['nonce'];
+        $success = $user->validate($login,$nonce);
     }
     
 }
