@@ -10,7 +10,7 @@ class Security {
         return $tmp;
     }
 
-    function generateRandomHex() {
+    public static function generateRandomHex() {
         // Generate a 32 digits hexadecimal number
         $numbytes = 16; // Because 32 digits hexadecimal = 16 bytes
         $bytes = openssl_random_pseudo_bytes($numbytes);
