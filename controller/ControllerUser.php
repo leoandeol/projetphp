@@ -98,7 +98,6 @@ class ControllerUser {
 
     public function update() {
         if (Session::is_connected()) {
-            $this->setCheckBox();
             $view = 'update';
             $pagetitle = 'Update';
             $controller = 'user';
@@ -142,3 +141,4 @@ class ControllerUser {
 }
 ?>
 
+    
