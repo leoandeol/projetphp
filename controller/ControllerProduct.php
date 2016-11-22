@@ -14,9 +14,31 @@ require_once File::build_path(array('model', 'ModelProduct.php'));
  */
 class ControllerProduct {
 
+    protected static $object = 'product';
+
+    public static function viewPanier() {
+        $view = 'displayPanier';
+        $controller = 'product';
+        $pagetitle = 'Description du panier';
+        require File::build_path(array('view', 'view.php'));
+    }
+
+    public static function ajoutPanier() {
+        $label = $_GET['label'];
+        $price = $_GET['price'];
+        Panier::ajoutArticle($label, $price);
+        self::viewPanier();
+    }
+
+    public static function supprimerPanier() {
+        $label = $_GET['label'];
+        Panier::supprimerArticle($label);
+        self::viewPanier();
+    }
+
     public function read() {
         $label = $_GET['label'];
-        $p = ModelProduct::getProductByLabel($label);
+        $p = ModelProduct::select($label);
         $view = 'displayProduct';
         $controller = 'product';
         $pagetitle = 'Description produit ' . $label;
@@ -24,7 +46,7 @@ class ControllerProduct {
     }
 
     public function readAll() {
-        $tab_p = ModelProduct::getAllProduct();
+        $tab_p = ModelProduct::selectAll();
         $view = 'displayAllProduct';
         $controller = 'product';
         $pagetitle = 'Description des produits';
@@ -33,11 +55,53 @@ class ControllerProduct {
     }
 
     public function create() {
-        $view = 'createProduct';
+        $view = 'updateProduct';
         $controller = 'product';
         $pagetitle = 'Création de produit';
 
+        $cerise = "create";
+
         require File::build_path(array('view', 'view.php'));
+    }
+
+    public function udpate() {
+        $label = $_GET['label'];
+        $p = ModelProduct::select($label);
+
+        $cerise = "update";
+
+        $view = 'updateProduct';
+        $controller = 'product';
+        $pagetitle = 'Modification d\' produit';
+
+        require File::build_path(array('view', 'view.php'));
+    }
+
+    public function updated() {
+        $pId = $_POST['idP'];
+        $pLabel = $_POST['label'];
+        $pPrice = $_POST['price'];
+        $pSDesc = $_POST['shortDesc'];
+        $pCDesc = $_POST['completeDesc'];
+
+        $data = array(
+            'idProduct' => $pId,
+            'label' => $pLabel,
+            'price' => $pPrice,
+            'shortDesc' => $pSDesc,
+            'completeDesc' => $pCDesc
+        );
+
+        $controller = 'product';
+        if (ModelProduct::update($data)) {
+            $view = "displayAllProduct";
+            $pagetitle = 'Modification d\' produit';
+            $tab_p = ModelProduct::selectAll();
+            require FILE::build_path(array('view', 'view.php'));
+        } else {
+            $view = "error";
+            self::readAll();
+        }
     }
 
     public function created() {
@@ -48,47 +112,41 @@ class ControllerProduct {
         $pSDesc = $_POST['shortDesc'];
         $pCDesc = $_POST['completeDesc'];
 
+        $data = array(
+            'idProduct' => $pId,
+            'label' => $pLabel,
+            'price' => $pPrice,
+            'shortDesc' => $pSDesc,
+            'completeDesc' => $pCDesc
+        );
 
-        $p = new ModelProduct($pId, $pLabel, $pPrice, $pSDesc, $pCDesc);
+
 
         /* var_dump($p);
           echo "<br>"; */
-        $p->save();
+        if (ModelProduct::save($data)) {
+            $view = 'createdProduct';
+            $controller = 'product';
+            $pagetitle = 'Produit créé';
 
-        $view = 'createdProduct';
-        $controller = 'product';
-        $pagetitle = 'Produit créé';
-
-        require File::build_path(array('view', 'view.php'));
+            require File::build_path(array('view', 'view.php'));
+        }else{
+         
+        }
     }
-    
-    public function delete(){
+
+    public function delete() {
         $id = $_GET['idProduct'];
-        
+
         $p = ModelProduct::delete($id);
-        
+
         $view = 'deleteProduct';
         $controller = 'product';
         $pagetitle = 'Produit supprimé';
-        
+
         require File::build_path(array('view', 'view.php'));
     }
 
-    public function modify(){
-        $label = $_GET['label'];
-        $p = ModelProduct::getProductByLabel($label);
-        
-        $view = 'modifyProduct';
-        $controller = 'product';
-        $pagetitle = 'Modification d\' produit';
-        
-        require File::build_path(array('view', 'view.php'));
-    }
-    
-    public function modified(){
-        
-        
-    }
 }
 
 ?>

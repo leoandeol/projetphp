@@ -141,3 +141,8 @@ main .readAll div.detail{
     color:black;
     text-align: center;
 }
+
+body main form textarea{
+    text-align: left;
+
+}

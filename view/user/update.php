@@ -29,13 +29,10 @@
         <input type="text" name="mail" for="mail"/>
     </p>
     <p>
-        <label for="bDate">date de naissance</label>
+        <label for="bDate">date de </label>
         <input type="date" name="birthDate" for="bDate"/>
-    </p>    
-    <p>
-        <label for="isAd">isAdmin</label>
-        <input type="checkbox" name="isAdmin" for="isAd"/>
     </p>
+    <?php echo $checkBoxAdmin; ?>
     <p>
         <input type="submit" value="Submit"/>
     </p>

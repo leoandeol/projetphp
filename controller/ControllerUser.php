@@ -4,8 +4,21 @@ require_once File::build_path(array('model', 'ModelUser.php'));
 
 class ControllerUser {
 
+    private $checkBoxAdmin;
+
+    public function setCheckBox() {
+        if (Session::is_admin() && Session::is_connected()) {
+            $checkBoxAdmin = '<p>
+                         <label for="isAd">isAdmin</label>
+                         <input type="checkbox" name="isAdmin" for="isAd"/>
+                         </p>';
+        } else {
+            $checkBox = '';
+        }
+    }
+
     public function read() {
-        $id = $_GET['idUser'];
+        $id = $_GET['nickName'];
         $user = ModelUser::getUserById($id);
         $view = 'displayUser';
         $controller = 'user';
@@ -36,10 +49,9 @@ class ControllerUser {
     }
 
     public function registered() {
-        //TODO comparer les 2 mots de passes + verifier si utilisateur existe deja
-        if(!filter_var($_POST['email'],FILTER_VALIDATE_EMAIL))
-        {
-            //do smthing if bad mail
+//TODO comparer les 2 mots de passes + verifier si utilisateur existe deja
+        if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+//do smthing if bad mail
         }
         $hashpass = Security::encrypt($_POST['password']);
         $nonce = Security::generateRandomHex();
@@ -63,22 +75,22 @@ class ControllerUser {
     }
 
     public function connected() {
-        // TODO cookies And view connected
+// TODO cookies And view connected
         $hashpass = Security::encrypt($_POST['password']);
         $user = new ModelUser();
         $user->connect($_POST['nickname'], $hashpass);
         if ($user == false) {
-            $view = 'error';
+            $this->error();
         } else {
-            $view = 'connected';    
+            $view = 'connected';
             $_SESSION['login'] = $_POST['nickname'];
             $_SESSION['admin'] = Session::is_admin();
             Session::connect();
         }
         $controller = 'user';
         $pagetitle = 'Connecté';
-        require File::build_path(array('view','view.php'));
-    } 
+        require File::build_path(array('view', 'view.php'));
+    }
 
     public function disconnect() {
         session_destroy();
@@ -90,18 +102,42 @@ class ControllerUser {
     }
 
     public function update() {
-        $view = 'update';
-        $controller = 'user';
-        $pagetitle = 'Update';
-        require File::build_path(array('view','view.php'));        
-    }
-    
-    public function updated() {
-        if(!isset($_POST['isAdmin'])){
-            $_POST['isAdmin']='false';
-        } else{
-            $_POST['isAdmin']='true';
+        if (Session::is_connected()) {
+            $this->setCheckBox();
+            $view = 'update';
+            $pagetitle = 'Update';
+            $controller = 'user';
+            require File::build_path(array('view', 'view.php'));
+        } else {
+            $this->error();
         }
+    }
+
+    public function updated() {
+        if (Session::is_connected()) {
+            if (!isset($_POST['isAdmin'])) {
+                $_POST['isAdmin'] = 'false';
+            } else {
+                $_POST['isAdmin'] = 'true';
+            }
+            
+            $data = array(
+                'lastName' => $_POST['lastName'],
+                'firstName' => $_POST['firstName'],
+                'nickName' => $_POST['nickName'],
+                'password' => $_POST['newPassword'],
+                'oldPass' => $_POST['oldPassword'],
+                'confPass' => $_POST['confPassword'],
+                'mail' => $_POST['mail'],
+                'birthDate' => $_POST['birthDate'],
+                'isAdmin' => $_POST['isAdmin']
+            );
+            
+            
+        } else {
+            $this->error();
+        }
+<<<<<<< HEAD
         $data = array (
             'lastName' => $_POST['lastName'],
             'firstName'=> $_POST['firstName'],
@@ -121,8 +157,15 @@ class ControllerUser {
         $login = $_GET['login'];
         $nonce = $_GET['nonce'];
         $success = $user->validate($login,$nonce);
+=======
+
+        function validate() {
+            $login = $_GET['login'];
+            $nonce = $_GET['nonce'];
+        }
+
+>>>>>>> 9bec34a2ed96c95a6b2107c8668f596261736047
     }
-    
 }
 ?>
 
