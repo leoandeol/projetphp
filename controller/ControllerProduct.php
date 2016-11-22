@@ -16,6 +16,11 @@ class ControllerProduct {
 
     protected static $object = 'product';
 
+     
+    //###Action du panier
+    
+    
+    
     public static function viewPanier() {
         $view = 'displayPanier';
         $controller = 'product';
@@ -36,9 +41,14 @@ class ControllerProduct {
         self::viewPanier();
     }
 
+    
+    //###Action des produits
+    
+    
     public function read() {
         $label = $_GET['label'];
         $p = ModelProduct::select($label);
+        
         $view = 'displayProduct';
         $controller = 'product';
         $pagetitle = 'Description produit ' . $label;
@@ -120,10 +130,6 @@ class ControllerProduct {
             'completeDesc' => $pCDesc
         );
 
-
-
-        /* var_dump($p);
-          echo "<br>"; */
         if (ModelProduct::save($data)) {
             $view = 'createdProduct';
             $controller = 'product';
@@ -146,6 +152,11 @@ class ControllerProduct {
 
         require File::build_path(array('view', 'view.php'));
     }
+    
+    
+     
+    //###Pour les options
+    
 
 }
 

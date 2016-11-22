@@ -34,7 +34,10 @@ main {
     display:flex;
     flex-wrap:wrap;
     align-items:stretch;
+    
+    flex-direction:column;
 }
+
 
 nav {
     width:100%;
