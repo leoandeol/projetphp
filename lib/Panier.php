@@ -2,19 +2,21 @@
 
 class Panier {
 
-    public static function creerPanier() {
+    public static function createPanier() {
         
         if(!isset($_SESSION['panier'])){
-            $_SESSION['panier']=array();
-            $_SESSION['panier']['label']=array();
-            $_SESSION['panier']['price']=array();
-            $_SESSION['panier']['verrou']=false;
+            
+            $_SESSION['panier']=array(
+                'label' => array(),
+                'price' => array(),
+                'verroy' => false
+            );
         }
         return true;
     }
 
-    public static function ajoutArticle($label,$price){
-        if(self::creerPanier() && !self::is_verouille()){
+    public static function addArticle($label,$price){
+        if(self::createPanier() && !self::is_verouille()){
             $exist = in_array($label, $_SESSION['panier']['label']);
             //si le produit existe on ne fait rien
             if($exist){
@@ -30,15 +32,15 @@ class Panier {
         }
     }
 
-    public static function supprimerArticle($label){
-        if(self::creerPanier() && !self::is_verouille()){
+    public static function deleteArticle($label){
+        if(self::createPanier() && !self::is_verouille()){
             $panierTmp = array(
                 'label'=> array(),
                 'price' => array(),
                 'verrou' => $_SESSION['panier']['verrou']
             );
 
-            for($i = 0; $i < self::compterArticles();$i++){
+            for($i = 0; $i < self::countArticles();$i++){
                 if($_SESSION['panier']['label'][$i] != $label){
                     array_push( $panierTmp['label'],$_SESSION['panier']['label'][$i]);
                     array_push( $panierTmp['price'],$_SESSION['panier']['price'][$i]);
@@ -57,8 +59,9 @@ class Panier {
             return false;
         }
     }
-    public static function compterArticles(){
-        if(self::creerPanier()){
+    
+    public static function countArticles(){
+        if(self::createPanier()){
             return count($_SESSION['panier']['label']);
         }
         else{
@@ -66,10 +69,10 @@ class Panier {
         }
     }
 
-    public static function montantGlobal(){
-        if(self::creerPanier()){
+    public static function totalPrice(){
+        if(self::createPanier()){
             $sum = 0;
-            for($i = 0; $i < self::compterArticles(); $i++){
+            for($i = 0; $i < self::countArticles(); $i++){
                 $sum += $_SESSION['panier']['price'][$i];
             }
             return $sum;

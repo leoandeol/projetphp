@@ -100,23 +100,29 @@ class Model {
             $table_name = $table_name . "s";
             $primary_key = static::$primary;
 
-            if ($table_name = 'Products') {
+            if ($table_name == 'Products') {
                 $primary_key = 'label';
             }
+            if($table_name == 'Options'){
+                $primary_key = 'name';
+            }
 
-            $sql = "SELECT * FROM Products WHERE $primary_key=:p";
+            $sql = "SELECT * FROM $table_name WHERE $primary_key=:p;";
 
             $req_prep = Model::$pdo->prepare($sql);
 
             $values = array(
                 "p" => $data
             );
-
+            
             $req_prep->execute($values);
 
-            $req_prep->setFetchMode(PDO::FETCH_CLASS, 'ModelProduct');
+
+            $req_prep->setFetchMode(PDO::FETCH_CLASS, $class_name);
             $tab_p = $req_prep->fetchAll();
 
+           
+            
             if (empty($tab_p)) {
                 return false;
             }
