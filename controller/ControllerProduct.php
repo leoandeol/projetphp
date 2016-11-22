@@ -1,6 +1,7 @@
 <?php
 
 require_once File::build_path(array('model', 'ModelProduct.php'));
+require_once File::build_path(array('model', 'ModelOption.php'));
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -41,6 +42,21 @@ class ControllerProduct {
         self::viewPanier();
     }
 
+        
+     
+    //###Pour les options
+    
+     public function readOption() {
+        $label = $_GET['label'];
+        $p = ModelOption::select($label);
+        
+        $view = 'displayOption';
+        $controller = 'product';
+        $pagetitle = 'Description option ' . $label;
+        require File::build_path(array('view', 'view.php'));
+    }
+  
+    
     
     //###Action des produits
     
@@ -48,6 +64,7 @@ class ControllerProduct {
     public function read() {
         $label = $_GET['label'];
         $p = ModelProduct::select($label);
+        
         
         $view = 'displayProduct';
         $controller = 'product';
@@ -153,10 +170,7 @@ class ControllerProduct {
         require File::build_path(array('view', 'view.php'));
     }
     
-    
-     
-    //###Pour les options
-    
+
 
 }
 

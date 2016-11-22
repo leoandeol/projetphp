@@ -67,6 +67,25 @@ class ModelProduct extends Model {
             $this->completeDesc = $cd;
         }
     }
+    
+    public function countOption(){
+        try {
+            $sql = "SELECT COUNT(*) FROM Products P JOIN Options O ON O.idProduct = P.idProduct WHERE P.idProduct=:id";
+            $req_prep = Model::$pdo->prepare($sql);
+
+            $values = array(
+            "id" => $this->idProduct
+            );
+
+            $nb = $req_prep->execute($values);
+           
+            
+            return $nb;
+          } catch (Exception $e) {
+             return false;
+            }
+      }
+    }
 
     /*
       public function getProductByLabel($label) {
@@ -175,6 +194,5 @@ class ModelProduct extends Model {
       return false;
       }
       } */
-}
 ?>
 
