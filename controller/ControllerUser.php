@@ -18,20 +18,28 @@ class ControllerUser {
     }
 
     public function read() {
-        $id = $_GET['nickName'];
-        $user = ModelUser::getUserById($id);
-        $view = 'displayUser';
-        $controller = 'user';
-        $pagetitle = 'Description';
-        require File::build_path(array('view', 'view.php'));
+        if(Session::is_admin() && Session::is_connected()){
+            $id = $_GET['nickName'];
+            $user = ModelUser::getUserById($id);
+            $view = 'displayUser';
+            $controller = 'user';
+            $pagetitle = 'Description';
+            require File::build_path(array('view', 'view.php'));
+        }else{
+            ControllerUser::error();
+        }
     }
 
     public function readAll() {
-        $tab_user = ModelUser::getAllUser();
-        $view = 'displayAllUser';
-        $controller = 'user';
-        $pagetitle = 'Description';
-        require File::build_path(array('view', 'view.php'));
+        if(Session::is_admin() && Session::is_connected()){
+            $tab_user = ModelUser::getAllUser();
+            $view = 'displayAllUser';
+            $controller = 'user';
+            $pagetitle = 'Description';
+            require File::build_path(array('view', 'view.php'));
+        }else{
+            ControllerUser::error();
+        }
     }
 
     public function error() {
@@ -80,7 +88,7 @@ class ControllerUser {
         $user = new ModelUser();
         $user->connect($_POST['nickname'], $hashpass);
         if ($user == false) {
-            $this->error();
+            ControllerUser::error();
         } else {
             $view = 'connected';
             $_SESSION['login'] = $_POST['nickname'];
@@ -108,7 +116,7 @@ class ControllerUser {
             $controller = 'user';
             require File::build_path(array('view', 'view.php'));
         } else {
-            $this->error();
+            ControllerUser::error();
         }
     }
 
@@ -134,14 +142,13 @@ class ControllerUser {
             
             
         } else {
-            $this->error();
+            ControllerUser::error();
         }
     }
 
     function validate() {
-            $login = $_GET['login'];
-            $nonce = $_GET['nonce'];
-        }
+        $login = $_GET['login'];
+        $nonce = $_GET['nonce'];
     }
 }
 ?>
