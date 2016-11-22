@@ -4,40 +4,38 @@ require_once File::build_path(array('model', 'ModelUser.php'));
 
 class ControllerUser {
 
-    private $checkBoxAdmin;
-
     public function setCheckBox() {
         if (Session::is_admin() && Session::is_connected()) {
-            $checkBoxAdmin = '<p>
-                         <label for="isAd">isAdmin</label>
-                         <input type="checkbox" name="isAdmin" for="isAd"/>
-                         </p>';
+            return '<p>
+                    <label for="isAd">isAdmin</label>
+                    <input type="checkbox" name="isAdmin" for="isAd"/>
+                    </p>';
         } else {
-            $checkBox = '';
+            return '';
         }
     }
 
     public function read() {
-        if(Session::is_admin() && Session::is_connected()){
+        if (Session::is_admin()) {
             $id = $_GET['nickName'];
-            $user = ModelUser::getUserById($id);
+            $user = ModelUser::select($id);
             $view = 'displayUser';
             $controller = 'user';
             $pagetitle = 'Description';
             require File::build_path(array('view', 'view.php'));
-        }else{
+        } else {
             ControllerUser::error();
         }
     }
 
     public function readAll() {
-        if(Session::is_admin() && Session::is_connected()){
-            $tab_user = ModelUser::getAllUser();
+        if (Session::is_admin() && Session::is_connected()) {
+            $tab_user = ModelUser::selectAll();
             $view = 'displayAllUser';
             $controller = 'user';
             $pagetitle = 'Description';
             require File::build_path(array('view', 'view.php'));
-        }else{
+        } else {
             ControllerUser::error();
         }
     }
@@ -65,9 +63,9 @@ class ControllerUser {
         $nonce = Security::generateRandomHex();
         $user = new ModelUser($_POST['nickname'], $hashpass, $_POST['firstname'], $_POST['lastname'], $_POST['email'], $_POST['birthdate'], 0, $nonce);
         $user->save();
-        
+
         //MAIL
-        $mail="<!DOCTYPE html><body><a href=\"http://infolimon.iutmontp.univ-montp2.fr/~andeoll/projetphp/index.php?action=validate&controller=user&login=".$_POST['nickname']."&nonce=$nonce\">pls click link</a></body>";
+        $mail = "<!DOCTYPE html><body><a href=\"http://infolimon.iutmontp.univ-montp2.fr/~andeoll/projetphp/index.php?action=validate&controller=user&login=" . $_POST['nickname'] . "&nonce=$nonce\">pls click link</a></body>";
         mail($_POST['email'], "Please confirm your email", $mail);
         $view = 'registered';
         $controller = 'user';
@@ -85,19 +83,22 @@ class ControllerUser {
     public function connected() {
 // TODO cookies And view connected
         $hashpass = Security::encrypt($_POST['password']);
-        $user = new ModelUser();
-        $user->connect($_POST['nickname'], $hashpass);
-        if ($user == false) {
-            ControllerUser::error();
-        } else {
+        $user = ModelUser::connect($_POST['nickname'], $hashpass);
+        if ($user != NULL) {
             $view = 'connected';
-            $_SESSION['login'] = $_POST['nickname'];
-            $_SESSION['admin'] = Session::is_admin();
+            $controller = 'user';
+            $pagetitle = 'Connecté';
+            $_SESSION['login'] = $user->getNickName();
+            if ($user->getIsAdmin() == 1) {
+                $_SESSION['admin'] = 1;
+            } else {
+                $_SESSION['admin'] = 0;
+            }
             Session::connect();
+            require File::build_path(array('view', 'view.php'));
+        } else {
+            ControllerUser::error();
         }
-        $controller = 'user';
-        $pagetitle = 'Connecté';
-        require File::build_path(array('view', 'view.php'));
     }
 
     public function disconnect() {
@@ -111,6 +112,7 @@ class ControllerUser {
 
     public function update() {
         if (Session::is_connected()) {
+            $checkBoxAdmin = ControllerUser::setCheckBox();
             $view = 'update';
             $pagetitle = 'Update';
             $controller = 'user';
@@ -127,7 +129,6 @@ class ControllerUser {
             } else {
                 $_POST['isAdmin'] = 'true';
             }
-            
             $data = array(
                 'lastName' => $_POST['lastName'],
                 'firstName' => $_POST['firstName'],
@@ -139,8 +140,7 @@ class ControllerUser {
                 'birthDate' => $_POST['birthDate'],
                 'isAdmin' => $_POST['isAdmin']
             );
-            
-            
+            ModelUser::update($data);
         } else {
             ControllerUser::error();
         }
@@ -150,7 +150,8 @@ class ControllerUser {
         $login = $_GET['login'];
         $nonce = $_GET['nonce'];
     }
+
 }
 ?>
 
-    
+
