@@ -62,7 +62,7 @@ class Model {
         }
     }
 
-    public function selectAll() {
+    public static function selectAll() {
         try {
 
             $table_name = ucfirst(static::$object);

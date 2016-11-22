@@ -20,6 +20,28 @@ echo <<<EOT
         <div class="completeDesc">$pCDesc</div>     
         <h1> $nbOption </h1>
 EOT;
+
+
+if ($nbOption != 0) {
+    echo "<form method = \"post\" action = \"index.php\">";
+    foreach($o as $object) {
+        $pIdO = htmlspecialchars($object->getId());
+        $pNameO = htmlspecialchars($object->getName());
+        $pPriceO = htmlspecialchars($object->getPrice());
+        $pDescO = htmlspecialchars($object->getDescription());
+        
+        echo <<<EOT
+            <fieldset style="margin:5px;">
+                <div class="id">ID : $pIdO</div>
+                <div class="label">Nom : $pNameO</div>
+                <div class="price">Prix : $pPriceO</div>
+                <div class="completeDesc">$pDescO</div>   
+            </fieldset>
+        
+EOT;
+    }
+}
+
 if (Session::is_connected()) {
     echo "<a href=\"index.php?action=addPanier&controller=product&label=$secureLabel&price=$securePrice\"><div class=\"redirect\" style=\"border:1px solid black;text-align:center;background-color:blue;\">Ajouter au panier</div></a>";
 }

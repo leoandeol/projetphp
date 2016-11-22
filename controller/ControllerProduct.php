@@ -64,7 +64,7 @@ class ControllerProduct {
     public function read() {
         $label = $_GET['label'];
         $p = ModelProduct::select($label);
-        
+        $o = $p->selectAllOption();
         
         $view = 'displayProduct';
         $controller = 'product';
@@ -74,6 +74,7 @@ class ControllerProduct {
 
     public function readAll() {
         $tab_p = ModelProduct::selectAll();
+        
         $view = 'displayAllProduct';
         $controller = 'product';
         $pagetitle = 'Description des produits';

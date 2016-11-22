@@ -67,132 +67,151 @@ class ModelProduct extends Model {
             $this->completeDesc = $cd;
         }
     }
-    
-    public function countOption(){
+
+    public function countOption() {
         try {
             $sql = "SELECT COUNT(*) FROM Products P JOIN Options O ON O.idProduct = P.idProduct WHERE P.idProduct=:id";
             $req_prep = Model::$pdo->prepare($sql);
 
             $values = array(
-            "id" => $this->idProduct
+                "id" => $this->idProduct
             );
 
             $nb = $req_prep->execute($values);
-           
-            
+
+
             return $nb;
-          } catch (Exception $e) {
-             return false;
-            }
-      }
+        } catch (Exception $e) {
+            return false;
+        }
     }
 
-    /*
-      public function getProductByLabel($label) {
-      try {
-      $sql = "SELECT * FROM Products WHERE label=:n";
+    public function selectAllOption() {
+        try {
+            $sql = "SELECT * FROM Products P JOIN Options O ON O.idProduct = P.idProduct WHERE P.idProduct=:id";
+            $req_prep = Model::$pdo->prepare($sql);
 
-      $req_prep = Model::$pdo->prepare($sql);
+            $values = array(
+                "id" => $this->idProduct
+            );
 
-      $values = array(
-      "n" => $label
-      );
+            $req_prep->execute($values);
+            $req_prep->setFetchMode(PDO::FETCH_CLASS, 'ModelOption');
 
-      $req_prep->execute($values);
+            return $req_prep->fetchAll();
+        } catch (Exception $e) {
+            return false;
+        }
+    }
 
-      $req_prep->setFetchMode(PDO::FETCH_CLASS, 'ModelProduct');
-      $tab_p = $req_prep->fetchAll();
+}
 
-      if (empty($tab_p)) {
-      return false;
-      }
-      return $tab_p[0];
-      } catch (PDOException $e) {
-      if (Conf::getDebug()) {
-      echo $e->getMessage(); // affiche un message d'erreur
-      } else {
-      echo 'Une erreur est survenue <a href=""> retour a la page d\'accueil </a>';
-      }
-      die();
-      }
-      }
-      public function save() {
-      try {
-      $sql = "INSERT INTO Products(idProduct, label, price, shortDesc, completeDesc) VALUES(:id, :l, :p, :sd, :cd);";
+/*
+  public function getProductByLabel($label) {
+  try {
+  $sql = "SELECT * FROM Products WHERE label=:n";
 
-      //préparation de la requête
-      $req_prep = Model::$pdo->prepare($sql);
+  $req_prep = Model::$pdo->prepare($sql);
 
+  $values = array(
+  "n" => $label
+  );
 
-      $values = array(
-      "id" => (int) $this->idProduct,
-      "l" => $this->label,
-      "p" => (int) $this->price,
-      "sd" => $this->shortDesc,
-      "cd" => $this->completeDesc
-      );
+  $req_prep->execute($values);
 
-      return $req_prep->execute($values);
-      } catch (PDOException $e) {
-      if ($e->getCode() == 23000) {
-      echo '<br>Le produit existe déjà. ';
-      return false;
-      } else {
-      echo $e->getMessage();
-      echo '<br>Une erreur est survenue lors de la sauvegarde du produit. ';
-      }
-      }
-      }
-      public function delete($idProduct) {
-      try {
-      $sql = "DELETE FROM Products WHERE idProduct=:id";
-      $req_prep = Model::$pdo->prepare($sql);
+  $req_prep->setFetchMode(PDO::FETCH_CLASS, 'ModelProduct');
+  $tab_p = $req_prep->fetchAll();
 
-      $values = array(
-      "id" => $idProduct
-      );
+  if (empty($tab_p)) {
+  return false;
+  }
+  return $tab_p[0];
+  } catch (PDOException $e) {
+  if (Conf::getDebug()) {
+  echo $e->getMessage(); // affiche un message d'erreur
+  } else {
+  echo 'Une erreur est survenue <a href=""> retour a la page d\'accueil </a>';
+  }
+  die();
+  }
+  }
+  public function save() {
+  try {
+  $sql = "INSERT INTO Products(idProduct, label, price, shortDesc, completeDesc) VALUES(:id, :l, :p, :sd, :cd);";
 
-      $req_prep->execute($values);
-
-      return true;
-      } catch (Exception $e) {
-      return false;
-      }
-      }
-      public function getAllProduct() {
-      try {
-      $sql = "SELECT * FROM Products;";
-
-      $req_prep = Model::$pdo->query($sql);
-
-      $req_prep->setFetchMode(PDO::FETCH_CLASS, 'ModelProduct');
-
-      $tab_p = $req_prep->fetchAll();
+  //préparation de la requête
+  $req_prep = Model::$pdo->prepare($sql);
 
 
-      if (empty($tab_p)) {
-      return false;
-      }
-      return $tab_p;
-      } catch (PDOException $e) {
-      if (Conf::getDebug()) {
-      echo $e->getMessage(); // affiche un message d'erreur
-      } else {
-      echo 'Une erreur est survenue <a href=""> retour a la page d\'accueil </a>';
-      }
-      die();
-      }
-      }
-      public function update($data){
-      try{
-      $sql = "UPDATE Products SET label=:label, price=:price, shortDesc=:shortDesc, completeDesc=:completeDesc WHERE idProduct=:idProduct;";
-      $req_prep = Model::$pdo->prepare($sql);
-      $req_prep->execute($data);
+  $values = array(
+  "id" => (int) $this->idProduct,
+  "l" => $this->label,
+  "p" => (int) $this->price,
+  "sd" => $this->shortDesc,
+  "cd" => $this->completeDesc
+  );
 
-      return true;
-      } catch (PDOException $e) {
-      return false;
-      }
-      } */
+  return $req_prep->execute($values);
+  } catch (PDOException $e) {
+  if ($e->getCode() == 23000) {
+  echo '<br>Le produit existe déjà. ';
+  return false;
+  } else {
+  echo $e->getMessage();
+  echo '<br>Une erreur est survenue lors de la sauvegarde du produit. ';
+  }
+  }
+  }
+  public function delete($idProduct) {
+  try {
+  $sql = "DELETE FROM Products WHERE idProduct=:id";
+  $req_prep = Model::$pdo->prepare($sql);
+
+  $values = array(
+  "id" => $idProduct
+  );
+
+  $req_prep->execute($values);
+
+  return true;
+  } catch (Exception $e) {
+  return false;
+  }
+  }
+  public function getAllProduct() {
+  try {
+  $sql = "SELECT * FROM Products;";
+
+  $req_prep = Model::$pdo->query($sql);
+
+  $req_prep->setFetchMode(PDO::FETCH_CLASS, 'ModelProduct');
+
+  $tab_p = $req_prep->fetchAll();
+
+
+  if (empty($tab_p)) {
+  return false;
+  }
+  return $tab_p;
+  } catch (PDOException $e) {
+  if (Conf::getDebug()) {
+  echo $e->getMessage(); // affiche un message d'erreur
+  } else {
+  echo 'Une erreur est survenue <a href=""> retour a la page d\'accueil </a>';
+  }
+  die();
+  }
+  }
+  public function update($data){
+  try{
+  $sql = "UPDATE Products SET label=:label, price=:price, shortDesc=:shortDesc, completeDesc=:completeDesc WHERE idProduct=:idProduct;";
+  $req_prep = Model::$pdo->prepare($sql);
+  $req_prep->execute($data);
+
+  return true;
+  } catch (PDOException $e) {
+  return false;
+  }
+  } */
 ?>
 
