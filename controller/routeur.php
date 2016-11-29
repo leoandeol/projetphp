@@ -2,6 +2,7 @@
 
 require_once File::build_path(array('controller','ControllerUser.php'));
 require_once File::build_path(array('controller','ControllerProduct.php'));
+require_once File::build_path(array('controller','ControllerDefault.php'));
 require_once FIle::build_path(array('lib', 'Security.php'));
 require_once FIle::build_path(array('lib', 'Session.php'));
 require_once FIle::build_path(array('lib', 'Panier.php'));
@@ -11,14 +12,14 @@ if(isset($_GET['action'])){
 }else if(isset($_POST['action'])){
     $action = $_POST['action'];
 } else {
-    $action = 'readAll';
+    $action = 'welcome';
 }
 if(isset($_GET['controller'])){
     $controller = $_GET['controller'];
 } else if(isset($_POST['controller'])){
     $controller = $_POST['controller'];
 } else{
-    $controller = 'user';
+    $controller = 'default';
 }
 
 $controllerClass = 'Controller' . ucfirst($controller);
