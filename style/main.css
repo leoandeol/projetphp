@@ -25,11 +25,20 @@ header,footer{
     background-color:green;
 }
 
+footer{
+    background-color:#1B1B1B;
+    display:flex;
+    flex-direction:row;
+    align-items:center;
+    justify-content:center;
+}
+
 main {
     display:flex;
     flex:1;
     padding:10px;
-    background-image:url('../res/background.jpg');
+    /*background-image:url('../res/background.jpg');*/
+    background-color:#2B2B2B;
     color:white;
     flex-wrap:wrap;
     align-items:stretch;    

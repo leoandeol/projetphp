@@ -21,6 +21,14 @@ class ControllerDefault {
         require File::build_path(array('view', 'view.php'));
     }
 
+    public function error($e) {
+        $error = $e;
+        $view = 'error';
+        $controller = 'default';
+        $pagetitle = 'Erreur';
+        require File::build_path(array('view', 'view.php'));
+    }
+
 }
 
 ?>
