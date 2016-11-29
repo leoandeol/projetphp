@@ -29,8 +29,7 @@ if(!(class_exists($controllerClass))){
     ControllerDefault::error("FATAL ERROR");
 }else{
     if(!(in_array($action,  get_class_methods($controllerClass)))){
-        $error = "La fonction que vous voulez utiliser n'existe pas";
-        ControllerDefault::error();
+        ControllerDefault::error("La fonction que vous voulez utiliser n'existe pas");
     }else{
         $controllerClass::$action();
     }    
