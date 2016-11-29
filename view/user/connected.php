@@ -1,5 +1,5 @@
 <?php
 
-    echo "Connexion réussie";
+    echo "<p>Bonjour ".  htmlspecialchars($name)."!";
 
 ?>

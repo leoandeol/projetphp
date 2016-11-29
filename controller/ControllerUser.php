@@ -94,6 +94,7 @@ class ControllerUser {
             } else {
                 $_SESSION['admin'] = 0;
             }
+            $name = $user->getFirstName();
             Session::connect();
             require File::build_path(array('view', 'view.php'));
         } else {
