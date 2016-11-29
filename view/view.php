@@ -13,7 +13,7 @@
                 </div>
                 
                 <div class="menu-item">
-                    <a href="index.php?controller=product">Liste article</a>
+                    <a href="index.php?controller=product&action=readAll">Liste article</a>
                 </div>
                 <div class='menu-dropdown'>
                     <a href='index.php?controller=user'>Compte</a>
