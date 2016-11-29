@@ -24,8 +24,7 @@ class ControllerUser {
             $pagetitle = 'Description';
             require File::build_path(array('view', 'view.php'));
         } else {
-            $error = "Vous n'avez pas la permission pour accéder à ce contenu.";
-            ControllerUser::error();
+            ControllerDefault::error("Vous n'avez pas la permission pour accéder à ce contenu.");
         }
     }
 
@@ -37,18 +36,10 @@ class ControllerUser {
             $pagetitle = 'Description';
             require File::build_path(array('view', 'view.php'));
         } else {
-            $error = "Vous n'avez pas la permission pour accéder à ce contenu.";
-            ControllerUser::error();
+            ControllerDefault::error("Vous n'avez pas la permission pour accéder à ce contenu.");
         }
     }
-
-    public function error() {
-        $view = 'error';
-        $controller = 'user';
-        $pagetitle = 'Erreur';
-        require File::build_path(array('view', 'view.php'));
-    }
-
+    
     public function register() {
         $view = 'register';
         $controller = 'user';
@@ -108,8 +99,7 @@ class ControllerUser {
             Session::connect();
             require File::build_path(array('view', 'view.php'));
         } else {
-            $error = "FATAL ERROR";
-            ControllerUser::error();
+            ControllerDefault::error("FATAL ERROR");
         }
     }
 
@@ -130,8 +120,7 @@ class ControllerUser {
             $controller = 'user';
             require File::build_path(array('view', 'view.php'));
         } else {
-            $error = "Veuillez vous connecter.";
-            ControllerUser::error();
+            ControllerDefault::error("Veuillez vous connecter.");
         }
     }
 
@@ -173,20 +162,16 @@ class ControllerUser {
                         $controller = 'user';
                         require File::build_path(array('view', 'view.php'));
                     } else {
-                        $error = "FATAL ERROR";
-                        ControllerUser::error();
+                        ControllerDefault::error("FATAL ERROR");
                     }
                 } else {
-                    $error = "Les nouveaux mots de passe ne coïncident pas";
-                    ControllerUser::error();
+                    ControllerDefault::error("Les nouveaux mots de passe ne coïncident pas");
                 }
             } else {
-                $error = "Mot de passe actuel invalide";
-                ControllerUser::error();
+                ControllerDefault::error("Mot de passe actuel invalide");
             }
         } else {
-            $error = "Veuillez vous connecter.";
-            ControllerUser::error();
+            ControllerDefault::error("Veuillez vous connecter.");
         }
     }
 

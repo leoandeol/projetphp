@@ -131,8 +131,7 @@ class ControllerProduct {
             $tab_p = ModelProduct::selectAll();
             require FILE::build_path(array('view', 'view.php'));
         } else {
-            $error = "FATAL ERROR";
-            ControllerUser::error();
+            ControllerDefault::error("FATAL ERROR");
         }
     }
 
@@ -159,8 +158,7 @@ class ControllerProduct {
 
             require File::build_path(array('view', 'view.php'));
         }else{
-            $error = "FATAL ERROR";
-            ControllerUser::error();
+            ControllerDefault::error("FATAL ERROR");
         }
     }
 
