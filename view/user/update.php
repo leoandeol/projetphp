@@ -1,36 +1,38 @@
 <form method="POST" action="index.php">
     <input type='hidden' name='action' value='updated'>
-    <input type='hidden' name='controller' value='user'>
-    <p>
-        <label for="fName">Prénom</label>
-        <input type="text" value="<?php echo $fName; ?>" name="firstName" for="fName"/>
-    </p>
-    <p>
-        <label for="lName">Nom de famille</label>
-        <input type="text" value="<?php echo $lName; ?>" name="lastName" for="lName"/>
-    </p>
-    <p>
-        <label for="oPass">Mot de passe actuel</label>
-        <input type="text" name="oldPassword" for="oPass"/>
-    </p>
-    <p>
-        <label for="nPass">Nouveau mot de passe</label>
-        <input type="text" name="newPassword" for="nPass"/>
-    </p>
-    <p>
-        <label for="nPass2">Confirmez le mot de passe</label>
-        <input type="text" name="confPassword" for="nPass2"/>
-    </p>
-    <p>
-        <label for="mail">Mail</label>
-        <input type="text" value="<?php echo $mail; ?>" name="mail" for="mail"/>
-    </p>
-    <p>
-        <label for="bDate">Date de naissance</label>
-        <input type="date" value="<?php echo $bDate; ?>" name="birthDate" for="bDate"/>
-    </p>
-    <?php echo $checkBoxAdmin; ?>
-    <p>
-        <input type="submit" value="Submit"/>
-    </p>
+    <input type='hidden' name='controller' value='user'><div class="input">
+            <label class="input-item" for="nick_id">Pseudonyme</label>
+            <input class="input-field" type="text" placeholder="Pseudonyme" name="nickname" id="nick_id" required/>
+        </div>
+        <div class="input">
+            <label class="input-item" for="pass_id">Vieux mot de passe</label>
+            <input class="input-field" type="password" placeholder="Mot de passe" name="old_password" id="pass_id" required/>
+        </div>
+        <div class="input">
+            <label class="input-item" for="pass_id">Nouveau mot de passe</label>
+            <input class="input-field" type="password" placeholder="Mot de passe" name="password" id="pass_id" required/>
+        </div>
+        <div class="input">
+            <label class="input-item" for="pass_id2">Nouveau mot de passe bis</label>
+            <input class="input-field" type="password" placeholder="Mot de passe" name="password2" id="pass_id2" required/>
+        </div>
+        <div class="input">
+            <label class="input-item" for="lastname_id">Nom de famille</label>
+            <input class="input-field" type="text" placeholder="Ex : Marchand" name="lastname" id="lastname_id" required/>
+        </div>
+        <div class="input">
+            <label class="input-item" for="firstname_id">Prénom</label>
+            <input class="input-field" type="text" placeholder="Ex : Gérard" name="firstname" id="firstname_id" required/>
+        </div>
+        <div class="input">
+            <label class="input-item" for="email_id">Email</label>
+            <input class="input-field" type="email" placeholder="Ex : g.marchand@gmail.com" name="email" id="email_id" required/>
+        </div>
+        <div class="input">
+            <label class="input-item" for="birth_id">Date de naissance</label>
+            <input class="input-field" type="date" placeholder="28-04-89" name="birthdate" id="birth_id" required/>
+        </div>
+        <div class="input">
+            <input class="input-field" type="submit"  value="Envoyer"/>
+        </div>
 </form>
