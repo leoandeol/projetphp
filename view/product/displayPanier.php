@@ -2,7 +2,13 @@
 <?php
 
 if (Session::is_connected()) {
+    
+    
+    
     echo <<<EOT
+    <div> Panier de l'utilisateur <br>
+    <h2><a href="index.php?controller=product&action=clearPanier">Vider le panier</a></h2><br></div>
+    
 <form method="post" action="panier.php">
 <table style="width: 400px">
 	<tr>
@@ -33,7 +39,7 @@ EOT;
 				<tr>
 					<td><a href="index.php?controller=product&action=read&label=$sLabel"> $pLabel </a></td>
 					<td> $pPrice </td>
-					<td><a href="index.php?controller=product&action=supprimerPanier&label=$sLabel">XX</a></td>
+					<td><a href="index.php?controller=product&action=deleteProductPanier&label=$sLabel">XX</a></td>
 				</tr>
 EOT;
             }

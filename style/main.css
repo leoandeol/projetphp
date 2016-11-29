@@ -88,13 +88,12 @@ nav {
 
 /* #### Read*/
 
-main .read a:visited, main .read a{
+main a:visited, main a{
     color:white;
     text-decoration: none;
     text-align:right;
 }
 main .read{
-    height:350px;
     display:flex;
     flex-direction:column;
     background-color: darkslateblue;
@@ -145,4 +144,8 @@ main .readAll div.detail{
 body main form textarea{
     text-align: left;
 
+}
+
+main table{
+    color:red;
 }
