@@ -99,7 +99,9 @@ class Model {
 
             $table_name = ucfirst(static::$object);
             $class_name = 'Model' . $table_name;
+            
             $table_name = $table_name . "s";
+            
             $primary_key = static::$primary;
 
             if ($table_name == 'Products') {
@@ -166,9 +168,6 @@ class Model {
             $table_name = ucfirst(static::$object);
             $class_name = 'Model' . $table_name;
             $table_name = $table_name . "s";
-
-
-            $sql = "INSERT INTO $table_name(";
 
 
             $sql = "INSERT INTO $table_name VALUES(";

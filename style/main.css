@@ -24,12 +24,6 @@ header,footer{
     margin:0;
     display:flex;
     width:100%;
-    text-align:center;
-    background-color:green;
-    display:flex;
-    justify-content: center;
-    list-style: none;
-    list-style-type: none;
     background-color:#1B1B1B;
     margin: 0;
     padding: 0;
@@ -40,11 +34,9 @@ main {
     display:flex;
     flex:1;
     padding:10px;
-    /*background-image:url('../res/background.jpg');*/
     background-color:#2B2B2B;
-    flex-wrap:wrap;
-    align-items:stretch;    
     flex-direction:column;
+    align-items:center;
 }
 
 article {
@@ -52,11 +44,61 @@ article {
     margin: 0 auto;
 }
 
+.menu-logo {
+    display:flex;
+    align-self:flex-start;
+    align-items:center;
+    flex-basis: 250px;
+    flex-direction:row;
+    height:100%;
+}
+.menu-search {
+    margin:0;
+    display:flex;
+    align-self:center;
+    align-items:center;
+    flex-direction:row;
+    flex-basis: 250px;
+    height:100%;
+    flex:1;
+}
+
+.menu-logo-content {
+    flex:1;
+    padding:auto;
+}
+
+.menu-logo-img {
+    width:50px;
+}
+
+.menu-buttons {
+    display:flex;
+    flex-direction:row;
+    justify-content:flex-end;
+}
+
 .menu-item, .menu-dropdown {
     display:flex;
     flex-basis: 160px;
     flex-direction:column;
     border-right: 2px solid #5a5a5a;
+    align-self:flex-end;
+}
+
+@keyframes button-menu {
+    from {
+        background-color:#1B1B1B;
+    }
+    to {
+        background-color:#4A4A4A;
+    }
+}
+
+.menu-item:hover, .menu-dropdown:hover {
+    animation-name: button-menu;
+    animation-duration: 0.8s;
+    background-color:#4A4A4A;
 }
 
 
@@ -92,7 +134,65 @@ article {
     color: black;
 }
 
-.menu-dropdown-content a:hover {background-color: #f1f1f1}
+.menu-dropdown-content a:hover {
+
+    animation-name: button-menu-2;
+    animation-duration: 0.8s;
+    background-color: #dcdcdc;
+}
+
+@keyframes button-menu-2 {
+    from {
+        background-color:#f9f9f9;
+    }
+    to {
+        background-color: #dcdcdc;
+    }
+}
+
+/* INPUTS */
+
+.input {
+    display:flex;
+    margin-bottom: 1em;
+}
+
+.input-search {
+    display:flex;
+    width:100%
+}
+
+.input-field {
+    flex:1;
+}
+
+.input-field:not(:first-child) {
+    border-left: 0;
+}
+.input-field:not(:last-child) {
+    border-right: 0;
+}
+
+.input-item {
+    background-color: rgba(147, 128, 108, 0.1);
+    color: #AAAAAA;
+    font: inherit;
+    font-weight: normal;
+}
+
+.input-field,
+.input-item {
+  border: 1px solid rgba(147, 128, 108, 0.25);
+  padding: 0.5em 0.75em;
+}
+.input-field:first-child,
+.input-item:first-child {
+  border-radius: 2px 0 0 2px;
+}
+.input-field:last-child,
+.input-item:last-child {
+  border-radius: 0 2px 2px 0;
+}
 
 /* #### Read*/
 
@@ -135,7 +235,7 @@ main .read div.name{
 
 main .readAll{
     border:1px solid white;
-    
+
     margin:10px;
     padding:5px;
 }

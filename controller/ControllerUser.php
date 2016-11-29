@@ -15,6 +15,19 @@ class ControllerUser {
         }
     }
 
+    public function displaySelf() {
+        if (Session::is_connected()) {
+            $id = $_SESSION['login'];
+            $user = ModelUser::select($id);
+            $view = 'displaySelf';
+            $controller = 'user';
+            $pagetitle = 'Compte';
+            require File::build_path(array('view', 'view.php'));
+        } else {
+            ControllerUser::connect();
+        }
+    }
+
     public function read() {
         if (Session::is_admin()) {
             $id = $_GET['nickName'];
@@ -39,7 +52,7 @@ class ControllerUser {
             ControllerDefault::error("Vous n'avez pas la permission pour accéder à ce contenu.");
         }
     }
-    
+
     public function register() {
         $view = 'register';
         $controller = 'user';
@@ -166,7 +179,7 @@ class ControllerUser {
                     $hashpassOk = Security::encrypt($dataNotOk['password']);
                     $dataOk = array(
                         'lastName' => $_POST['lastName'],
-                        'firstName' => $_POST['firstName'], 
+                        'firstName' => $_POST['firstName'],
                         'password' => $hashpassOk,
                         'mail' => $_POST['mail'],
                         'birthDate' => $_POST['birthDate'],
