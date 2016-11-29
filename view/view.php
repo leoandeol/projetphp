@@ -42,10 +42,12 @@ EOT;
             </nav>
         </header>
         <main>
-            <?php
-            $filepath = File::build_path(array('view', $controller, $view . ".php"));
-            require $filepath;
-            ?>
+            <article>
+                <?php
+                $filepath = File::build_path(array('view', $controller, $view . ".php"));
+                require $filepath;
+                ?>
+            </article>
         </main>
         <footer>
             <p> Team requêtes INC.</p>  

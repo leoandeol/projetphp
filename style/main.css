@@ -26,14 +26,14 @@ header,footer{
 }
 
 main {
+    display:flex;
     flex:1;
     padding:10px;
     background-image:url('../res/background.jpg');
     color:white;
-    display:flex;
     flex-wrap:wrap;
     align-items:stretch;    
-    flex-direction:row;
+    flex-direction:column;
 }
 
 
@@ -47,6 +47,11 @@ nav {
     display:flex;
     justify-content: center;
     list-style: none;
+}
+
+article {
+    max-width:50em;
+    margin: 0 auto;
 }
 
 .menu-item, .menu-dropdown {
