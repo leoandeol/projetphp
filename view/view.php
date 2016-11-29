@@ -13,7 +13,7 @@
                 </div>
                 
                 <div class="menu-item">
-                    <a href="index.php?controller=product">Liste article</a>
+                    <a href="index.php?controller=product&action=readAll">Liste article</a>
                 </div>
                 <div class='menu-dropdown'>
                     <a href='index.php?controller=user'>Compte</a>
@@ -42,10 +42,12 @@ EOT;
             </nav>
         </header>
         <main>
-            <?php
-            $filepath = File::build_path(array('view', $controller, $view . ".php"));
-            require $filepath;
-            ?>
+            <article>
+                <?php
+                $filepath = File::build_path(array('view', $controller, $view . ".php"));
+                require $filepath;
+                ?>
+            </article>
         </main>
         <footer>
             <p> Team requêtes INC.</p>  

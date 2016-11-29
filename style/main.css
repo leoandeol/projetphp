@@ -26,14 +26,14 @@ header,footer{
 }
 
 main {
+    display:flex;
     flex:1;
     padding:10px;
     background-image:url('../res/background.jpg');
     color:white;
-    display:flex;
     flex-wrap:wrap;
     align-items:stretch;    
-    flex-direction:row;
+    flex-direction:column;
 }
 
 
@@ -45,8 +45,13 @@ nav {
     overflow: hidden;
     background-color: #333;
     display:flex;
-    justify-content: flex-start;
+    justify-content: center;
     list-style: none;
+}
+
+article {
+    max-width:50em;
+    margin: 0 auto;
 }
 
 .menu-item, .menu-dropdown {
@@ -54,6 +59,11 @@ nav {
     flex-basis: 160px;
     flex-direction:column;
     border-right: 2px solid #5a5a5a;
+}
+
+
+.menu-item:first-child, .menu-dropdown:first-child {
+    border-left: 2px solid #5a5a5a;
 }
 
 .menu-dropdown-content{

@@ -14,55 +14,55 @@ class ModelUser extends Model{
     protected static $object = "user";
     protected static $primary = 'nickName';
 
-    function getPassword() {
+    public function getPassword() {
         return $this->password;
     }
 
-    function getNickName() {
+    public function getNickName() {
         return $this->nickName;
     }
 
-    function getFirstName() {
+    public function getFirstName() {
         return $this->firstName;
     }
 
-    function getLastName() {
+    public function getLastName() {
         return $this->lastName;
     }
 
-    function getMail() {
+    public function getMail() {
         return $this->mail;
     }
 
-    function getBirthDate() {
+    public function getBirthDate() {
         return $this->birthDate;
     }
 
-    function getIsAdmin() {
+    public function getIsAdmin() {
         return $this->isAdmin;
     }
 
-    function setNickName($nickName) {
+    public function setNickName($nickName) {
         $this->nickName = $nickName;
     }
 
-    function setFirstName($firstName) {
+    public function setFirstName($firstName) {
         $this->firstName = $firstName;
     }
 
-    function setLastName($lastName) {
+    public function setLastName($lastName) {
         $this->lastName = $lastName;
     }
 
-    function setMail($mail) {
+    public function setMail($mail) {
         $this->mail = $mail;
     }
 
-    function setBirthDate($birthDate) {
+    public function setBirthDate($birthDate) {
         $this->birthDate = $birthDate;
     }
 
-    function setIsAdmin($isAdmin) {
+    public function setIsAdmin($isAdmin) {
         $this->isAdmin = $isAdmin;
     }
 

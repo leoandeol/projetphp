@@ -24,6 +24,7 @@ class ControllerUser {
             $pagetitle = 'Description';
             require File::build_path(array('view', 'view.php'));
         } else {
+            $error = "Vous n'avez pas la permission pour accéder à ce contenu.";
             ControllerUser::error();
         }
     }
@@ -36,6 +37,7 @@ class ControllerUser {
             $pagetitle = 'Description';
             require File::build_path(array('view', 'view.php'));
         } else {
+            $error = "Vous n'avez pas la permission pour accéder à ce contenu.";
             ControllerUser::error();
         }
     }
@@ -102,9 +104,11 @@ class ControllerUser {
             } else {
                 $_SESSION['admin'] = 0;
             }
+            $name = $user->getFirstName();
             Session::connect();
             require File::build_path(array('view', 'view.php'));
         } else {
+            $error = "FATAL ERROR";
             ControllerUser::error();
         }
     }
@@ -126,6 +130,7 @@ class ControllerUser {
             $controller = 'user';
             require File::build_path(array('view', 'view.php'));
         } else {
+            $error = "Veuillez vous connecter.";
             ControllerUser::error();
         }
     }
@@ -168,19 +173,19 @@ class ControllerUser {
                         $controller = 'user';
                         require File::build_path(array('view', 'view.php'));
                     } else {
-                        echo "here";
+                        $error = "FATAL ERROR";
                         ControllerUser::error();
                     }
                 } else {
-                    echo "here2";
+                    $error = "Les nouveaux mots de passe ne coïncident pas";
                     ControllerUser::error();
                 }
             } else {
-                echo "here3";
+                $error = "Mot de passe actuel invalide";
                 ControllerUser::error();
             }
         } else {
-            echo "here4";
+            $error = "Veuillez vous connecter.";
             ControllerUser::error();
         }
     }
