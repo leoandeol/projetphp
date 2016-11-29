@@ -36,9 +36,13 @@ class ControllerProduct {
         self::viewPanier();
     }
 
-    public static function deletePanier() {
+    public static function deleteProductPanier() {
         $label = $_GET['label'];
         Panier::deleteArticle($label);
+        self::viewPanier();
+    }
+     public static function clearPanier() {
+        Panier::clearPanier($label);
         self::viewPanier();
     }
 

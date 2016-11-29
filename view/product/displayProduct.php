@@ -17,21 +17,26 @@ echo <<<EOT
         <div class="label">Nom : $pLabel</div>
         <div class="price">Prix : $pPrice</div>
             
-        <div class="completeDesc">$pCDesc</div>     
-        <h1> $nbOption </h1>
+        <div class="completeDesc">$pCDesc</div> 
 EOT;
 
 
 if ($nbOption != 0) {
     echo "<form method = \"post\" action = \"index.php\">";
     foreach($o as $object) {
-        $pIdO = htmlspecialchars($object->getId());
+    $pIdO = htmlspecialchars($object->getId());
         $pNameO = htmlspecialchars($object->getName());
         $pPriceO = htmlspecialchars($object->getPrice());
         $pDescO = htmlspecialchars($object->getDescription());
         
         echo <<<EOT
             <fieldset style="margin:5px;">
+EOT;
+        
+            if(Session::is_connected()){
+               echo "<input type=\"checkbox\" name=\"$pNameO\">";
+            }
+echo <<<EOT
                 <div class="id">ID : $pIdO</div>
                 <div class="label">Nom : $pNameO</div>
                 <div class="price">Prix : $pPriceO</div>
@@ -40,6 +45,7 @@ if ($nbOption != 0) {
         
 EOT;
     }
+            echo "</form>";
 }
 
 if (Session::is_connected()) {

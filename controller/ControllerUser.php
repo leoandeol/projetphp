@@ -61,8 +61,16 @@ class ControllerUser {
         }
         $hashpass = Security::encrypt($_POST['password']);
         $nonce = Security::generateRandomHex();
-        $user = new ModelUser($_POST['nickname'], $hashpass, $_POST['firstname'], $_POST['lastname'], $_POST['email'], $_POST['birthdate'], 0, $nonce);
-        $user->save();
+        $data = array('nickName' => $_POST['nickname'],
+                      'password' => $hashpass, 
+                      'firstName'=> $_POST['firstname'],
+                      'lastName' => $_POST['lastname'],
+                      'mail'     => $_POST['email'], 
+                      'birthDate'=> $_POST['birthdate'],
+                      'isAdmin'  => 0,
+                      'nonce'    => $nonce
+                );
+        $user->save($data);
 
         //MAIL
         $mail = "<!DOCTYPE html><body><a href=\"http://infolimon.iutmontp.univ-montp2.fr/~andeoll/projetphp/index.php?action=validate&controller=user&login=" . $_POST['nickname'] . "&nonce=$nonce\">pls click link</a></body>";
@@ -126,7 +134,9 @@ class ControllerUser {
     public function updated() {
         if (Session::is_connected()) {
             if (!isset($_POST['isAdmin'])) {
-                $_POST['isAdmin'] = 'false';
+                $_POST['isAdmin'] = 0;
+            } else {
+                $_POST['isAdmin'] = 1;
             }
             $dataNotOk = array(
                 'lastName' => $_POST['lastName'],
@@ -144,27 +154,34 @@ class ControllerUser {
                     $hashpassOk = Security::encrypt($dataNotOk['password']);
                     $dataOk = array(
                         'lastName' => $_POST['lastName'],
-                        'firstName' => $_POST['firstName'],
+                        'firstName' => $_POST['firstName'], 
                         'password' => $hashpassOk,
                         'mail' => $_POST['mail'],
                         'birthDate' => $_POST['birthDate'],
-                        'isAdmin' => $_POST['isAdmin']
+                        'isAdmin' => $_POST['isAdmin'],
+                        'nickName' => $_SESSION['login']
                     );
-                    if (ModelUser::update($dataOk)) {
+                    $res = ModelUser::update($dataOk);
+                    var_dump($dataOk);
+                    if ($res == TRUE) {
                         $view = 'updated';
                         $pagetitle = 'Updated';
                         $controller = 'user';
                         require File::build_path(array('view', 'view.php'));
                     } else {
+                        echo "here";
                         ControllerUser::error();
                     }
                 } else {
+                    echo "here2";
                     ControllerUser::error();
                 }
             } else {
+                echo "here3";
                 ControllerUser::error();
             }
         } else {
+            echo "here4";
             ControllerUser::error();
         }
     }

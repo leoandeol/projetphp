@@ -40,7 +40,7 @@ class Model {
 
 
             $sql = "UPDATE $table_name SET ";
-            
+
             foreach ($data as $cle => $valeur) {
                 $sql = $sql . $cle . "=:" . $cle . ", ";
             }
@@ -50,13 +50,16 @@ class Model {
             $primary_key = static::$primary;
 
             $sql = $sql . " WHERE $primary_key=:$primary_key;";
-
+            
             $req_prep = Model::$pdo->prepare($sql);
-
             $req_prep->execute($data);
             return true;
         } catch (PDOException $e) {
-
+            if (Conf::getDebug()) {
+                echo $e->getMessage(); // affiche un message d'erreur
+            } else {
+                echo 'Une erreur est survenue <a href=""> retour a la page d\'accueil </a>';
+            }
             return false;
         }
     }
@@ -87,7 +90,7 @@ class Model {
             } else {
                 echo 'Une erreur est survenue <a href=""> retour a la page d\'accueil </a>';
             }
-            die();
+            return false;
         }
     }
 
@@ -102,7 +105,7 @@ class Model {
             if ($table_name == 'Products') {
                 $primary_key = 'label';
             }
-            if($table_name == 'Options'){
+            if ($table_name == 'Options') {
                 $primary_key = 'name';
             }
 
@@ -113,15 +116,15 @@ class Model {
             $values = array(
                 "p" => $data
             );
-            
+
             $req_prep->execute($values);
 
 
             $req_prep->setFetchMode(PDO::FETCH_CLASS, $class_name);
             $tab_p = $req_prep->fetchAll();
 
-           
-            
+
+
             if (empty($tab_p)) {
                 return false;
             }
@@ -168,14 +171,13 @@ class Model {
             $sql = "INSERT INTO $table_name(";
 
 
-            
             $sql = "INSERT INTO $table_name VALUES(";
 
-            foreach ($data as $cle=>$valeur){
-                $sql = $sql.":".$cle. ", ";
+            foreach ($data as $cle => $valeur) {
+                $sql = $sql . ":" . $cle . ", ";
             }
-            $sql = rtrim($sql, " ,").");";
-            
+            $sql = rtrim($sql, " ,") . ");";
+
             //préparation de la requête
             $req_prep = Model::$pdo->prepare($sql);
 

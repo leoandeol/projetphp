@@ -9,10 +9,20 @@ class Panier {
             $_SESSION['panier']=array(
                 'label' => array(),
                 'price' => array(),
-                'verroy' => false
+                'verrou' => false
             );
         }
         return true;
+    }
+    
+    public static function clearPanier(){
+        
+        if(!isset($_SESSION['panier'])){
+            session_unset();     // unset $_SESSION variable for the run-time 
+            session_destroy();   // destroy session data in storage
+            setcookie(session_name(),'',time()-1);            
+        }
+        
     }
 
     public static function addArticle($label,$price){
