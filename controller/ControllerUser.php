@@ -54,14 +54,19 @@ class ControllerUser {
         }
         $hashpass = Security::encrypt($_POST['password']);
         $nonce = Security::generateRandomHex();
+        $bDate = $_POST['birthdate'];
+        $format = "d/m/Y";
+        $date_parsed = date_parse_from_format($format, $bDate);
+        $goodFormatDate = $date_parsed["year"].$date_parsed["month"].$date_parsed["day"];
+        var_dump($goodFormatDate);
         $data = array('nickName' => $_POST['nickname'],
-                      'password' => $hashpass, 
-                      'firstName'=> $_POST['firstname'],
+                      'nonce'    => $nonce,
                       'lastName' => $_POST['lastname'],
+                      'firstName'=> $_POST['firstname'],
+                      'password' => $hashpass, 
                       'mail'     => $_POST['email'], 
-                      'birthDate'=> $_POST['birthdate'],
+                      'birthDate'=> $goodFormatDate,
                       'isAdmin'  => 0,
-                      'nonce'    => $nonce
                 );
         
         // REGISTERING INFO INTO $_SESSION
@@ -70,15 +75,17 @@ class ControllerUser {
         $_SESSION['mail']     = $data['mail'];
         $_SESSION['birthDate']= $data['birthDate'];
         
-        $user->save($data);
-
-        //MAIL
-        $mail = "<!DOCTYPE html><body><a href=\"http://infolimon.iutmontp.univ-montp2.fr/~andeoll/projetphp/index.php?action=validate&controller=user&login=" . $_POST['nickname'] . "&nonce=$nonce\">pls click link</a></body>";
-        mail($_POST['email'], "Please confirm your email", $mail);
-        $view = 'registered';
-        $controller = 'user';
-        $pagetitle = 'Compte créé';
-        require File::build_path(array('view', 'view.php'));
+        if(ModelUser::save($data)){
+            $nickNameSecure = rawurlencode($_POST['nickname']);
+            $mail = "<!DOCTYPE html><body><a href=http://infolimon.iutmontp.univ-montp2.fr/~andeoll/projetphp/index.php?action=validate&controller=user&login={$nickNameSecure}&nonce=$nonce>pls click link to finalise your registeration.</a></body>";
+            mail($_POST['email'], "Please confirm your email", $mail);
+            $view = 'registered';
+            $controller = 'user';
+            $pagetitle = 'Compte créé';
+            require File::build_path(array('view', 'view.php'));
+        }else{
+            ControllerDefault::error("FATAL ERROR");
+        }
     }
 
     public function connect() {
@@ -186,9 +193,27 @@ class ControllerUser {
         }
     }
 
-    function validate() {
+    public function validate() {
         $login = $_GET['login'];
         $nonce = $_GET['nonce'];
+        $user = ModelUser::select($login);
+        var_dump($user);
+        if($user != false){
+            if($user->getNonce() == $nonce){
+                $data = array(
+                    'nonce' => NULL
+                );
+                ModelUser::update($data);
+                $view = 'validated';
+                $controller = 'user';
+                $pagetitle = 'Bienvenue';
+                File::build_path(array('view','view.php'));
+            }else{
+                ControllerDefault::error("Problème de confirmation.");
+            }
+        }else{
+            ControllerDefault::error("FATAL ERROR.");
+        }
     }
 
 }

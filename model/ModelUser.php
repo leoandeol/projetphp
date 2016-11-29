@@ -11,9 +11,14 @@ class ModelUser extends Model{
     private $mail;
     private $birthDate;
     private $isAdmin;
+    private $nonce;
     protected static $object = "user";
     protected static $primary = 'nickName';
 
+    public function getNonce() {
+        return $this->nonce;
+    }
+    
     public function getPassword() {
         return $this->password;
     }
@@ -65,13 +70,17 @@ class ModelUser extends Model{
     public function setIsAdmin($isAdmin) {
         $this->isAdmin = $isAdmin;
     }
+    
+    public function setNonce($nonce) {
+        $this->nonce = $nonce;
+    }
 
     public static function getSeed() {
         return self::$seed;
     }
 
-    public function __construct($nickName = NULL, $pwd = NULL, $firstName = NULL, $lastName = NULL, $mail = NULL, $bd = NULL, $isAdmn = NULL) {
-        if (!is_null($nickName) && !is_null($firstName) && !is_null($lastName) && !is_null($mail) && !is_null($bd) && !is_null($isAdmn) && !is_null($pwd)) {
+    public function __construct($nickName = NULL, $pwd = NULL, $firstName = NULL, $lastName = NULL, $mail = NULL, $bd = NULL, $isAdmn = NULL, $nonce = NULL) {
+        if (!is_null($nickName) && !is_null($firstName) && !is_null($lastName) && !is_null($mail) && !is_null($bd) && !is_null($isAdmn) && !is_null($pwd) && !is_null($nonce)) {
             $this->nickName = $nickName;
             $this->firstName = $firstName;
             $this->lastName = $lastName;
@@ -79,6 +88,7 @@ class ModelUser extends Model{
             $this->birthDate = $bd;
             $this->isAdmin = $isAdmn;
             $this->password = $pwd;
+            $this->nonce = $nonce;
         }
     }
     
