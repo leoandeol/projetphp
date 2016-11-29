@@ -96,7 +96,7 @@ class ControllerProduct {
         require File::build_path(array('view', 'view.php'));
     }
 
-    public function udpate() {
+    public function update() {
         $label = $_GET['label'];
         $p = ModelProduct::select($label);
 
