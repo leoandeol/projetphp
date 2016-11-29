@@ -26,12 +26,10 @@ $controllerClass = 'Controller' . ucfirst($controller);
 
 
 if(!(class_exists($controllerClass))){
-    $error = "FATAL ERROR";
-    ControllerUser::error();
+    ControllerDefault::error("FATAL ERROR");
 }else{
     if(!(in_array($action,  get_class_methods($controllerClass)))){
-        $error = "La fonction que vous voulez utiliser n'existe pas";
-        ControllerUser::error();
+        ControllerDefault::error("La fonction que vous voulez utiliser n'existe pas");
     }else{
         $controllerClass::$action();
     }    
