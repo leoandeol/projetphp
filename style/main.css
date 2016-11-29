@@ -36,6 +36,7 @@ main {
     padding:10px;
     background-color:#2B2B2B;
     flex-direction:column;
+    align-items:center;
 }
 
 article {
@@ -51,6 +52,16 @@ article {
     flex-direction:row;
     height:100%;
 }
+.menu-search {
+    margin:0;
+    display:flex;
+    align-self:center;
+    align-items:center;
+    flex-direction:row;
+    flex-basis: 250px;
+    height:100%;
+    flex:1;
+}
 
 .menu-logo-content {
     flex:1;
@@ -65,7 +76,6 @@ article {
     display:flex;
     flex-direction:row;
     justify-content:flex-end;
-    flex:1;
 }
 
 .menu-item, .menu-dropdown {
@@ -144,7 +154,12 @@ article {
 
 .input {
     display:flex;
-    margin-bottom: 1.5em;
+    margin-bottom: 1em;
+}
+
+.input-search {
+    display:flex;
+    width:100%
 }
 
 .input-field {
