@@ -45,7 +45,7 @@ nav {
     overflow: hidden;
     background-color: #333;
     display:flex;
-    justify-content: flex-start;
+    justify-content: center;
     list-style: none;
 }
 
@@ -54,6 +54,11 @@ nav {
     flex-basis: 160px;
     flex-direction:column;
     border-right: 2px solid #5a5a5a;
+}
+
+
+.menu-item:first-child, .menu-dropdown:first-child {
+    border-left: 2px solid #5a5a5a;
 }
 
 .menu-dropdown-content{
