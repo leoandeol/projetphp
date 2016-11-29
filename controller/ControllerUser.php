@@ -15,6 +15,19 @@ class ControllerUser {
         }
     }
 
+    public function displaySelf() {
+        if (Session::is_connected()) {
+            $id = $_SESSION['login'];
+            $user = ModelUser::select($id);
+            $view = 'displaySelf';
+            $controller = 'user';
+            $pagetitle = 'Compte';
+            require File::build_path(array('view', 'view.php'));
+        } else {
+            ControllerUser::connect();
+        }
+    }
+
     public function read() {
         if (Session::is_admin()) {
             $id = $_GET['nickName'];
@@ -39,7 +52,7 @@ class ControllerUser {
             ControllerDefault::error("Vous n'avez pas la permission pour accéder à ce contenu.");
         }
     }
-    
+
     public function register() {
         $view = 'register';
         $controller = 'user';
@@ -55,14 +68,14 @@ class ControllerUser {
         $hashpass = Security::encrypt($_POST['password']);
         $nonce = Security::generateRandomHex();
         $data = array('nickName' => $_POST['nickname'],
-                      'password' => $hashpass, 
-                      'firstName'=> $_POST['firstname'],
-                      'lastName' => $_POST['lastname'],
-                      'mail'     => $_POST['email'], 
-                      'birthDate'=> $_POST['birthdate'],
-                      'isAdmin'  => 0,
-                      'nonce'    => $nonce
-                );
+            'password' => $hashpass,
+            'firstName' => $_POST['firstname'],
+            'lastName' => $_POST['lastname'],
+            'mail' => $_POST['email'],
+            'birthDate' => $_POST['birthdate'],
+            'isAdmin' => 0,
+            'nonce' => $nonce
+        );
         $user->save($data);
 
         //MAIL
@@ -107,8 +120,8 @@ class ControllerUser {
         session_destroy();
         $user = null;
         $pagetitle = 'Accueil';
-        $view = 'displayAllUser';
-        $controller = 'user';
+        $view = 'welcome';
+        $controller = 'default';
         require File::build_path(array('view', 'view.php'));
     }
 
@@ -147,7 +160,7 @@ class ControllerUser {
                     $hashpassOk = Security::encrypt($dataNotOk['password']);
                     $dataOk = array(
                         'lastName' => $_POST['lastName'],
-                        'firstName' => $_POST['firstName'], 
+                        'firstName' => $_POST['firstName'],
                         'password' => $hashpassOk,
                         'mail' => $_POST['mail'],
                         'birthDate' => $_POST['birthDate'],

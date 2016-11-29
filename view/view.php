@@ -15,7 +15,7 @@
                 <a href="index.php?controller=product&action=readAll">Liste article</a>
             </div>
             <div class='menu-dropdown'>
-                <a href='index.php?controller=user'>Compte</a>
+                <a href='index.php?controller=user&action=displaySelf'>Compte</a>
                 <?php
                 if (!Session::is_connected()) {
                     echo <<< EOT

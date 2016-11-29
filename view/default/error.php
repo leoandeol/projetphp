@@ -1,10 +1,10 @@
 <?php
 if(isset($error))
 {
-    echo "<p> An error occured please try again : ".htmlspecialchars($error).".</p>";
+    echo "<p>Une erreur est apparue : ".htmlspecialchars($error).".</p><p> Veuillez effectuer une nouvelle tentative, et si l'erreur se répète, veuillez contacter l'administrateur du site.</p>";
 }
 else
 {
-    echo "<p> An error occured please try again.</p>";
+    echo "<p>Une erreur est apparue.</p><p> Veuillez effectuer une nouvelle tentative, et si l'erreur se répète, veuillez contacter l'administrateur du site.</p>";
 }
 ?>

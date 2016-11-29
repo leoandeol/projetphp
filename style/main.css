@@ -59,6 +59,21 @@ article {
     border-right: 2px solid #5a5a5a;
 }
 
+@keyframes button-menu {
+    from {
+        background-color:#1B1B1B;
+    }
+    to {
+        background-color:#4A4A4A;
+    }
+}
+
+.menu-item:hover, .menu-dropdown:hover {
+    animation-name: button-menu;
+    animation-duration: 0.8s;
+    background-color:#4A4A4A;
+}
+
 
 .menu-item:first-child, .menu-dropdown:first-child {
     border-left: 2px solid #5a5a5a;
@@ -92,7 +107,21 @@ article {
     color: black;
 }
 
-.menu-dropdown-content a:hover {background-color: #f1f1f1}
+.menu-dropdown-content a:hover {
+    
+    animation-name: button-menu-2;
+    animation-duration: 0.8s;
+    background-color: #dcdcdc;
+}
+
+@keyframes button-menu-2 {
+    from {
+        background-color:#f9f9f9;
+    }
+    to {
+        background-color: #dcdcdc;
+    }
+}
 
 /* #### Read*/
 
