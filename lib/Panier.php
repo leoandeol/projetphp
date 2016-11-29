@@ -9,7 +9,7 @@ class Panier {
             $_SESSION['panier']=array(
                 'label' => array(),
                 'price' => array(),
-                'verroy' => false
+                'verrou' => false
             );
         }
         return true;
