@@ -35,6 +35,10 @@ EOT;
                     }
                     ?>
                 </div>
+                
+                <div class='menu-item'>
+                    <a href='index.php?action=about'>A propos</a>
+                </div>
             </nav>
         </header>
         <main>
