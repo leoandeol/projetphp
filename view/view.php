@@ -7,39 +7,37 @@
     </head>
     <body>
         <header>
-            <nav>
-                <div class='menu-item'>
-                    <a href='index.php'>Accueil</a>
-                </div>
-                
-                <div class="menu-item">
-                    <a href="index.php?controller=product&action=readAll">Liste article</a>
-                </div>
-                <div class='menu-dropdown'>
-                    <a href='index.php?controller=user'>Compte</a>
-                    <?php
-                    if (!Session::is_connected()) {
-                        echo <<< EOT
+            <div class='menu-item'>
+                <a href='index.php'>Accueil</a>
+            </div>
+
+            <div class="menu-item">
+                <a href="index.php?controller=product&action=readAll">Liste article</a>
+            </div>
+            <div class='menu-dropdown'>
+                <a href='index.php?controller=user'>Compte</a>
+                <?php
+                if (!Session::is_connected()) {
+                    echo <<< EOT
                     <div class='menu-dropdown-content'>
                         <a href='index.php?action=connect&controller=user'>Se connecter</a>
                         <a href='index.php?action=register&controller=user'>S'inscrire</a>
                     </div>
 EOT;
-                    } else {
-                        echo <<< EOT
+                } else {
+                    echo <<< EOT
                      <div class='menu-dropdown-content'>
                         <a href='index.php?action=update&controller=user'>Paramètres</a>
                         <a href='index.php?action=disconnect&controller=user'>Se déconnecter</a>
                     </div>
 EOT;
-                    }
-                    ?>
-                </div>
-                
-                <div class='menu-item'>
-                    <a href='index.php?action=about'>A propos</a>
-                </div>
-            </nav>
+                }
+                ?>
+            </div>
+
+            <div class='menu-item'>
+                <a href='index.php?action=about'>A propos</a>
+            </div>
         </header>
         <main>
             <article>

@@ -137,8 +137,8 @@ class ControllerProduct {
                 ControllerUser::error();
             }
         } else {
-            $error = "Vous n'avez pas les droits nécessaires pour effectuer cette action. ";
-            ControllerUser::error();
+
+            ControllerDefault::error("FATAL ERROR");
         }
     }
 
@@ -165,8 +165,7 @@ class ControllerProduct {
 
                 require File::build_path(array('view', 'view.php'));
             } else {
-                $error = "FATAL ERROR";
-                ControllerUser::error();
+            ControllerDefault::error("FATAL ERROR");
             }
          }else {
             $error = "Vous n'avez pas les droits nécessaires pour effectuer cette action. ";
