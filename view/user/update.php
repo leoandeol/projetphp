@@ -1,12 +1,13 @@
 <form method="POST" action="index.php">
     <input type='hidden' name='action' value='updated'>
+    <input type='hidden' name='controller' value='user'>
     <p>
         <label for="fName">Prénom</label>
-        <input type="text" name="firstName" for="fName"/>
+        <input type="text" value="<?php echo $fName; ?>" name="firstName" for="fName"/>
     </p>
     <p>
         <label for="lName">Nom de famille</label>
-        <input type="text" name="lastName" for="lName"/>
+        <input type="text" value="<?php echo $lName; ?>" name="lastName" for="lName"/>
     </p>
     <p>
         <label for="oPass">Mot de passe actuel</label>
@@ -22,11 +23,11 @@
     </p>
     <p>
         <label for="mail">Mail</label>
-        <input type="text" name="mail" for="mail"/>
+        <input type="text" value="<?php echo $mail; ?>" name="mail" for="mail"/>
     </p>
     <p>
         <label for="bDate">Date de naissance</label>
-        <input type="date" name="birthDate" for="bDate"/>
+        <input type="date" value="<?php echo $bDate; ?>" name="birthDate" for="bDate"/>
     </p>
     <?php echo $checkBoxAdmin; ?>
     <p>

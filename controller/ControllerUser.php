@@ -63,6 +63,13 @@ class ControllerUser {
                       'isAdmin'  => 0,
                       'nonce'    => $nonce
                 );
+        
+        // REGISTERING INFO INTO $_SESSION
+        $_SESSION['lastName'] = $data['lastName'];
+        $_SESSION['firstName']= $data['firstName'];
+        $_SESSION['mail']     = $data['mail'];
+        $_SESSION['birthDate']= $data['birthDate'];
+        
         $user->save($data);
 
         //MAIL
@@ -104,11 +111,12 @@ class ControllerUser {
     }
 
     public function disconnect() {
+        session_unset();
         session_destroy();
         $user = null;
         $pagetitle = 'Accueil';
-        $view = 'displayAllUser';
-        $controller = 'user';
+        $view = 'welcome';
+        $controller = 'default';
         require File::build_path(array('view', 'view.php'));
     }
 
@@ -118,6 +126,10 @@ class ControllerUser {
             $view = 'update';
             $pagetitle = 'Update';
             $controller = 'user';
+            $fName = htmlspecialchars($_SESSION['firstName']);
+            $lName = htmlspecialchars($_SESSION['lastName']);
+            $mail  = htmlspecialchars($_SESSION['mail']);
+            $bDate = htmlspecialchars($_SESSION['birthDate']);
             require File::build_path(array('view', 'view.php'));
         } else {
             ControllerDefault::error("Veuillez vous connecter.");
@@ -155,7 +167,6 @@ class ControllerUser {
                         'nickName' => $_SESSION['login']
                     );
                     $res = ModelUser::update($dataOk);
-                    var_dump($dataOk);
                     if ($res == TRUE) {
                         $view = 'updated';
                         $pagetitle = 'Updated';
