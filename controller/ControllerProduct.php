@@ -24,12 +24,12 @@ class ControllerProduct {
         if(Session::is_connected()){
             $controller = 'product';
             $pagetitle = 'Listes des commandes précédentes';
+            require File::build_path(array('view', 'view.php'));
         }
         else{
             $orderCommand = true;
             ControllerUser::connect();
         }
-        require File::build_path(array('view', 'view.php'));
     }
 
 
