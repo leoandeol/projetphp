@@ -2,11 +2,15 @@
 
 require_once File::build_path(array("model","Model.php"));
 
-class ModelOrder {
+class ModelOrder extends Model{
   private $id;
-  private $userID;
+  private $nickName;
   private $date;
   private $state;
+  
+  
+    protected static $object = "order";
+    protected static $primary = 'idOrder';
 
   public function getState(){
     return $this->state;
@@ -17,11 +21,11 @@ class ModelOrder {
   }
 
   public function getUserID(){
-    return $this->userID;
+    return $this->nickName;
   }
 
   public function setUserID($i){
-    $this->userID = $i;
+    $this->nickName = $i;
   }	
 
   public function getDate(){
@@ -37,84 +41,13 @@ class ModelOrder {
   }
 
 
-  /*public function __construct($m = NULL, $i = NULL, $c = NULL){
-    if(!is_null($m)&&!is_null($c)&&!is_null($i)){
-      $this->marque = $m;
-      $this->immatriculation = $i;
-      $this->couleur = $c;
+  public function __construct($m = NULL, $i = NULL, $c = NULL, $d = NULL){
+    if(!is_null($m)&&!is_null($c)&&!is_null($i)&&!is_null($d)){
+      $this->id = $m;
+      $this->nickName = $i;
+      $this->date = $c;
+      $this->state = $d;
     }
   }
-
-  /*public function afficher(){
-    echo "<p>Voiture ".$this->immatriculation." de marque $this->marque (couleur $this->couleur)</p>";
-  }
-
-  public static function getAllVoitures(){
-    $rep = Model::$pdo->query("SELECT * FROM voiture");
-    $tab_obj = $rep->fetchAll(PDO::FETCH_CLASS, 'ModelVoiture');
-    return $tab_obj;
-  }
-
-  public static function getVoitureByImmat($immat) {
-    $sql = "SELECT * from voiture WHERE immatriculation=:nom_var";
-    // Préparation de la requête
-    $req_prep = Model::$pdo->prepare($sql);
-  
-    $values = array(
-		    //nomdutag => valeur,
-		    "nom_var" => $immat,
-		    );
-    // On donne les valeurs et on exécute la requête	 
-    $req_prep->execute($values);
-
-    // On récupère les résultats comme précédemment
-    $req_prep->setFetchMode(PDO::FETCH_CLASS, 'ModelVoiture');
-    if($req_prep->rowCount()==0){
-        require File::build_path(array("view","voiture","error.php"));
-    }
-    return $req_prep->fetch();
-    // Attention, si il n'y a pas de résultats, fetch renvoie FALSE
-    // Pour voir si il y a des résultat : ($req_prep->rowCount() != 0)
-  }
-  
-  public static function deleteByImmat($immat){
-      $sql = "DELETE FROM voiture WHERE immatriculation=:nom_var";
-    // Préparation de la requête
-    $req_prep = Model::$pdo->prepare($sql);
-  
-    $values = array(
-		    //nomdutag => valeur,
-		    "nom_var" => $immat,
-		    );
-    // On donne les valeurs et on exécute la requête	 
-    $req_prep->execute($values);
-  }
-  
-  public static function update($data){
-      $sql = "UPDATE voiture SET couleur=:couleur AND marque=:marque WHERE immatriculation=:nom_var";
-    // Préparation de la requête
-    $req_prep = Model::$pdo->prepare($sql);
-  
-    $values = array(
-		    //nomdutag => valeur,
-		    "nom_var" => $data['immat'],
-                     "marque" => $data['marque'],
-                    "couleur" => $data['couleur']
-		    );
-    // On donne les valeurs et on exécute la requête	 
-    $req_prep->execute($values);
-  }
-
-  public function save(){
-    $sql = "INSERT INTO voiture (immatriculation, marque, couleur) VALUES ( :v1, :v2, :v3 );";
-    $req_prep = Model::$pdo->prepare($sql);
-    $values = array(
-		    ":v1" => $this->immatriculation,
-		    ":v2" => $this->marque,
-		    ":v3" => $this->couleur,
-		    );
-    $req_prep->execute($values);
-  }*/
-
 }
 ?>

@@ -81,6 +81,14 @@ class ControllerUser {
                       'isAdmin'  => 0
                 );
         
+
+        // REGISTERING INFO INTO $_SESSION
+        $_SESSION['nickName'] = $data['nickName'];
+        $_SESSION['lastName'] = $data['lastName'];
+        $_SESSION['firstName']= $data['firstName'];
+        $_SESSION['mail']     = $data['mail'];
+        $_SESSION['birthDate']= $data['birthDate'];
+
         // REGISTERING INFO INTO $_SESSION AND CONNECTING
         Session::connect($data['nickName'],$data['firstName'], $data['lastName'], $data['birthDate'], $data['mail']);
         

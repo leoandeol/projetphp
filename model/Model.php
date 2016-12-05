@@ -94,7 +94,7 @@ class Model {
         }
     }
 
-    public function select($data) {
+    public static function select($data) {
         try {
 
             $table_name = ucfirst(static::$object);
@@ -163,7 +163,7 @@ class Model {
         }
     }
 
-    public function save($data) {
+    public static function save($data) {
         try {
             $table_name = ucfirst(static::$object);
             $class_name = 'Model' . $table_name;
@@ -228,6 +228,11 @@ class Model {
             return false;
         }
     }
+     public static function get_id_by_name($name){
+            $table_name = ucfirst(static::$object);
+            $class_name = 'Model' . $table_name;
+            $table_name = $table_name . "s";
+     }
 
 }
 
