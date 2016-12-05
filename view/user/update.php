@@ -30,7 +30,7 @@
         </div>
         <div class="input">
             <label class="input-item" for="birth_id">Date de naissance</label>
-            <input class="input-field" type="date" placeholder="28-04-89" name="birthdate" id="birth_id" required/>
+            <input class="input-field" type="date" placeholder="28/04/1989" name="birthdate" id="birth_id" required/>
         </div>
         <div class="input">
             <input class="input-field" type="submit"  value="Envoyer"/>

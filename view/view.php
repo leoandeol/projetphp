@@ -20,7 +20,8 @@
                 </form> 
             </div>
             <div class='menu-buttons'>
-                <div class="menu-item">
+                <div class="menu-item basket">
+                    <span><?php Session::get_nbItems()?></span>
                     <a href="index.php?controller=product&action=viewPanier">Panier</a>
                 </div>
                 <div class='menu-dropdown'>
@@ -37,15 +38,16 @@ EOT;
                         echo <<< EOT
                      <div class='menu-dropdown-content'>
                         <a href='index.php?action=update&controller=user'>Paramètres</a>
+EOT;
+                        if(Session::is_admin()){
+                            echo "<a href='index.php?action=create&controller=product'>Ajouter un Produit</a>";
+                        }
+                        echo <<< EOT
                         <a href='index.php?action=disconnect&controller=user'>Se déconnecter</a>
                     </div>
 EOT;
                     }
                     ?>
-                </div>
-
-                <div class='menu-item'>
-                    <a href='index.php?action=about'>A propos</a>
                 </div>
             </div>
         </header>
@@ -58,7 +60,7 @@ EOT;
             </article>
         </main>
         <footer>
-            <p> Team requêtes ©</p>  
+            <p> Team requêtes © <a href='index.php?action=about'>Notre équipe</a></p>
         </footer>
     </body>
 </html>

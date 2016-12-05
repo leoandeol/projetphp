@@ -18,11 +18,7 @@ class Session{
         return (!empty($_SESSION['connected']) && $_SESSION['connected']);
     }
     public static function get_nbItems(){
-        if(Panier::createPanier()){
-            return count($_SESSION['panier']['label']);
-        }
-        else
-            return 0;
+        return Panier::countArticles();
     }
     
 }

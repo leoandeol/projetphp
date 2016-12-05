@@ -71,7 +71,6 @@ class ControllerUser {
         $format = "d/m/Y";
         $date_parsed = date_parse_from_format($format, $bDate);
         $goodFormatDate = $date_parsed["year"].$date_parsed["month"].$date_parsed["day"];
-        var_dump($goodFormatDate);
         $data = array('nickName' => $_POST['nickname'],
                       'nonce'    => $nonce,
                       'lastName' => $_POST['lastname'],
@@ -79,7 +78,7 @@ class ControllerUser {
                       'password' => $hashpass, 
                       'mail'     => $_POST['email'], 
                       'birthDate'=> $goodFormatDate,
-                      'isAdmin'  => 0,
+                      'isAdmin'  => 0
                 );
         
         // REGISTERING INFO INTO $_SESSION
