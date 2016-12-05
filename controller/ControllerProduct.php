@@ -2,6 +2,7 @@
 
 require_once File::build_path(array('model', 'ModelProduct.php'));
 require_once File::build_path(array('model', 'ModelOption.php'));
+require_once File::build_path(array('model', 'ModelOrder.php'));
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -24,6 +25,21 @@ class ControllerProduct {
         if (Session::is_connected()) {
             $controller = 'product';
             $pagetitle = 'Listes des commandes précédentes';
+            
+            $format = "d/m/Y";
+            $bDate = date('d/m/Y');
+            $date_parsed = date_parse_from_format($format, $bDate);
+            $state = "En cours";
+            echo $_SESSION['nickName'];
+            $data = array(
+               'nickName' => $_SESSION['nickName'],
+               'date' => $date_parsed,
+               'state' => $state
+            );
+            
+            
+            ModelOrder::save($data);
+            
             require File::build_path(array('view', 'view.php'));
         } else {
             $orderCommand = true;
