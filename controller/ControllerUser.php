@@ -14,7 +14,6 @@ class ControllerUser {
             return '';
         }
     }
-
     public function displaySelf() {
         if (Session::is_connected()) {
             $id = $_SESSION['login'];
