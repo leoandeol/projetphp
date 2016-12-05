@@ -10,8 +10,16 @@ class Session{
         return (!empty($_SESSION['admin']) && $_SESSION['admin']==1);
     }
     
-    public static function connect() {
+    public static function setLogin($login){
+        $_SESSION['login'] = $login;
+    }
+    
+    public static function connect($firstName,$lastName,$birthDate,$mail) {
         $_SESSION['connected'] = true;
+        $_SESSION['firstName'] = $firstName;
+        $_SESSION['lastName']  = $lastName;
+        $_SESSION['birthDate'] = $birthDate;
+        $_SESSION['mail']      = $mail;
     }
     
     public static function is_connected() {

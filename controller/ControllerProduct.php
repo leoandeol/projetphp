@@ -205,6 +205,18 @@ class ControllerProduct {
             ControllerUser::error();
         }
     }
+    
+    public function research(){
+        
+        $data = $_POST['search'];
+        $tab_p = ModelProduct::research($data);
+        
+        $view = 'displayAllProduct';
+        $controller = 'product';
+        $pagetitle = 'Description des produits';
+        
+        require File::build_path(array('view','view.php'));
+    }
 
 }
 
