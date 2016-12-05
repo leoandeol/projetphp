@@ -126,7 +126,10 @@ class ControllerUser {
             $goodFormatDate = $date_parsed["day"]."/".$date_parsed["month"]."/".$date_parsed["year"];
             $mail = $user->getMail();
             Session::connect($name,$lname,$goodFormatDate,$mail);
-            require File::build_path(array('view', 'view.php'));
+            if(isset($orderCommand) && $orderCommand){
+                ControllerProduct::orderCommand();
+            }else
+                require File::build_path(array('view', 'view.php'));
         } else {
             if($user == -1){
                 ControllerDefault::error("FATAL ERROR");

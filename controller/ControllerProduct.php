@@ -19,6 +19,18 @@ class ControllerProduct {
 
     //###Action du panier
 
+    public static function orderCommand() {
+        $view = 'listCommand';
+        if(Session::is_connected()){
+            $controller = 'product';
+            $pagetitle = 'Listes des commandes précédentes';
+            require File::build_path(array('view', 'view.php'));
+        }
+        else{
+            $orderCommand = true;
+            ControllerUser::connect();
+        }
+    }
 
 
     public static function viewPanier() {
@@ -31,6 +43,9 @@ class ControllerProduct {
     public static function addPanier() {
         $label = $_GET['label'];
         $price = $_GET['price'];
+        
+        
+        
         Panier::addArticle($label, $price);
         self::viewPanier();
     }

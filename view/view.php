@@ -7,12 +7,12 @@
     </head>
     <body>
         <header>
-            <div class='menu-logo'>
-                <img class='menu-logo-img' src='res/logo.png'>
+            <a class='menu-logo' href="index.php">
+                <img class='menu-logo-img' src='res/logo.png' alt='logo'>
                 <div class='menu-logo-content'>
                     Neo-nouveau développeurs
                 </div>
-            </div>
+            </a>
             <div class="menu-search">
                 <form class="input-search" action="index.php" method="POST">
                     <input type="hidden" name="action" value="research">
@@ -22,12 +22,8 @@
                 </form> 
             </div>
             <div class='menu-buttons'>
-                <div class='menu-item'>
-                    <a href='index.php'>Accueil</a>
-                </div>
-
                 <div class="menu-item">
-                    <a href="index.php?controller=product&action=readAll">Liste article</a>
+                    <a href="index.php?controller=product&action=viewPanier">Panier</a>
                 </div>
                 <div class='menu-dropdown'>
                     <a href='index.php?controller=user&action=displaySelf'>Compte</a>
@@ -64,7 +60,7 @@ EOT;
             </article>
         </main>
         <footer>
-            <p> Team requêtes INC.</p>  
+            <p> Team requêtes ©</p>  
         </footer>
     </body>
 </html>
