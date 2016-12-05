@@ -124,7 +124,10 @@ class ControllerUser {
             }
             $name = $user->getFirstName();
             Session::connect();
-            require File::build_path(array('view', 'view.php'));
+            if(isset($orderCommand) && $orderCommand){
+                ControllerProduct::orderCommand();
+            }else
+                require File::build_path(array('view', 'view.php'));
         } else {
             ControllerDefault::error("FATAL ERROR");
         }

@@ -9,6 +9,7 @@ class Panier {
             $_SESSION['panier']=array(
                 'label' => array(),
                 'price' => array(),
+                'option' => array(),
                 'verrou' => false
             );
         }
@@ -25,7 +26,7 @@ class Panier {
         
     }
 
-    public static function addArticle($label,$price){
+    public static function addArticle($label,$price, $option){
         if(self::createPanier() && !self::is_verouille()){
             $exist = in_array($label, $_SESSION['panier']['label']);
             //si le produit existe on ne fait rien
