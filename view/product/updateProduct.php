@@ -17,9 +17,9 @@ if (isset($p)) {
 
 
 if ($cerise == 'update') {
-    echo "<form method = \"post\" action = \"index.php?action=updated&controller=product\">";
+    echo "<form method = \"post\" action = \"index.php?action=updated&controller=product\" enctype=\"multipart/form-data\">";
 } else {
-    echo "<form method = \"post\" action = \"index.php?action=created&controller=product\">";
+    echo "<form method = \"post\" action = \"index.php?action=created&controller=product\" enctype=\"multipart/form-data\">";
 }
 echo "<fieldset>";
 if ($cerise == 'update') {
@@ -64,6 +64,9 @@ echo <<<EOT
         $pCDesc
             </textarea>
         </p>
+                <p>
+                    <input type="file" name="path" />
+                </p>
         <p>
             VOIR OPTION
         </p>
