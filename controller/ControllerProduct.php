@@ -24,6 +24,19 @@ class ControllerProduct {
         if(Session::is_connected()){
             $controller = 'product';
             $pagetitle = 'Listes des commandes précédentes';
+            
+            $format = "d/m/Y";
+            $bDate = date('d/m/Y');
+            $date_parsed = date_parse_from_format($format, $bDate);
+            
+            $data = array(
+               'nickame' => $_SESSION['nickName'],
+               'date' => $date_parsed,
+               'state' => "En cours"
+            );
+            
+            ModelOrder::save($data);
+            
             require File::build_path(array('view', 'view.php'));
         }
         else{

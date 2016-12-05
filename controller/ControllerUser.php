@@ -83,6 +83,7 @@ class ControllerUser {
                 );
         
         // REGISTERING INFO INTO $_SESSION
+        $_SESSION['nickName'] = $data['nickName'];
         $_SESSION['lastName'] = $data['lastName'];
         $_SESSION['firstName']= $data['firstName'];
         $_SESSION['mail']     = $data['mail'];
