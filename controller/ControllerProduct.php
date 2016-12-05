@@ -21,17 +21,15 @@ class ControllerProduct {
 
     public static function orderCommand() {
         $view = 'listCommand';
-        if(Session::is_connected()){
+        if (Session::is_connected()) {
             $controller = 'product';
             $pagetitle = 'Listes des commandes précédentes';
             require File::build_path(array('view', 'view.php'));
-        }
-        else{
+        } else {
             $orderCommand = true;
             ControllerUser::connect();
         }
     }
-
 
     public static function viewPanier() {
         $view = 'displayPanier';
@@ -43,9 +41,9 @@ class ControllerProduct {
     public static function addPanier() {
         $label = $_GET['label'];
         $price = $_GET['price'];
-        
-        
-        
+
+
+
         Panier::addArticle($label, $price);
         self::viewPanier();
     }
@@ -158,7 +156,7 @@ class ControllerProduct {
     }
 
     public function created() {
-         if (Session::is_admin() && Session::is_connected()) {
+        if (Session::is_admin() && Session::is_connected()) {
             $pId = $_POST['idP'];
             $pLabel = $_POST['label'];
             $pPrice = $_POST['price'];
@@ -173,6 +171,15 @@ class ControllerProduct {
                 'completeDesc' => $pCDesc
             );
 
+            $extensions_valides = array('jpg', 'jpeg', 'gif', 'png');
+            $extension_upload = strtolower(substr(strrchr($_FILES['path']['name'], '.'), 1));
+            if (!in_array($extension_upload, $extensions_valides))
+            {
+                ControllerDefault::error("Extension correcte");
+            }
+            $nom = "res/upload/produit$pId.$extension_upload";
+            move_uploaded_file($_FILES['path']['tmp_name'], $nom);
+
             if (ModelProduct::save($data)) {
                 $view = 'createdProduct';
                 $controller = 'product';
@@ -180,9 +187,9 @@ class ControllerProduct {
 
                 require File::build_path(array('view', 'view.php'));
             } else {
-            ControllerDefault::error("FATAL ERROR");
+                ControllerDefault::error("FATAL ERROR");
             }
-         }else {
+        } else {
             $error = "Vous n'avez pas les droits nécessaires pour effectuer cette action. ";
             ControllerUser::error();
         }
@@ -199,23 +206,22 @@ class ControllerProduct {
             $pagetitle = 'Produit supprimé';
 
             require File::build_path(array('view', 'view.php'));
-
-        }else {
+        } else {
             $error = "Vous n'avez pas les droits nécessaires pour effectuer cette action. ";
             ControllerUser::error();
         }
     }
-    
-    public function research(){
-        
+
+    public function research() {
+
         $data = $_POST['search'];
         $tab_p = ModelProduct::research($data);
-        
+
         $view = 'displayAllProduct';
         $controller = 'product';
         $pagetitle = 'Description des produits';
-        
-        require File::build_path(array('view','view.php'));
+
+        require File::build_path(array('view', 'view.php'));
     }
 
 }
