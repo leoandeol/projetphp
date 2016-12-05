@@ -82,7 +82,7 @@ class ControllerUser {
                 );
         
         // REGISTERING INFO INTO $_SESSION AND CONNECTING
-        Session::connect($data['firstName'], $data['lastName'], $data['birthDate'], $data['mail']);
+        Session::connect($data['nickName'],$data['firstName'], $data['lastName'], $data['birthDate'], $data['mail']);
         
         if(ModelUser::save($data)){
             $nickNameSecure = rawurlencode($_POST['nickname']);
@@ -108,7 +108,7 @@ class ControllerUser {
 // TODO cookies And view connected
         $hashpass = Security::encrypt($_POST['password']);
         $user = ModelUser::connect($_POST['nickname'], $hashpass);
-        if ($user !=-1 && $user != -2 && $user != -3) {
+        if ($user != NULL) {
             $view = 'connected';
             $controller = 'user';
             $pagetitle = 'Connecté';
@@ -118,6 +118,7 @@ class ControllerUser {
             } else {
                 $_SESSION['admin'] = 0;
             }
+            $nickName = $user->getNickName();
             $name = $user->getFirstName();
             $lname = $user->getLastName();
             $birthDate = $user->getBirthDate();
@@ -125,19 +126,13 @@ class ControllerUser {
             $date_parsed = date_parse_from_format($format, $birthDate);
             $goodFormatDate = $date_parsed["day"]."/".$date_parsed["month"]."/".$date_parsed["year"];
             $mail = $user->getMail();
-            Session::connect($name,$lname,$goodFormatDate,$mail);
+            Session::connect($nickName,$name,$lname,$goodFormatDate,$mail);
             if(isset($orderCommand) && $orderCommand){
                 ControllerProduct::orderCommand();
             }else
                 require File::build_path(array('view', 'view.php'));
         } else {
-            if($user == -1){
-                ControllerDefault::error("FATAL ERROR");
-            }else if ($user == -2){
-                ControllerDefault::error("FATAL ERROR");
-            }else if ($user == -3){
-                ControllerDefault::error("Veuillez confirmer votre mail");
-            }
+            ControllerDefault::error("FATAL ERROR");
         }
     }
 
@@ -157,7 +152,7 @@ class ControllerUser {
             $view = 'update';
             $pagetitle = 'Update';
             $controller = 'user';
-            $nName = htmlspecialchars($_SESSION['login']);
+            $nName = htmlspecialchars($_SESSION['nickName']);
             $fName = htmlspecialchars($_SESSION['firstName']);
             $lName = htmlspecialchars($_SESSION['lastName']);
             $mail  = htmlspecialchars($_SESSION['mail']);
@@ -268,6 +263,8 @@ class ControllerUser {
     public function validate() {
         $login = $_GET['login'];
         $nonce = $_GET['nonce'];
+        $var_dump($login);
+        $user = ModelUser::select($login);
         if($user != false){
             if($user->getNonce() == $nonce){
                 $data = array();

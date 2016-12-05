@@ -14,8 +14,9 @@ class Session{
         $_SESSION['login'] = $login;
     }
     
-    public static function connect($firstName,$lastName,$birthDate,$mail) {
+    public static function connect($nickName,$firstName,$lastName,$birthDate,$mail) {
         $_SESSION['connected'] = true;
+        $_SESSION['nickName'] = $nickName;
         $_SESSION['firstName'] = $firstName;
         $_SESSION['lastName']  = $lastName;
         $_SESSION['birthDate'] = $birthDate;
