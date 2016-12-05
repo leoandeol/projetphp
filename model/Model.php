@@ -181,14 +181,51 @@ class Model {
             $req_prep = Model::$pdo->prepare($sql);
 
             return $req_prep->execute($data);
-        } catch (PDOException $e) {
-            if ($e->getCode() == 23000) {
-                echo '<br>Le produit existe déjà. ';
-                return false;
+        } catch (PDOException $ex) {
+            if (Conf::getDebug()) {
+                echo $ex->getMessage();
             } else {
-                echo $e->getMessage();
-                echo '<br>Une erreur est survenue lors de la sauvegarde du produit. ';
+                echo "une erreur est survenue.";
             }
+            return false;
+        }
+    }
+    
+    public static function research($data){      
+        try{
+            $exploded = explode(" ",$data);
+            
+            $values = array();
+            
+            foreach($exploded as $key){
+                $values[$key] = $key;
+            }
+            
+            $sql = "SELECT idProduct FROM Products WHERE label ";
+
+            foreach($exploded as $key){
+                $sql = $sql."LIKE '%:".$key."%' OR label ";
+            }
+            $sql = rtrim($sql," OR label ").";";
+            
+            echo"$sql";
+            
+            $req_prep = Model::$pdo->prepare($sql);
+            $req_prep->execute($values);
+            $req_prep->setFetchMode(PDO::FETCH_ASSOC);
+            
+            $tab_p = $req_prep->fetchAll();
+            if (empty($tab_p)) {
+                return false;
+            }
+            return $tab_p;
+        } catch (PDOException $ex) {
+            if (Conf::getDebug()) {
+                echo $ex->getMessage();
+            } else {
+                echo "une erreur est survenue.";
+            }
+            return false;
         }
     }
 
