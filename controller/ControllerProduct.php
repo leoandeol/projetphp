@@ -195,6 +195,7 @@ class ControllerProduct {
             }
             $nom = "res/upload/produit$pId.$extension_upload";
             move_uploaded_file($_FILES['path']['tmp_name'], $nom);
+            //TODO setfacl for rights to apache
 
             if (ModelProduct::save($data)) {
                 $view = 'createdProduct';
