@@ -270,8 +270,9 @@ class ControllerUser {
     public function validate() {
         $login = $_GET['login'];
         $nonce = $_GET['nonce'];
-        $var_dump($login);
+        var_dump($login);
         $user = ModelUser::select($login);
+        echo "pute";
         if($user != false){
             if($user->getNonce() == $nonce){
                 $data = array();
