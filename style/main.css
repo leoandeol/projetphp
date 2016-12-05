@@ -49,7 +49,22 @@ main {
 
 article {
     max-width:50em;
+    display:flex;
+    flex:1;
     margin: 0 auto;
+}
+
+article>form{
+    margin-top:25%;
+}
+
+a {
+    color:white;
+    text-decoration: none;
+}
+
+footer a {
+    font-style: italic;
 }
 
 .menu-logo {
@@ -59,8 +74,6 @@ article {
     flex-direction:row;
     height:100%;
     margin-left: 10px;
-    color:white;
-    text-decoration: none;
 }
 
 .menu-search {
@@ -135,7 +148,6 @@ article {
     padding: 16px;
     text-align: center;
     text-decoration: none;
-    width:100%;
     height:100%;
     box-sizing:border-box;
 }
@@ -160,6 +172,20 @@ article {
     }
 }
 
+.basket {
+    display:flex;
+}
+
+.basket span {
+    color:red;
+    text-align:center;
+    width:20%;
+    height:100%;
+}
+
+.basket a {
+    
+}
 /* INPUTS */
 
 .input {

@@ -2,6 +2,7 @@
 
 require_once File::build_path(array('model', 'ModelProduct.php'));
 require_once File::build_path(array('model', 'ModelOption.php'));
+require_once File::build_path(array('model', 'ModelOrder.php'));
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -28,12 +29,14 @@ class ControllerProduct {
             $format = "d/m/Y";
             $bDate = date('d/m/Y');
             $date_parsed = date_parse_from_format($format, $bDate);
-            
+            $state = "En cours";
+            echo $_SESSION['nickName'];
             $data = array(
-               'nickame' => $_SESSION['nickName'],
+               'nickName' => $_SESSION['nickName'],
                'date' => $date_parsed,
-               'state' => "En cours"
+               'state' => $state
             );
+            
             
             ModelOrder::save($data);
             
@@ -217,6 +220,18 @@ class ControllerProduct {
             $error = "Vous n'avez pas les droits nécessaires pour effectuer cette action. ";
             ControllerUser::error();
         }
+    }
+    
+    public function research(){
+        
+        $data = $_POST['search'];
+        $tab_p = ModelProduct::research($data);
+        
+        $view = 'displayAllProduct';
+        $controller = 'product';
+        $pagetitle = 'Description des produits';
+        
+        require File::build_path(array('view','view.php'));
     }
 
 }
