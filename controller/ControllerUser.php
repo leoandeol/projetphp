@@ -280,7 +280,7 @@ class ControllerUser {
                 $view = 'validated';
                 $controller = 'user';
                 $pagetitle = 'Bienvenue';
-                File::build_path(array('view','view.php'));
+                require_once(File::build_path(array('view','view.php')));
             }else{
                 ControllerDefault::error("Problème de confirmation.");
             }
