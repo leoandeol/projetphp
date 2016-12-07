@@ -50,10 +50,6 @@ class Model {
             $primary_key = static::$primary;
 
             $sql = $sql . " WHERE $primary_key=:$primary_key;";
-            
-            echo $sql;
-            echo $primary_key;
-            var_dump($data);
             $req_prep = Model::$pdo->prepare($sql);
             $req_prep->execute($data);
             return true;
