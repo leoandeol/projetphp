@@ -270,15 +270,13 @@ class ControllerUser {
     public function validate() {
         $login = $_GET['login'];
         $nonce = $_GET['nonce'];
-        var_dump($login);
         $user = ModelUser::select($login);
-        echo "pute";
         if($user != false){
             if($user->getNonce() == $nonce){
                 $data = array();
-                $data['nonce']=NULL;
+                $data['nonce']="";
+                $data['nickName']=$login;
                 ModelUser::update($data);
-                var_dump($data);
                 $view = 'validated';
                 $controller = 'user';
                 $pagetitle = 'Bienvenue';
@@ -293,5 +291,3 @@ class ControllerUser {
 
 }
 ?>
-
-
