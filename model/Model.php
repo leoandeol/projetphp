@@ -214,6 +214,7 @@ class Model {
             $req_prep->setFetchMode(PDO::FETCH_ASSOC);
             
             $tab_p = $req_prep->fetchAll();
+	    var_dump($tab_p);
             if (empty($tab_p)) {
                 return false;
             }

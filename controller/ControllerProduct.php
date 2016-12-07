@@ -231,7 +231,7 @@ class ControllerProduct {
 
     public function research() {
 
-        $data = $_POST['search'];
+        $data = $_GET['search'];
         $tab_p = ModelProduct::research($data);
 
         $view = 'displayAllProduct';
