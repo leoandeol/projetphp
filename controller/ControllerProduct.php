@@ -26,19 +26,20 @@ class ControllerProduct {
             $controller = 'product';
             $pagetitle = 'Listes des commandes précédentes';
             
-            $format = "d/m/Y";
-            $bDate = date('d/m/Y');
-            $date_parsed = date_parse_from_format($format, $bDate);
+            $bDate = date('Y/m/d');
             $state = "En cours";
-            echo $_SESSION['nickName'];
+            $nickName = $_SESSION['nickName'];
             $data = array(
-               'nickName' => $_SESSION['nickName'],
-               'date' => $date_parsed,
+               'nickName' => $nickName,
+               'date' => $bDate,
                'state' => $state
             );
             
+
             
             ModelOrder::save($data);
+            $idOrder = ModelOrder::get_id($nickName, $bDate, $state);
+            Panier::saveArticles($idOrder);
             
             require File::build_path(array('view', 'view.php'));
         } else {
@@ -77,7 +78,7 @@ class ControllerProduct {
 
     //###Pour les options
 
-    public function readOption() {
+    public static function readOption() {
         $label = $_GET['label'];
         $p = ModelOption::select($label);
 
@@ -90,10 +91,11 @@ class ControllerProduct {
     //###Action des produits
 
 
-    public function read() {
+    public static function read() {
         $label = $_GET['label'];
         $p = ModelProduct::select($label);
-        $o = $p->selectAllOption();
+        if(!is_null($p))
+            $o = $p->selectAllOption();
 
         $view = 'displayProduct';
         $controller = 'product';
@@ -101,7 +103,7 @@ class ControllerProduct {
         require File::build_path(array('view', 'view.php'));
     }
 
-    public function readAll() {
+    public static function readAll() {
         $tab_p = ModelProduct::selectAll();
 
         $view = 'displayAllProduct';
@@ -111,7 +113,7 @@ class ControllerProduct {
         require File::build_path(array('view', 'view.php'));
     }
 
-    public function create() {
+    public static function create() {
         $view = 'updateProduct';
         $controller = 'product';
         $pagetitle = 'Création de produit';
@@ -121,7 +123,7 @@ class ControllerProduct {
         require File::build_path(array('view', 'view.php'));
     }
 
-    public function update() {
+    public static function update() {
         if (Session::is_admin() && Session::is_connected()) {
 
             $label = $_GET['label'];
@@ -139,7 +141,7 @@ class ControllerProduct {
         }
     }
 
-    public function updated() {
+    public static function updated() {
         if (Session::is_admin() && Session::is_connected()) {
             $pId = $_POST['idP'];
             $pLabel = $_POST['label'];
@@ -171,7 +173,7 @@ class ControllerProduct {
         }
     }
 
-    public function created() {
+    public static function created() {
         if (Session::is_admin() && Session::is_connected()) {
             $pId = $_POST['idP'];
             $pLabel = $_POST['label'];
@@ -212,7 +214,7 @@ class ControllerProduct {
         }
     }
 
-    public function delete() {
+    public static function delete() {
         if (Session::is_admin() && Session::is_connected()) {
             $id = $_GET['idProduct'];
 
@@ -229,7 +231,7 @@ class ControllerProduct {
         }
     }
 
-    public function research() {
+    public static function research() {
 
         $data = $_GET['search'];
         $tab_p = ModelProduct::research($data);

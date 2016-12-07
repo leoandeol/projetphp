@@ -49,5 +49,39 @@ class ModelOrder extends Model{
       $this->state = $d;
     }
   }
+  public static function get_id($nickName, $date, $state){
+        try {
+
+
+            $sql = "SELECT * FROM Orders WHERE nickName=:a and date=:d and state=:s;";
+
+            $req_prep = Model::$pdo->prepare($sql);
+
+            $values = array(
+                "a" => $nickName,
+                "d" => $date,
+                "s" => $state
+            );
+
+            $req_prep->execute($values);
+
+            $req_prep->setFetchMode(PDO::FETCH_CLASS, 'ModelOrder');
+            $tab_p = $req_prep->fetchAll();
+
+
+
+            if (empty($tab_p)) {
+                return false;
+            }
+            return $tab_p[0];
+        } catch (PDOException $e) {
+            if (Conf::getDebug()) {
+                echo $e->getMessage(); // affiche un message d'erreur
+            } else {
+                echo 'Une erreur est survenue <a href=""> retour a la page d\'accueil </a>';
+            }
+            die();
+        }
+  }
 }
 ?>

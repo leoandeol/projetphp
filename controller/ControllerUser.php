@@ -4,7 +4,7 @@ require_once File::build_path(array('model', 'ModelUser.php'));
 
 class ControllerUser {
 
-    public function setCheckBox() {
+    public static function setCheckBox() {
         if (Session::is_admin() && Session::is_connected()) {
             return '<p>
                     <label for="isAd">isAdmin</label>
@@ -14,7 +14,7 @@ class ControllerUser {
             return '';
         }
     }
-    public function displaySelf() {
+    public static function displaySelf() {
         if (Session::is_connected()) {
             $id = $_SESSION['login'];
             $user = ModelUser::select($id);
@@ -27,7 +27,7 @@ class ControllerUser {
         }
     }
 
-    public function read() {
+    public static function read() {
         if (Session::is_admin()) {
             $id = $_GET['nickName'];
             $user = ModelUser::select($id);
@@ -40,7 +40,7 @@ class ControllerUser {
         }
     }
 
-    public function readAll() {
+    public static function readAll() {
         if (Session::is_admin() && Session::is_connected()) {
             $tab_user = ModelUser::selectAll();
             $view = 'displayAllUser';
@@ -52,14 +52,14 @@ class ControllerUser {
         }
     }
 
-    public function register() {
+    public static function register() {
         $view = 'register';
         $controller = 'user';
         $pagetitle = 'Création de compte';
         require File::build_path(array('view', 'view.php'));
     }
 
-    public function registered() {
+    public static function registered() {
 //TODO comparer les 2 mots de passes + verifier si utilisateur existe deja
         if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
             ControllerDefault::error("Problème avec le mail.");
@@ -104,14 +104,14 @@ class ControllerUser {
         }
     }
 
-    public function connect() {
+    public static function connect() {
         $view = 'connect';
         $controller = 'user';
         $pagetitle = 'Connexion';
         require File::build_path(array('view', 'view.php'));
     }
 
-    public function connected() {
+    public static function connected() {
 // TODO cookies And view connected
         $hashpass = Security::encrypt($_POST['password']);
         $user = ModelUser::connect($_POST['nickname'], $hashpass);
@@ -143,7 +143,7 @@ class ControllerUser {
         }
     }
 
-    public function disconnect() {
+    public static function disconnect() {
         session_unset();
         session_destroy();
         $user = null;
@@ -153,7 +153,7 @@ class ControllerUser {
         require File::build_path(array('view', 'view.php'));
     }
 
-    public function update() {
+    public static function update() {
         if (Session::is_connected()) {
             $checkBoxAdmin = ControllerUser::setCheckBox();
             $view = 'update';
@@ -170,7 +170,7 @@ class ControllerUser {
         }
     }
 
-    public function updated() {
+    public static function updated() {
         if (Session::is_connected()) {
             if (!isset($_POST['isAdmin'])) {
                 $_POST['isAdmin'] = 0;
@@ -267,7 +267,7 @@ class ControllerUser {
         }
     }
 
-    public function validate() {
+    public static function validate() {
         $login = $_GET['login'];
         $nonce = $_GET['nonce'];
         $user = ModelUser::select($login);

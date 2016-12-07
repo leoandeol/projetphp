@@ -1,4 +1,5 @@
 <?php
+require_once File::build_path(array("model","ModelOrderContent.php"));
 
 class Panier {
 
@@ -16,6 +17,24 @@ class Panier {
         return true;
     }
     
+    public static function saveArticles($idCommand){
+        if(self::createPanier() && !self::is_verouille()){
+            for($i = 0; $i < self::countArticles(); $i++){
+                $article = ModelProduct::select($_SESSION['panier']['label'][$i]);
+                $idArticle = $article->getId();
+                $d = array(
+                  'idOrder' => $idCommand,
+                  'idProduct' => $idArticle
+                );
+                var_dump($d);
+                ModelOrderContent::save($d);
+            }
+        }
+        self::clearPanier();
+    }
+
+
+    
     public static function clearPanier(){
         
         if(!isset($_SESSION['panier'])){
@@ -26,7 +45,7 @@ class Panier {
         
     }
 
-    public static function addArticle($label,$price, $option){
+    public static function addArticle($label,$price){
         if(self::createPanier() && !self::is_verouille()){
             $exist = in_array($label, $_SESSION['panier']['label']);
             //si le produit existe on ne fait rien

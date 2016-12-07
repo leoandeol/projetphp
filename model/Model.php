@@ -164,12 +164,18 @@ class Model {
 
     public static function save($data) {
         try {
+            
             $table_name = ucfirst(static::$object);
             $class_name = 'Model' . $table_name;
             $table_name = $table_name . "s";
 
-
-            $sql = "INSERT INTO $table_name VALUES(";
+            $sql = "INSERT INTO $table_name (";
+            
+            foreach ($data as $cle => $valeur) {
+                $sql = $sql . $cle . ", ";
+            }
+            
+            $sql =  rtrim($sql, " ,") . ")VALUES(";
 
             foreach ($data as $cle => $valeur) {
                 $sql = $sql . ":" . $cle . ", ";
@@ -228,12 +234,6 @@ class Model {
             return false;
         }
     }
-     public static function get_id_by_name($name){
-            $table_name = ucfirst(static::$object);
-            $class_name = 'Model' . $table_name;
-            $table_name = $table_name . "s";
-     }
-
 }
 
 Model::Init();
