@@ -32,7 +32,8 @@ class ControllerProduct {
             $data = array(
                'nickName' => $nickName,
                'date' => $bDate,
-               'state' => $state
+               'state' => $state,
+               'price' => Panier::totalPrice()
             );
             
 
@@ -72,7 +73,7 @@ class ControllerProduct {
     }
 
     public static function clearPanier() {
-        Panier::clearPanier($label);
+        Panier::clearPanier();
         self::viewPanier();
     }
 

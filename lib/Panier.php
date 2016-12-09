@@ -26,7 +26,6 @@ class Panier {
                   'idOrder' => $idCommand,
                   'idProduct' => $idArticle
                 );
-                var_dump($d);
                 ModelOrderContent::save($d);
             }
         }
@@ -36,13 +35,11 @@ class Panier {
 
     
     public static function clearPanier(){
-        
-        if(!isset($_SESSION['panier'])){
+        if(isset($_SESSION['panier'])){
             session_unset();     // unset $_SESSION variable for the run-time 
             session_destroy();   // destroy session data in storage
             setcookie(session_name(),'',time()-1);            
         }
-        
     }
 
     public static function addArticle($label,$price){

@@ -3,11 +3,11 @@
 require_once File::build_path(array("model","Model.php"));
 
 class ModelOrder extends Model{
-  private $id;
+  private $idOrder;
   private $nickName;
   private $date;
   private $state;
-  
+  private $price;
   
     protected static $object = "order";
     protected static $primary = 'idOrder';
@@ -36,17 +36,22 @@ class ModelOrder extends Model{
     $this->date = $d;
   }	
 
-  public function getID(){
-    return $this->id;
+  public function getIDOrder(){
+    return $this->idOrder;
+  }
+
+  public function getPrice(){
+    return $this->price;
   }
 
 
-  public function __construct($m = NULL, $i = NULL, $c = NULL, $d = NULL){
-    if(!is_null($m)&&!is_null($c)&&!is_null($i)&&!is_null($d)){
+  public function __construct($m = NULL, $i = NULL, $c = NULL, $d = NULL, $p = NULL){
+    if(!is_null($m)&&!is_null($c)&&!is_null($i)&&!is_null($d) && !is_null($p)){
       $this->id = $m;
       $this->nickName = $i;
       $this->date = $c;
       $this->state = $d;
+      $this->price = $p;
     }
   }
   public static function get_id($nickName, $date, $state){
@@ -73,7 +78,7 @@ class ModelOrder extends Model{
             if (empty($tab_p)) {
                 return false;
             }
-            return $tab_p[0];
+            return $tab_p[0]->getIDOrder();
         } catch (PDOException $e) {
             if (Conf::getDebug()) {
                 echo $e->getMessage(); // affiche un message d'erreur

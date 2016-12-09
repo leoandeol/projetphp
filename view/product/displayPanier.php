@@ -31,7 +31,7 @@ EOT;
 
                 $sLabel = rawurldecode($_SESSION['panier']['label'][$i]);
                 
-                $nbOptionArticle = count($_SESSION['panier']['option'][$i]);
+               /* $nbOptionArticle = count($_SESSION['panier']['option'][$i]);*/
 
                 echo <<<EOT
 				<tr>
@@ -41,7 +41,7 @@ EOT;
 				</tr>
 EOT;
 
-                
+               /* 
                         for($y = 0; $y < $nbOptionArticle;$y++){
                                 $pLabel = htmlspecialchars($_SESSION['panier']['label'][$i][$y]['label']);
                                 $pPrice = htmlspecialchars($_SESSION['panier']['price'][$i][$y]['prix']);
@@ -55,7 +55,7 @@ EOT;
 					<td><a href="index.php?controller=product&action=deleteOptionPanier&label=$sLabel">XX</a></td>
 				</tr>
 EOT;
-                    }
+                    }*/
             }
             echo <<<EOT
 			<tr>
