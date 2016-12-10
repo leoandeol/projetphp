@@ -69,12 +69,17 @@ class ControllerUser {
 
     public static function registered() {
 //TODO comparer les 2 mots de passes + verifier si utilisateur existe deja
+		$dataErr = array();
+		$dataErr['nName'] = $_POST['nickname'];
+		$dataErr['lName'] = $_POST['lastname'];
+		$dataErr['fName'] = $_POST['firstname'];
+		$dataErr['mail'] = $_POST['email'];
+		$dataErr['bDate'] = $_POST['birthdate'];
         if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
-			$data = array();
-			$data['error'] = "Email invalide";
-			$data['view'] = 'register';
-			$data['controller'] = 'user';
-            ControllerDefault::error($data);
+			$dataErr['error'] = "Email invalide";
+			$dataErr['view'] = 'register';
+			$dataErr['controller'] = 'user';
+            ControllerDefault::error($dataErr);
         }
         $hashpass = Security::encrypt($_POST['password']);
         $nonce = Security::generateRandomHex();
@@ -92,18 +97,17 @@ class ControllerUser {
                       'isAdmin'  => 0
                 );
         
-
-        // REGISTERING INFO INTO $_SESSION
-        $_SESSION['nickName'] = $data['nickName'];
-        $_SESSION['lastName'] = $data['lastName'];
-        $_SESSION['firstName']= $data['firstName'];
-        $_SESSION['mail']     = $data['mail'];
-        $_SESSION['birthDate']= $data['birthDate'];
-
-        // REGISTERING INFO INTO $_SESSION AND CONNECTING
-        Session::connect($data['nickName'],$data['firstName'], $data['lastName'], $data['birthDate'], $data['mail']);
-        
         if(ModelUser::save($data)){
+			// REGISTERING INFO INTO $_SESSION
+			$_SESSION['nickName'] = $data['nickName'];
+			$_SESSION['lastName'] = $data['lastName'];
+			$_SESSION['firstName']= $data['firstName'];
+			$_SESSION['mail']     = $data['mail'];
+			$_SESSION['birthDate']= $data['birthDate'];
+
+			// REGISTERING INFO INTO $_SESSION AND CONNECTING
+			Session::connect($data['nickName'],$data['firstName'], $data['lastName'], $data['birthDate'], $data['mail']);
+			
             $nickNameSecure = rawurlencode($_POST['nickname']);
             $mail = "<!DOCTYPE html><body><a href=http://infolimon.iutmontp.univ-montp2.fr/~andeoll/projetphp/index.php?action=validate&controller=user&nickName={$nickNameSecure}&nonce=$nonce>pls click link to finalise your registeration.</a></body>";
             mail($_POST['email'], "Please confirm your email", $mail);
@@ -112,11 +116,10 @@ class ControllerUser {
             $pagetitle = 'Compte créé';
             require File::build_path(array('view', 'view.php'));
         }else{
-			$data = array();
-			$data['error'] = "Problème de création de compte";
-			$data['view'] = 'register';
-			$data['controller'] = 'user';
-            ControllerDefault::error($data);			
+			$dataErr['error'] = "Problème de création de compte";
+			$dataErr['view'] = 'register';
+			$dataErr['controller'] = 'user';
+            ControllerDefault::error($dataErr);			
         }
     }
 
