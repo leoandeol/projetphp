@@ -102,7 +102,7 @@ class ModelProduct extends Model {
                 $sql = $sql . "LIKE '%:" . $key . "%' OR label ";
             }
             $sql = rtrim($sql, " OR label ") . ";";
-
+            
             echo"$sql";
 
             $req_prep = Model::$pdo->prepare($sql);
