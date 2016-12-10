@@ -52,13 +52,13 @@ article {
     display:flex;
     flex:1;
     margin: 0 auto;
-    background:white;
-    color:black;
+    background:#4a4a4a;
     padding:15px;
-    box-shadow: 0px 70px 5em 3em darkgrey;
+    box-shadow: 0px 70px 5em 3em #222222;
 }
 
 article>form{
+    margin:0 auto;
     margin-top:25%;
 }
 
