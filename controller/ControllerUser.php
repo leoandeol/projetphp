@@ -93,7 +93,8 @@ class ControllerUser {
         
         if(ModelUser::save($data)){
             $nickNameSecure = rawurlencode($_POST['nickname']);
-            $mail = "<!DOCTYPE html><body><a href=http://infolimon.iutmontp.univ-montp2.fr/~andeoll/projetphp/index.php?action=validate&controller=user&nickName={$nickNameSecure}&nonce=$nonce>pls click link to finalise your registeration.</a></body>";
+                $actual_link = "http://{$_SERVER['HTTP_HOST']}{$_SERVER['PHP_SELF']}";
+            $mail = "<!DOCTYPE html><body><a href={$actual_link}?action=validate&controller=user&nickName={$nickNameSecure}&nonce=$nonce>pls click link to finalise your registeration.</a></body>";
             mail($_POST['email'], "Please confirm your email", $mail);
             $view = 'registered';
             $controller = 'user';

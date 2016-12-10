@@ -23,7 +23,7 @@
             </div>
             <div class='menu-buttons'>
                 <div class="menu-item basket">
-                    <span><?php Session::get_nbItems()?></span>
+                    <span><?php echo Session::get_nbItems()?></span>
                     <a href="index.php?controller=product&action=viewPanier">Panier</a>
                 </div>
                 <div class='menu-dropdown'>

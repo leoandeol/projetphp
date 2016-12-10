@@ -54,7 +54,7 @@ article {
     flex:1;
     margin: 0 auto;
     background:#4a4a4a;
-    padding:15px;
+    padding:30px;
     box-shadow: 0px 70px 5em 3em #222222;
 }
 
@@ -235,66 +235,25 @@ footer a {
   border-radius: 0 2px 2px 0;
 }
 
-/* #### Read*/
+/* PRODUCTS */
 
-main a:visited, main a{
-    color:white;
-    text-decoration: none;
-    text-align:right;
-}
-main .read{
+.products {
     display:flex;
     flex-direction:column;
-    background-color: darkslateblue;
-    flex-basis:31%;
+    flew-wrap:wrap;
 }
 
-main .read .name{
-    font-size:1.5em;
-    font-weight: bold;
-}
-
-main .read .id{
-    font-style:italic;
-    font-size:0.85em;
-}
-main .read .price{
-    color:red;
-}
-
-main .read .description{
+.product {
+    display:flex;
     flex:1;
+    margin-bottom:25px;
 }
 
-main .read div{
-    padding-bottom: 4px;
-}
-main .read div.name{
-    margin:5px;
-}
-/* #### ReadAll*/
-
-main .readAll{
-    border:1px solid white;
-
-    margin:10px;
-    padding:5px;
-}
-main .readAll div.detail{
-    font-weight: bold;
-    padding:5px 10px;
-    border:2px;
-    font-size:20px;
-    background-color:yellow;
-    color:black;
-    text-align: center;
+.product-name {
+    
 }
 
-body main form textarea{
-    text-align: left;
-
-}
-
-main table{
-    color:red;
+.product-pic {
+    width:15em;
+    height:15em;
 }
