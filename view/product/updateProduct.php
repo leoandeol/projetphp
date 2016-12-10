@@ -26,10 +26,6 @@ if ($cerise == 'update') {
     echo <<<EOT
         <legend>Modification de $pId</legend>
         <input type = 'hidden' name = 'action' value = 'updated'>
-        <p>
-            <label for = "id_produit">ID</label> :
-            <input type = "text" pattern="^(0|[1-9][0-9]*)$" value="$pId" name = "idP" id = "id_produit" readonly/>
-        </p>
 EOT;
 } else {
     echo <<<EOT

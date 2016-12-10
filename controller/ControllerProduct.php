@@ -204,7 +204,7 @@ class ControllerProduct {
             //TODO setfacl for rights to apache
 
             if (ModelProduct::save($data)) {
-                $view = 'createdProduct';
+                $view = 'displayAllProduct';
                 $controller = 'product';
                 $pagetitle = 'Produit créé';
 
