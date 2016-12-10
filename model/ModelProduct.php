@@ -99,7 +99,7 @@ class ModelProduct extends Model {
             $sql = "SELECT label FROM Products WHERE label ";
 
             foreach ($exploded as $key) {
-                $sql = $sql . "LIKE '%:" . $key . "%' OR label ";
+                $sql = $sql . "LIKE '%" . $key . "%' OR label ";
             }
             $sql = rtrim($sql, " OR label ") . ";";
 
