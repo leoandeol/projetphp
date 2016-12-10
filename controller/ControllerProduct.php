@@ -192,7 +192,7 @@ class ControllerProduct {
             $extension_upload = strtolower(substr(strrchr($_FILES['path']['name'], '.'), 1));
             if (!in_array($extension_upload, $extensions_valides))
             {
-                ControllerDefault::error("Extension correcte");
+                ControllerDefault::error("Extension incorrecte");
             }
             $nom = "res/upload/produit$pId.$extension_upload";
             move_uploaded_file($_FILES['path']['tmp_name'], $nom);
