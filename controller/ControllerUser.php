@@ -7,8 +7,8 @@ class ControllerUser {
     public static function setCheckBox() {
         if (Session::is_admin() && Session::is_connected()) {
             return '<p>
-                    <label for="isAd">isAdmin</label>
-                    <input type="checkbox" name="isAdmin" for="isAd"/>
+                    <label class="input-item" for="isAd">isAdmin</label>
+                    <input class="input-field" type="checkbox" name="isAdmin" for="isAd"/>
                     </p>';
         } else {
             return '';
@@ -23,7 +23,6 @@ class ControllerUser {
             $pagetitle = 'Compte';
             require File::build_path(array('view', 'view.php'));
         } else {
-			$user = ModelUser::select($id);
             ControllerUser::connect();
         }
     }
@@ -177,26 +176,26 @@ class ControllerUser {
                 $_POST['isAdmin'] = 1;
             }
             $dataNotOk = array(
-                'lastName' => $_POST['lastName'],
-                'firstName' => $_POST['firstName'],
-                'newPassword' => $_POST['newPassword'],
-                'confPass' => $_POST['confPassword'],
-                'mail' => $_POST['mail'],
-                'birthDate' => $_POST['birthDate'],
+                'lastName' => $_POST['lastname'],
+                'firstName' => $_POST['firstname'],
+                'newPassword' => $_POST['password'],
+                'confPass' => $_POST['password2'],
+                'mail' => $_POST['email'],
+                'birthDate' => $_POST['birthdate'],
                 'isAdmin' => $_POST['isAdmin'],
-                'oldPass' => $_POST['oldPassword']
+                'oldPass' => $_POST['old_password']
             );
                     
             $hashpass = Security::encrypt($dataNotOk['oldPass']);
             if (ModelUser::checkPassword($_SESSION['nickName'], $hashpass)) {
-                if ($dataNotOk['password'] == $dataNotOk['confPass']) {
-                    $hashpassOk = Security::encrypt($dataNotOk['password']);
+                if ($dataNotOk['newPassword'] == $dataNotOk['confPass']) {
+                    $hashpassOk = Security::encrypt($dataNotOk['newPassword']);
                     $dataOk = array(
-                        'lastName' => $_POST['lastName'],
-                        'firstName' => $_POST['firstName'],
+                        'lastName' => $_POST['lastname'],
+                        'firstName' => $_POST['firstname'],
                         'password' => $hashpassOk,
-                        'mail' => $_POST['mail'],
-                        'birthDate' => $_POST['birthDate'],
+                        'mail' => $_POST['email'],
+                        'birthDate' => $_POST['birthdate'],
                         'isAdmin' => $_POST['isAdmin'],
                         'nickName' => $_SESSION['nickName']
                     );

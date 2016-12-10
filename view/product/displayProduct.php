@@ -1,7 +1,6 @@
 
 <?php
 
-$pId = htmlspecialchars($p->getId());
 $pLabel = htmlspecialchars($p->getLabel());
 $pPrice = htmlspecialchars($p->getPrice());
 $pCDesc = htmlspecialchars($p->getCompleteDesc());
@@ -13,7 +12,6 @@ $securePrice = rawurldecode($p->getPrice());
 
 echo <<<EOT
     <div class="read">
-        <div class="id">ID : $pId</div>
         <div class="label">Nom : $pLabel</div>
         <div class="price">Prix : $pPrice</div>
             
@@ -25,7 +23,6 @@ if ($nbOption != 0) {
     echo "<form method = \"post\" action = \"index.php\">";
     $i = 0;
     foreach($o as $object) {
-    $pIdO = htmlspecialchars($object->getId());
         $pNameO = htmlspecialchars($object->getName());
         $pPriceO = htmlspecialchars($object->getPrice());
         $pDescO = htmlspecialchars($object->getDescription());
@@ -39,7 +36,6 @@ EOT;
         echo "<input type=\"checkbox\" name=\"$name\">";
 
 echo <<<EOT
-                <div class="id">ID : $pIdO</div>
                 <div class="label">Nom : $pNameO</div>
                 <div class="price">Prix : $pPriceO</div>
                 <div class="completeDesc">$pDescO</div>   

@@ -32,6 +32,9 @@
             <label class="input-item" for="birth_id">Date de naissance</label>
             <input class="input-field" type="date" value="<?php echo"$bDate" ?>" name="birthdate" id="birth_id"/>
         </div>
+		<div class ="input">
+			<?php echo $checkBoxAdmin ?>
+		</div>
         <div class="input">
             <input class="input-field" type="submit"  value="Envoyer"/>
         </div>
