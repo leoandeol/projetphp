@@ -2,7 +2,7 @@
     <input type='hidden' name='action' value='updated'>
     <input type='hidden' name='controller' value='user'><div class="input">
             <label class="input-item" for="nick_id">Pseudonyme</label>
-            <input class="input-field" type="text" value="<?php echo "$nName" ?>" name="nickname" id="nick_id"/>
+            <input class="input-field" type="text" value="<?php if(isset($data['nName'])){echo $data['nName'];}else{echo "$nName";}?>" name="nickname" id="nick_id"/>
         </div>
         <div class="input">
             <label class="input-item" for="pass_id">Vieux mot de passe</label>
@@ -18,22 +18,22 @@
         </div>
         <div class="input">
             <label class="input-item" for="lastname_id">Nom de famille</label>
-            <input class="input-field" type="text" value="<?php echo"$lName" ?>" name="lastname" id="lastname_id"/>
+            <input class="input-field" type="text" value="<?php if(isset($data['lName'])){echo $data['lName'];}else{echo "$lName";} ?>" name="lastname" id="lastname_id"/>
         </div>
         <div class="input">
             <label class="input-item" for="firstname_id">Prénom</label>
-            <input class="input-field" type="text" value="<?php echo"$fName" ?>" name="firstname" id="firstname_id"/>
+            <input class="input-field" type="text" value="<?php if(isset($data['fName'])){echo $data['fName'];}else{echo "$fName";} ?>" name="firstname" id="firstname_id"/>
         </div>
         <div class="input">
             <label class="input-item" for="email_id">Email</label>
-            <input class="input-field" type="email" value="<?php echo"$mail" ?>" name="email" id="email_id"/>
+            <input class="input-field" type="email" value="<?php if(isset($data['mail'])){echo $data['mail'];}else{echo "$mail";} ?>" name="email" id="email_id"/>
         </div>
         <div class="input">
             <label class="input-item" for="birth_id">Date de naissance</label>
-            <input class="input-field" type="date" value="<?php echo"$bDate" ?>" name="birthdate" id="birth_id"/>
+            <input class="input-field" type="date" value="<?php if(isset($data['bDate'])){echo $data['bDate'];}else{echo "$bDate";} ?>" name="birthdate" id="birth_id"/>
         </div>
 		<div class ="input">
-			<?php echo $checkBoxAdmin ?>
+			<?php if(isset($data['checkBoxAdmin'])){echo $data['checkBoxAdmin'];}else{echo $checkBoxAdmin;} ?>
 		</div>
         <div class="input">
             <input class="input-field" type="submit"  value="Envoyer"/>

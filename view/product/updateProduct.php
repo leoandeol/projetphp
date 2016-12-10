@@ -8,21 +8,46 @@ if (isset($p)) {
     $pSDesc = htmlspecialchars($p->getShortDesc());
     $pCDesc = htmlspecialchars($p->getCompleteDesc());
 } else {
-    $pId = "";
-    $pLabel = "";
-    $pPrice = "";
-    $pSDesc = "";
-    $pCDesc = "";
+    if(isset($data['pId'])){
+		$pId = $data['pId'];
+	}else{
+		$pId = "";
+	}
+	if(isset($data['pLabel'])){
+		$pLabel = $data['pLabel'];
+	}else{
+		$pLabel = "";
+	}
+	if(isset($data['pPrice'])){
+		$pPrice = $data['pPrice'];
+	}else{
+		$pPrice = "";
+	}
+	if(isset($data['pSDesc'])){
+		$pSDesc = $data['pSDesc'];
+	}else{
+		$pSDesc = "";
+	}
+	if(isset($data['pCDesc'])){
+		$pCDesc = $data['pCDesc'];
+	}else{
+		$pCDesc = "";
+	}
 }
 
+if(isset($data['cerise'])){
+	$cer = $data['cerise'];
+}else{
+	$cer = $cerise;
+}
 
-if ($cerise == 'update') {
-    echo "<form method = \"post\" action = \"index.php?action=updated&controller=product\" enctype=\"multipart/form-data\">";
+if ($cer == 'update') {
+    echo "<form method = \"POST\" action = \"index.php?action=updated&controller=product\" enctype=\"multipart/form-data\">";
 } else {
-    echo "<form method = \"post\" action = \"index.php?action=created&controller=product\" enctype=\"multipart/form-data\">";
+    echo "<form method = \"POST\" action = \"index.php?action=created&controller=product\" enctype=\"multipart/form-data\">";
 }
 echo "<fieldset>";
-if ($cerise == 'update') {
+if ($cer == 'update') {
     echo <<<EOT
         <legend>Modification de $pId</legend>
         <input type = 'hidden' name = 'action' value = 'updated'>
@@ -67,7 +92,7 @@ echo <<<EOT
             VOIR OPTION
         </p>
 EOT;
-if ($cerise == 'update') {
+if ($cer == 'update') {
     echo <<<EOT
     <p>
             <input type = "submit" value = "Modifier" />
