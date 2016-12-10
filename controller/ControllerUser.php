@@ -109,7 +109,6 @@ class ControllerUser {
     }
 
     public function connected() {
-// TODO cookies And view connected
         $hashpass = Security::encrypt($_POST['password']);
         $user = ModelUser::connect($_POST['nickname'], $hashpass);
         if ($user != NULL) {

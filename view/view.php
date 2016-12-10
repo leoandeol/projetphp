@@ -14,7 +14,7 @@
                 </div>
             </div>
             <div class="menu-search">
-                <form class="input-search" action="index.php" method="POST">
+                <form class="input-search" action="research" controller="product" method="POST">
                     <input class="input-field" type="text" name="search" placeholder="Recherche..." required>
                     <input class="input-item" type="submit" value="Envoyer">
                 </form> 
