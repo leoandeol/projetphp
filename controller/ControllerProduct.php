@@ -235,8 +235,11 @@ class ControllerProduct {
     public static function research() {
 
         $data = $_GET['search'];
-        $tab_p = ModelProduct::research($data);
-
+        $tab = ModelProduct::research($data);
+		$tab_p = array();
+		foreach($tab as $key){
+			array_push($tab_p,ModelProduct::Select($key['label']));
+		}
         $view = 'displayAllProduct';
         $controller = 'product';
         $pagetitle = 'Description des produits';
