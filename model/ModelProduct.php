@@ -96,7 +96,7 @@ class ModelProduct extends Model {
                 $values[$key] = $key;
             }
 
-            $sql = "SELECT idProduct FROM Products WHERE label ";
+            $sql = "SELECT label FROM Products WHERE label ";
 
             foreach ($exploded as $key) {
                 $sql = $sql . "LIKE '%:" . $key . "%' OR label ";
