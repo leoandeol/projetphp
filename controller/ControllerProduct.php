@@ -3,6 +3,7 @@
 require_once File::build_path(array('model', 'ModelProduct.php'));
 require_once File::build_path(array('model', 'ModelOption.php'));
 require_once File::build_path(array('model', 'ModelOrder.php'));
+require_once File::build_path(array('lib', 'File.php'));
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -188,14 +189,18 @@ class ControllerProduct {
                 'completeDesc' => $pCDesc
             );
 
-            $extensions_valides = array('jpg');
+            $extensions_valides = array('jpg','jpeg','png','gif','bmp');
             $extension_upload = strtolower(substr(strrchr($_FILES['path']['name'], '.'), 1));
             if (!in_array($extension_upload, $extensions_valides))
             {
-                ControllerDefault::error("Extension correcte");
+                ControllerDefault::error("Extension incorrecte");
+                return;
             }
+            
             $nom = "res/upload/produit$pId.$extension_upload";
+            $nom = "res/upload/produit$pId.jpg";
             move_uploaded_file($_FILES['path']['tmp_name'], $nom);
+            File::convertImage($nom, $nom2, 100);
             //TODO setfacl for rights to apache
 
             if (ModelProduct::save($data)) {
