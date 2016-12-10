@@ -17,7 +17,7 @@
                 <form class="input-search" action="index.php" method="GET">
                     <input type="hidden" name="action" value="research">
                     <input type="hidden" name="controller" value="product">
-                    <input class="input-field" type="text" name="search" placeholder="Recherche..." required>
+                    <input class="input-field" type="text" name="search" placeholder="Recherche...">
                     <input class="input-item" type="submit" value="Envoyer">
                 </form> 
             </div>
