@@ -86,31 +86,28 @@ class ModelProduct extends Model {
         }
     }
 
-    public static function research($data) {
-        try {
-            $exploded = explode(" ", $data);
-
+	public static function research($data){      
+        try{
+            $exploded = explode(" ",$data);
+            
             $values = array();
-
-            foreach ($exploded as $key) {
+            
+            foreach($exploded as $key){
                 $values[$key] = $key;
             }
-
-            $sql = "SELECT idProduct FROM Products WHERE label ";
-
-            foreach ($exploded as $key) {
-                $sql = $sql . "LIKE '%:" . $key . "%' OR label ";
-            }
-            $sql = rtrim($sql, " OR label ") . ";";
             
-            echo"$sql";
+            $sql = "SELECT  label FROM Products WHERE label ";
 
+            foreach($exploded as $key){
+                $sql = $sql."LIKE '%".$key."%' OR label ";
+            }
+            $sql = rtrim($sql," OR label ").";";
+            
             $req_prep = Model::$pdo->prepare($sql);
             $req_prep->execute($values);
             $req_prep->setFetchMode(PDO::FETCH_ASSOC);
-
+			
             $tab_p = $req_prep->fetchAll();
-            var_dump($tab_p);
             if (empty($tab_p)) {
                 return false;
             }
@@ -142,7 +139,6 @@ class ModelProduct extends Model {
             return false;
         }
     }
-
 }
 
 /*
