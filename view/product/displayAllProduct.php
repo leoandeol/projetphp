@@ -2,6 +2,7 @@
 
 //Maybe n'afficher que le titre et l'ID -> revoir function readAll de produit
 if ($tab_p != false) {
+    echo "<div class='products'>";
     foreach ($tab_p as $p) {
         $pId = htmlspecialchars($p->getId());
         $pLabel = htmlspecialchars($p->getLabel());
@@ -11,9 +12,11 @@ if ($tab_p != false) {
         $securePLabel = rawurlencode($p->getLabel());
         $secureId = rawurldecode($p->getId());
         echo <<< EOT
-            <div class="read readAll">
-                <div class="name">$pLabel </div>
-                <img src="res/upload/produit$pId.jpg" />
+            <div class="product">
+                <div class="product-name-pic">
+                    <div class="product-name">$pLabel </div>
+                    <img class="product-pic" src="res/upload/produit$pId.jpg" />
+                </div>
                 <div class="price">Prix :  $pPrice €</div>
                 <div class="description">$pSDesc</div>
                 
@@ -27,5 +30,6 @@ EOT;
         }
                         echo "</div>";
     }
+    echo "</div>";
 }
 ?>
