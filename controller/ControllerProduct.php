@@ -235,7 +235,6 @@ class ControllerProduct {
 		if($tab == false){
 			ControllerDefault::error( "Aucun article ne correspond à la recherche");
 		}else{
-			var_dump($tab);
 			$tab_p = array();
 			foreach($tab as $key){
 				array_push($tab_p,ModelProduct::Select($key['label']));

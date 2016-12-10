@@ -106,8 +106,6 @@ class ModelProduct extends Model {
             $req_prep = Model::$pdo->prepare($sql);
             $req_prep->execute($values);
             $req_prep->setFetchMode(PDO::FETCH_ASSOC);
-			
-			echo $sql;
             $tab_p = $req_prep->fetchAll();
             if (empty($tab_p)) {
                 return false;
