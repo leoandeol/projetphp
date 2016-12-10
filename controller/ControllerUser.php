@@ -16,13 +16,14 @@ class ControllerUser {
     }
     public static function displaySelf() {
         if (Session::is_connected()) {
-            $id = $_SESSION['login'];
+            $id = $_SESSION['nickName'];
             $user = ModelUser::select($id);
             $view = 'displaySelf';
             $controller = 'user';
             $pagetitle = 'Compte';
             require File::build_path(array('view', 'view.php'));
         } else {
+			$user = ModelUser::select($id);
             ControllerUser::connect();
         }
     }
@@ -93,7 +94,7 @@ class ControllerUser {
         
         if(ModelUser::save($data)){
             $nickNameSecure = rawurlencode($_POST['nickname']);
-            $mail = "<!DOCTYPE html><body><a href=http://infolimon.iutmontp.univ-montp2.fr/~andeoll/projetphp/index.php?action=validate&controller=user&login={$nickNameSecure}&nonce=$nonce>pls click link to finalise your registeration.</a></body>";
+            $mail = "<!DOCTYPE html><body><a href=http://infolimon.iutmontp.univ-montp2.fr/~andeoll/projetphp/index.php?action=validate&controller=user&nickName={$nickNameSecure}&nonce=$nonce>pls click link to finalise your registeration.</a></body>";
             mail($_POST['email'], "Please confirm your email", $mail);
             $view = 'registered';
             $controller = 'user';
@@ -118,7 +119,6 @@ class ControllerUser {
             $view = 'connected';
             $controller = 'user';
             $pagetitle = 'Connecté';
-            Session::setLogin($user->getNickName());
             if ($user->getIsAdmin() == 1) {
                 $_SESSION['admin'] = 1;
             } else {
@@ -188,7 +188,7 @@ class ControllerUser {
             );
                     
             $hashpass = Security::encrypt($dataNotOk['oldPass']);
-            if (ModelUser::checkPassword($_SESSION['login'], $hashpass)) {
+            if (ModelUser::checkPassword($_SESSION['nickName'], $hashpass)) {
                 if ($dataNotOk['password'] == $dataNotOk['confPass']) {
                     $hashpassOk = Security::encrypt($dataNotOk['password']);
                     $dataOk = array(
@@ -198,7 +198,7 @@ class ControllerUser {
                         'mail' => $_POST['mail'],
                         'birthDate' => $_POST['birthDate'],
                         'isAdmin' => $_POST['isAdmin'],
-                        'nickName' => $_SESSION['login']
+                        'nickName' => $_SESSION['nickName']
                     );
                     $res = ModelUser::update($dataOk);
                     if ($res == TRUE) {
@@ -221,7 +221,7 @@ class ControllerUser {
     }
 
     public static function validate() {
-        $login = $_GET['login'];
+        $login = $_GET['nickName'];
         $nonce = $_GET['nonce'];
         $user = ModelUser::select($login);
         if($user != false){
