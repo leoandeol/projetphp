@@ -186,52 +186,6 @@ class ControllerUser {
                 'isAdmin' => $_POST['isAdmin'],
                 'oldPass' => $_POST['oldPassword']
             );
-            
-            if($_POST['lastName']==NULL){
-                if($_POST['firstName']==NULL){
-                    if($_POST['newPassword']==NULL){
-                        if($_POST['confPassword']==NULL){
-                            if($_POST['mail']==NULL){
-                                if($_POST['birthDate']==NULL){
-                                    array_splice($dataNotOk,0,6);
-                                }else{
-                                    array_splice($dataNotOk,0,5);
-                                }
-                            }else{
-                                if($_POST['birthDate']==NULL){
-                                    array_splice($dataNotOk,0,4);
-                                    array_splice($dataNotOk,1);
-                                }else{
-                                    array_splice($dataNotOk,0,4);
-                                }
-                            }
-                        }else{
-                            ControllerDefault::error("Veuillez d'abord entrer un nouveau mot de passe");
-                        }
-                    }else{
-                        if($_POST['confPassword']==NULL){
-                            ControllerDefault::error("Veuillez confirmer le mot nouveau mot de passe");
-                        }else{
-                            if($_POST['mail']==NULL){
-                                if($_POST['birthDate']==NULL){
-                                    array_splice($dataNotOk,0,2);
-                                    array_splice($dataNotOk,2,2);
-                                }else{
-                                    array_splice($dataNotOk,0,2);
-                                    array_splice($dataNotOk,2);
-                                }
-                            }else{
-                                if($_POST['birthDate']==NULL){
-                                    array_splice($dataNotOk,0,2);
-                                    array_splice($dataNotOk,3);
-                                }else{
-                                    array_splice($dataNotOk,0,2);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
                     
             $hashpass = Security::encrypt($dataNotOk['oldPass']);
             if (ModelUser::checkPassword($_SESSION['login'], $hashpass)) {
