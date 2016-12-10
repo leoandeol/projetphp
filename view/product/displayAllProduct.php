@@ -12,6 +12,7 @@ if ($tab_p != false) {
         echo <<< EOT
             <div class="read readAll">
                 <div class="name">$pLabel </div>
+                <img src="res/$pId.jpg" />
                 <div class="price">Prix :  $pPrice €</div>
                 <div class="description">$pSDesc</div>
                 
