@@ -188,7 +188,7 @@ class ControllerProduct {
                 'completeDesc' => $pCDesc
             );
 
-            $extensions_valides = array('jpg', 'jpeg', 'gif', 'png');
+            $extensions_valides = array('jpg');
             $extension_upload = strtolower(substr(strrchr($_FILES['path']['name'], '.'), 1));
             if (!in_array($extension_upload, $extensions_valides))
             {

@@ -12,8 +12,8 @@ if ($tab_p != false) {
         $secureId = rawurldecode($p->getId());
         echo <<< EOT
             <div class="read readAll">
-                <div class="id">ID :  $pId ~</div>
                 <div class="name">$pLabel </div>
+                <img src="res/$pId.jpg" />
                 <div class="price">Prix :  $pPrice €</div>
                 <div class="description">$pSDesc</div>
                 
