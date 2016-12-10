@@ -225,17 +225,13 @@ class ControllerProduct {
             }
             
             $nom = "res/upload/produit$pId.$extension_upload";
-            $nom = "res/upload/produit$pId.jpg";
+            $nom2 = "res/upload/produit$pId.jpg";
             move_uploaded_file($_FILES['path']['tmp_name'], $nom);
             File::convertImage($nom, $nom2, 100);
             //TODO setfacl for rights to apache
 
             if (ModelProduct::save($data)) {
-                $view = 'createdProduct';
-                $controller = 'product';
-                $pagetitle = 'Produit créé';
-
-                require File::build_path(array('view', 'view.php'));
+                ControllerProduct::readAll();
             } else {
 				$dataEr['error'] =  "Extension incorrecte";
 				$dataEr['view'] =	"updateProduct";
