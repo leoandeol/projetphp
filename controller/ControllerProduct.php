@@ -137,8 +137,7 @@ class ControllerProduct {
             $pagetitle = 'Modification d\' produit';
             require File::build_path(array('view', 'view.php'));
         } else {
-            $error = "Vous n'avez pas les droits nécessaires pour effectuer cette action. ";
-            ControllerUser::error();
+            ControllerUser::error( "Vous n'avez pas les droits nécessaires pour effectuer cette action. ");
         }
     }
 
@@ -165,8 +164,7 @@ class ControllerProduct {
                 $tab_p = ModelProduct::selectAll();
                 require FILE::build_path(array('view', 'view.php'));
             } else {
-                $error = "FATAL ERROR";
-                ControllerUser::error();
+                ControllerUser::error("FATAL ERROR");
             }
         } else {
 
@@ -210,8 +208,7 @@ class ControllerProduct {
                 ControllerDefault::error("FATAL ERROR");
             }
         } else {
-            $error = "Vous n'avez pas les droits nécessaires pour effectuer cette action. ";
-            ControllerUser::error();
+            ControllerUser::error("Vous n'avez pas les droits nécessaires pour effectuer cette action. ");
         }
     }
 
@@ -227,8 +224,7 @@ class ControllerProduct {
 
             require File::build_path(array('view', 'view.php'));
         } else {
-            $error = "Vous n'avez pas les droits nécessaires pour effectuer cette action. ";
-            ControllerUser::error();
+            ControllerUser::error( "Vous n'avez pas les droits nécessaires pour effectuer cette action. ");
         }
     }
 
@@ -236,15 +232,20 @@ class ControllerProduct {
 
         $data = $_GET['search'];
         $tab = ModelProduct::research($data);
-		$tab_p = array();
-		foreach($tab as $key){
-			array_push($tab_p,ModelProduct::Select($key['label']));
-		}
-        $view = 'displayAllProduct';
-        $controller = 'product';
-        $pagetitle = 'Description des produits';
+		if($tab == false){
+			ControllerDefault::error( "Aucun article ne correspond à la recherche");
+		}else{
+			var_dump($tab);
+			$tab_p = array();
+			foreach($tab as $key){
+				array_push($tab_p,ModelProduct::Select($key['label']));
+			}
+			$view = 'displayAllProduct';
+			$controller = 'product';
+			$pagetitle = 'Description des produits';
 
-        require File::build_path(array('view', 'view.php'));
+			require File::build_path(array('view', 'view.php'));
+		}
     }
 
 }
