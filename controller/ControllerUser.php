@@ -36,7 +36,11 @@ class ControllerUser {
             $pagetitle = 'Description';
             require File::build_path(array('view', 'view.php'));
         } else {
-            ControllerDefault::error("Vous n'avez pas la permission pour accéder à ce contenu.");
+			$data = array();
+			$data['error'] = "Vous n'avez pas la permission pour accéder à ce contenu";
+			$data['view'] = 'error';
+			$data['controller'] = 'default';
+            ControllerDefault::error($data);
         }
     }
 
@@ -48,7 +52,11 @@ class ControllerUser {
             $pagetitle = 'Description';
             require File::build_path(array('view', 'view.php'));
         } else {
-            ControllerDefault::error("Vous n'avez pas la permission pour accéder à ce contenu.");
+			$data = array();
+            $data['error'] = "Vous n'avez pas la permission pour accéder à ce contenu";
+			$data['view'] = 'error';
+			$data['controller'] = 'default';
+            ControllerDefault::error($data);
         }
     }
 
@@ -62,7 +70,11 @@ class ControllerUser {
     public static function registered() {
 //TODO comparer les 2 mots de passes + verifier si utilisateur existe deja
         if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
-            ControllerDefault::error("Problème avec le mail.");
+			$data = array();
+			$data['error'] = "Email invalide";
+			$data['view'] = 'register';
+			$data['controller'] = 'user';
+            ControllerDefault::error($data);
         }
         $hashpass = Security::encrypt($_POST['password']);
         $nonce = Security::generateRandomHex();
@@ -101,7 +113,11 @@ class ControllerUser {
             $pagetitle = 'Compte créé';
             require File::build_path(array('view', 'view.php'));
         }else{
-            ControllerDefault::error("FATAL ERROR");
+			$data = array();
+			$data['error'] = "Problème de création de compte";
+			$data['view'] = 'register';
+			$data['controller'] = 'user';
+            ControllerDefault::error($data);			
         }
     }
 
@@ -138,7 +154,12 @@ class ControllerUser {
             }else
                 require File::build_path(array('view', 'view.php'));
         } else {
-            ControllerDefault::error("FATAL ERROR");
+			$data = array();
+			$data['error'] = "Problème de connexion";
+			$data['view'] = 'connect';
+			$data['controller'] = 'user';
+			$data['login'] = $_POST['nickname'];
+            ControllerDefault::error($data);	
         }
     }
 
@@ -165,11 +186,23 @@ class ControllerUser {
             $bDate = htmlspecialchars($_SESSION['birthDate']);
             require File::build_path(array('view', 'view.php'));
         } else {
-            ControllerDefault::error("Veuillez vous connecter.");
+			$data = array();
+			$data['error'] = "Veuillez vous connecter";
+			$data['view'] = 'connect';
+			$data['controller'] = 'user';
+            ControllerDefault::error($data);
         }
     }
 
     public static function updated() {
+		$dataError = array();
+		$dataError['nName'] = htmlspecialchars($_SESSION['nickName']);
+		$dataError['fName'] = htmlspecialchars($_SESSION['firstName']);
+		$dataError['lName']= htmlspecialchars($_SESSION['lastName']);
+		$dataError['mail']  = htmlspecialchars($_SESSION['mail']);
+		$dataError['bDate'] = htmlspecialchars($_SESSION['birthDate']);		
+		$dataError['checkBoxAdmin'] = ControllerUser::setCheckBox();
+		
         if (Session::is_connected()) {
             if (!isset($_POST['isAdmin'])) {
                 $_POST['isAdmin'] = 0;
@@ -206,17 +239,29 @@ class ControllerUser {
                         $pagetitle = 'Updated';
                         $controller = 'user';
                         require File::build_path(array('view', 'view.php'));
-                    } else {
-                        ControllerDefault::error("FATAL ERROR");
+                    } else {						
+						$dataError['error'] = "Problème de mofications des données";
+						$dataError['view'] = 'update';
+						$dataError['controller'] = 'user';
+						ControllerDefault::error($dataError);
                     }
-                } else {
-                    ControllerDefault::error("Les nouveaux mots de passe ne coïncident pas");
+                } else {					
+					$dataError['error'] = "Les nouveaux mots de passes ne coïncident pas";
+					$dataError['view'] = 'update';
+					$dataError['controller'] = 'user';
+					ControllerDefault::error($dataError);
                 }
             } else {
-                ControllerDefault::error("Mot de passe actuel invalide");
+				$dataError['error'] = "Mot de passe actuel invalide";
+				$dataError['view'] = 'update';
+				$dataError['controller'] = 'user';
+				ControllerDefault::error($dataError);
             }
         } else {
-            ControllerDefault::error("Veuillez vous connecter.");
+            $dataError['error'] = "Veuillez vous connecter";
+			$dataError['view'] = 'connect';
+			$dataError['controller'] = 'user';
+			ControllerDefault::error($dataError);
         }
     }
 
@@ -235,10 +280,18 @@ class ControllerUser {
                 $pagetitle = 'Bienvenue';
                 require_once(File::build_path(array('view','view.php')));
             }else{
-                ControllerDefault::error("Problème de confirmation.");
+				$data = array();
+				$data['error'] = "Problème de confirmation du mail";
+				$data['view'] = 'error';
+				$data['controller'] = 'default';
+				ControllerDefault::error($data);
             }
         }else{
-            ControllerDefault::error("FATAL ERROR.");
+			$data = array();
+			$data['error'] = "FATAL ERROR";
+			$data['view'] = 'error';
+			$data['controller'] = 'default';
+			ControllerDefault::error($data);
         }
     }
 
