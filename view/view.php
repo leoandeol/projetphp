@@ -7,25 +7,24 @@
     </head>
     <body>
         <header>
-            <div class='menu-logo'>
-                <img class='menu-logo-img' src='res/logo.png'>
+            <a class='menu-logo' href="index.php">
+                <img class='menu-logo-img' src='res/logo.png' alt='logo'>
                 <div class='menu-logo-content'>
                     Neo-nouveau développeurs
                 </div>
-            </div>
+            </a>
             <div class="menu-search">
-                <form class="input-search" action="research" controller="product" method="POST">
+                <form class="input-search" action="index.php" method="GET">
+                    <input type="hidden" name="action" value="research">
+                    <input type="hidden" name="controller" value="product">
                     <input class="input-field" type="text" name="search" placeholder="Recherche..." required>
                     <input class="input-item" type="submit" value="Envoyer">
                 </form> 
             </div>
             <div class='menu-buttons'>
-                <div class='menu-item'>
-                    <a href='index.php'>Accueil</a>
-                </div>
-
-                <div class="menu-item">
-                    <a href="index.php?controller=product&action=readAll">Liste article</a>
+                <div class="menu-item basket">
+                    <span><?php Session::get_nbItems()?></span>
+                    <a href="index.php?controller=product&action=viewPanier">Panier</a>
                 </div>
                 <div class='menu-dropdown'>
                     <a href='index.php?controller=user&action=displaySelf'>Compte</a>
@@ -41,15 +40,16 @@ EOT;
                         echo <<< EOT
                      <div class='menu-dropdown-content'>
                         <a href='index.php?action=update&controller=user'>Paramètres</a>
+EOT;
+                        if(Session::is_admin()){
+                            echo "<a href='index.php?action=create&controller=product'>Ajouter un Produit</a>";
+                        }
+                        echo <<< EOT
                         <a href='index.php?action=disconnect&controller=user'>Se déconnecter</a>
                     </div>
 EOT;
                     }
                     ?>
-                </div>
-
-                <div class='menu-item'>
-                    <a href='index.php?action=about'>A propos</a>
                 </div>
             </div>
         </header>
@@ -62,7 +62,7 @@ EOT;
             </article>
         </main>
         <footer>
-            <p> Team requêtes INC.</p>  
+            <p> Team requêtes © <a href='index.php?action=about'>Notre équipe</a></p>
         </footer>
     </body>
 </html>

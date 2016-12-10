@@ -1,4 +1,5 @@
 <?php
+require_once File::build_path(array("model","ModelOrderContent.php"));
 
 class Panier {
 
@@ -9,20 +10,36 @@ class Panier {
             $_SESSION['panier']=array(
                 'label' => array(),
                 'price' => array(),
+                'option' => array(),
                 'verrou' => false
             );
         }
         return true;
     }
     
+    public static function saveArticles($idCommand){
+        if(self::createPanier() && !self::is_verouille()){
+            for($i = 0; $i < self::countArticles(); $i++){
+                $article = ModelProduct::select($_SESSION['panier']['label'][$i]);
+                $idArticle = $article->getId();
+                $d = array(
+                  'idOrder' => $idCommand,
+                  'idProduct' => $idArticle
+                );
+                ModelOrderContent::save($d);
+            }
+        }
+        self::clearPanier();
+    }
+
+
+    
     public static function clearPanier(){
-        
-        if(!isset($_SESSION['panier'])){
+        if(isset($_SESSION['panier'])){
             session_unset();     // unset $_SESSION variable for the run-time 
             session_destroy();   // destroy session data in storage
             setcookie(session_name(),'',time()-1);            
         }
-        
     }
 
     public static function addArticle($label,$price){

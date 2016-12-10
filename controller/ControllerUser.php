@@ -4,7 +4,7 @@ require_once File::build_path(array('model', 'ModelUser.php'));
 
 class ControllerUser {
 
-    public function setCheckBox() {
+    public static function setCheckBox() {
         if (Session::is_admin() && Session::is_connected()) {
             return '<p>
                     <label for="isAd">isAdmin</label>
@@ -14,8 +14,7 @@ class ControllerUser {
             return '';
         }
     }
-
-    public function displaySelf() {
+    public static function displaySelf() {
         if (Session::is_connected()) {
             $id = $_SESSION['login'];
             $user = ModelUser::select($id);
@@ -28,7 +27,7 @@ class ControllerUser {
         }
     }
 
-    public function read() {
+    public static function read() {
         if (Session::is_admin()) {
             $id = $_GET['nickName'];
             $user = ModelUser::select($id);
@@ -41,7 +40,7 @@ class ControllerUser {
         }
     }
 
-    public function readAll() {
+    public static function readAll() {
         if (Session::is_admin() && Session::is_connected()) {
             $tab_user = ModelUser::selectAll();
             $view = 'displayAllUser';
@@ -53,40 +52,44 @@ class ControllerUser {
         }
     }
 
-    public function register() {
+    public static function register() {
         $view = 'register';
         $controller = 'user';
         $pagetitle = 'Création de compte';
         require File::build_path(array('view', 'view.php'));
     }
 
-    public function registered() {
+    public static function registered() {
 //TODO comparer les 2 mots de passes + verifier si utilisateur existe deja
         if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
-//do smthing if bad mail
+            ControllerDefault::error("Problème avec le mail.");
         }
         $hashpass = Security::encrypt($_POST['password']);
         $nonce = Security::generateRandomHex();
         $bDate = $_POST['birthdate'];
         $format = "d/m/Y";
         $date_parsed = date_parse_from_format($format, $bDate);
-        $goodFormatDate = $date_parsed["year"].$date_parsed["month"].$date_parsed["day"];
-        var_dump($goodFormatDate);
+        $goodFormatDate = $date_parsed["year"]."/".$date_parsed["month"]."/".$date_parsed["day"];
         $data = array('nickName' => $_POST['nickname'],
                       'nonce'    => $nonce,
                       'lastName' => $_POST['lastname'],
                       'firstName'=> $_POST['firstname'],
-                      'password' => $hashpass, 
-                      'mail'     => $_POST['email'], 
+                      'password' => $hashpass,
+                      'mail'     => $_POST['email'],
                       'birthDate'=> $goodFormatDate,
-                      'isAdmin'  => 0,
+                      'isAdmin'  => 0
                 );
         
+
         // REGISTERING INFO INTO $_SESSION
+        $_SESSION['nickName'] = $data['nickName'];
         $_SESSION['lastName'] = $data['lastName'];
         $_SESSION['firstName']= $data['firstName'];
         $_SESSION['mail']     = $data['mail'];
         $_SESSION['birthDate']= $data['birthDate'];
+
+        // REGISTERING INFO INTO $_SESSION AND CONNECTING
+        Session::connect($data['nickName'],$data['firstName'], $data['lastName'], $data['birthDate'], $data['mail']);
         
         if(ModelUser::save($data)){
             $nickNameSecure = rawurlencode($_POST['nickname']);
@@ -101,35 +104,45 @@ class ControllerUser {
         }
     }
 
-    public function connect() {
+    public static function connect() {
         $view = 'connect';
         $controller = 'user';
         $pagetitle = 'Connexion';
         require File::build_path(array('view', 'view.php'));
     }
 
-    public function connected() {
+    public static function connected() {
         $hashpass = Security::encrypt($_POST['password']);
         $user = ModelUser::connect($_POST['nickname'], $hashpass);
         if ($user != NULL) {
             $view = 'connected';
             $controller = 'user';
             $pagetitle = 'Connecté';
-            $_SESSION['login'] = $user->getNickName();
+            Session::setLogin($user->getNickName());
             if ($user->getIsAdmin() == 1) {
                 $_SESSION['admin'] = 1;
             } else {
                 $_SESSION['admin'] = 0;
             }
+            $nickName = $user->getNickName();
             $name = $user->getFirstName();
-            Session::connect();
-            require File::build_path(array('view', 'view.php'));
+            $lname = $user->getLastName();
+            $birthDate = $user->getBirthDate();
+            $format = "Y/m/d";
+            $date_parsed = date_parse_from_format($format, $birthDate);
+            $goodFormatDate = $date_parsed["day"]."/".$date_parsed["month"]."/".$date_parsed["year"];
+            $mail = $user->getMail();
+            Session::connect($nickName,$name,$lname,$goodFormatDate,$mail);
+            if(isset($orderCommand) && $orderCommand){
+                ControllerProduct::orderCommand();
+            }else
+                require File::build_path(array('view', 'view.php'));
         } else {
             ControllerDefault::error("FATAL ERROR");
         }
     }
 
-    public function disconnect() {
+    public static function disconnect() {
         session_unset();
         session_destroy();
         $user = null;
@@ -139,12 +152,13 @@ class ControllerUser {
         require File::build_path(array('view', 'view.php'));
     }
 
-    public function update() {
+    public static function update() {
         if (Session::is_connected()) {
             $checkBoxAdmin = ControllerUser::setCheckBox();
             $view = 'update';
             $pagetitle = 'Update';
             $controller = 'user';
+            $nName = htmlspecialchars($_SESSION['nickName']);
             $fName = htmlspecialchars($_SESSION['firstName']);
             $lName = htmlspecialchars($_SESSION['lastName']);
             $mail  = htmlspecialchars($_SESSION['mail']);
@@ -155,7 +169,7 @@ class ControllerUser {
         }
     }
 
-    public function updated() {
+    public static function updated() {
         if (Session::is_connected()) {
             if (!isset($_POST['isAdmin'])) {
                 $_POST['isAdmin'] = 0;
@@ -165,13 +179,60 @@ class ControllerUser {
             $dataNotOk = array(
                 'lastName' => $_POST['lastName'],
                 'firstName' => $_POST['firstName'],
-                'password' => $_POST['newPassword'],
-                'oldPass' => $_POST['oldPassword'],
+                'newPassword' => $_POST['newPassword'],
                 'confPass' => $_POST['confPassword'],
                 'mail' => $_POST['mail'],
                 'birthDate' => $_POST['birthDate'],
-                'isAdmin' => $_POST['isAdmin']
+                'isAdmin' => $_POST['isAdmin'],
+                'oldPass' => $_POST['oldPassword']
             );
+            
+            if($_POST['lastName']==NULL){
+                if($_POST['firstName']==NULL){
+                    if($_POST['newPassword']==NULL){
+                        if($_POST['confPassword']==NULL){
+                            if($_POST['mail']==NULL){
+                                if($_POST['birthDate']==NULL){
+                                    array_splice($dataNotOk,0,6);
+                                }else{
+                                    array_splice($dataNotOk,0,5);
+                                }
+                            }else{
+                                if($_POST['birthDate']==NULL){
+                                    array_splice($dataNotOk,0,4);
+                                    array_splice($dataNotOk,1);
+                                }else{
+                                    array_splice($dataNotOk,0,4);
+                                }
+                            }
+                        }else{
+                            ControllerDefault::error("Veuillez d'abord entrer un nouveau mot de passe");
+                        }
+                    }else{
+                        if($_POST['confPassword']==NULL){
+                            ControllerDefault::error("Veuillez confirmer le mot nouveau mot de passe");
+                        }else{
+                            if($_POST['mail']==NULL){
+                                if($_POST['birthDate']==NULL){
+                                    array_splice($dataNotOk,0,2);
+                                    array_splice($dataNotOk,2,2);
+                                }else{
+                                    array_splice($dataNotOk,0,2);
+                                    array_splice($dataNotOk,2);
+                                }
+                            }else{
+                                if($_POST['birthDate']==NULL){
+                                    array_splice($dataNotOk,0,2);
+                                    array_splice($dataNotOk,3);
+                                }else{
+                                    array_splice($dataNotOk,0,2);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+                    
             $hashpass = Security::encrypt($dataNotOk['oldPass']);
             if (ModelUser::checkPassword($_SESSION['login'], $hashpass)) {
                 if ($dataNotOk['password'] == $dataNotOk['confPass']) {
@@ -205,21 +266,20 @@ class ControllerUser {
         }
     }
 
-    public function validate() {
+    public static function validate() {
         $login = $_GET['login'];
         $nonce = $_GET['nonce'];
         $user = ModelUser::select($login);
-        var_dump($user);
         if($user != false){
             if($user->getNonce() == $nonce){
-                $data = array(
-                    'nonce' => NULL
-                );
+                $data = array();
+                $data['nonce']="";
+                $data['nickName']=$login;
                 ModelUser::update($data);
                 $view = 'validated';
                 $controller = 'user';
                 $pagetitle = 'Bienvenue';
-                File::build_path(array('view','view.php'));
+                require_once(File::build_path(array('view','view.php')));
             }else{
                 ControllerDefault::error("Problème de confirmation.");
             }
@@ -230,5 +290,3 @@ class ControllerUser {
 
 }
 ?>
-
-

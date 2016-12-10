@@ -2,6 +2,7 @@
 
 require_once File::build_path(array('model', 'ModelProduct.php'));
 require_once File::build_path(array('model', 'ModelOption.php'));
+require_once File::build_path(array('model', 'ModelOrder.php'));
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -19,7 +20,34 @@ class ControllerProduct {
 
     //###Action du panier
 
+    public static function orderCommand() {
+        $view = 'listCommand';
+        if (Session::is_connected()) {
+            $controller = 'product';
+            $pagetitle = 'Listes des commandes précédentes';
+            
+            $bDate = date('Y/m/d');
+            $state = "En cours";
+            $nickName = $_SESSION['nickName'];
+            $data = array(
+               'nickName' => $nickName,
+               'date' => $bDate,
+               'state' => $state,
+               'price' => Panier::totalPrice()
+            );
+            
 
+            
+            ModelOrder::save($data);
+            $idOrder = ModelOrder::get_id($nickName, $bDate, $state);
+            Panier::saveArticles($idOrder);
+            
+            require File::build_path(array('view', 'view.php'));
+        } else {
+            $orderCommand = true;
+            ControllerUser::connect();
+        }
+    }
 
     public static function viewPanier() {
         $view = 'displayPanier';
@@ -31,6 +59,9 @@ class ControllerProduct {
     public static function addPanier() {
         $label = $_GET['label'];
         $price = $_GET['price'];
+
+
+
         Panier::addArticle($label, $price);
         self::viewPanier();
     }
@@ -42,13 +73,13 @@ class ControllerProduct {
     }
 
     public static function clearPanier() {
-        Panier::clearPanier($label);
+        Panier::clearPanier();
         self::viewPanier();
     }
 
     //###Pour les options
 
-    public function readOption() {
+    public static function readOption() {
         $label = $_GET['label'];
         $p = ModelOption::select($label);
 
@@ -61,10 +92,11 @@ class ControllerProduct {
     //###Action des produits
 
 
-    public function read() {
+    public static function read() {
         $label = $_GET['label'];
         $p = ModelProduct::select($label);
-        $o = $p->selectAllOption();
+        if(!is_null($p))
+            $o = $p->selectAllOption();
 
         $view = 'displayProduct';
         $controller = 'product';
@@ -72,7 +104,7 @@ class ControllerProduct {
         require File::build_path(array('view', 'view.php'));
     }
 
-    public function readAll() {
+    public static function readAll() {
         $tab_p = ModelProduct::selectAll();
 
         $view = 'displayAllProduct';
@@ -82,7 +114,7 @@ class ControllerProduct {
         require File::build_path(array('view', 'view.php'));
     }
 
-    public function create() {
+    public static function create() {
         $view = 'updateProduct';
         $controller = 'product';
         $pagetitle = 'Création de produit';
@@ -92,7 +124,7 @@ class ControllerProduct {
         require File::build_path(array('view', 'view.php'));
     }
 
-    public function update() {
+    public static function update() {
         if (Session::is_admin() && Session::is_connected()) {
 
             $label = $_GET['label'];
@@ -110,7 +142,7 @@ class ControllerProduct {
         }
     }
 
-    public function updated() {
+    public static function updated() {
         if (Session::is_admin() && Session::is_connected()) {
             $pId = $_POST['idP'];
             $pLabel = $_POST['label'];
@@ -142,8 +174,8 @@ class ControllerProduct {
         }
     }
 
-    public function created() {
-         if (Session::is_admin() && Session::is_connected()) {
+    public static function created() {
+        if (Session::is_admin() && Session::is_connected()) {
             $pId = $_POST['idP'];
             $pLabel = $_POST['label'];
             $pPrice = $_POST['price'];
@@ -158,6 +190,16 @@ class ControllerProduct {
                 'completeDesc' => $pCDesc
             );
 
+            $extensions_valides = array('jpg', 'jpeg', 'gif', 'png');
+            $extension_upload = strtolower(substr(strrchr($_FILES['path']['name'], '.'), 1));
+            if (!in_array($extension_upload, $extensions_valides))
+            {
+                ControllerDefault::error("Extension correcte");
+            }
+            $nom = "res/upload/produit$pId.$extension_upload";
+            move_uploaded_file($_FILES['path']['tmp_name'], $nom);
+            //TODO setfacl for rights to apache
+
             if (ModelProduct::save($data)) {
                 $view = 'createdProduct';
                 $controller = 'product';
@@ -165,15 +207,15 @@ class ControllerProduct {
 
                 require File::build_path(array('view', 'view.php'));
             } else {
-            ControllerDefault::error("FATAL ERROR");
+                ControllerDefault::error("FATAL ERROR");
             }
-         }else {
+        } else {
             $error = "Vous n'avez pas les droits nécessaires pour effectuer cette action. ";
             ControllerUser::error();
         }
     }
 
-    public function delete() {
+    public static function delete() {
         if (Session::is_admin() && Session::is_connected()) {
             $id = $_GET['idProduct'];
 
@@ -184,11 +226,22 @@ class ControllerProduct {
             $pagetitle = 'Produit supprimé';
 
             require File::build_path(array('view', 'view.php'));
-
-        }else {
+        } else {
             $error = "Vous n'avez pas les droits nécessaires pour effectuer cette action. ";
             ControllerUser::error();
         }
+    }
+
+    public static function research() {
+
+        $data = $_GET['search'];
+        $tab_p = ModelProduct::research($data);
+
+        $view = 'displayAllProduct';
+        $controller = 'product';
+        $pagetitle = 'Description des produits';
+
+        require File::build_path(array('view', 'view.php'));
     }
 
 }

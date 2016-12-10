@@ -7,21 +7,21 @@
  */
 class ControllerDefault {
     
-    public function welcome() {
+    public static function welcome() {
         $view = 'welcome';
         $controller = 'default';
         $pagetitle = 'Accueil';
         require File::build_path(array('view', 'view.php'));
     }
     
-    public function about() {
+    public static function about() {
         $view = 'about';
         $controller = 'default';
         $pagetitle = 'A propos';
         require File::build_path(array('view', 'view.php'));
     }
 
-    public function error($e) {
+    public static function error($e) {
         $error = $e;
         $view = 'error';
         $controller = 'default';

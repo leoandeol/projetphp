@@ -86,6 +86,7 @@ class ModelProduct extends Model {
         }
     }
 
+
     public function selectAllOption() {
         try {
             $sql = "SELECT * FROM Products P JOIN Options O ON O.idProduct = P.idProduct WHERE P.idProduct=:id";
@@ -103,7 +104,6 @@ class ModelProduct extends Model {
             return false;
         }
     }
-
 }
 
 /*

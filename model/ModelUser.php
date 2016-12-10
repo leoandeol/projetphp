@@ -134,12 +134,10 @@ class ModelUser extends Model{
                 } else {
                     echo "une erreur est survenue.";
                 }
-                return null;
+                return NULL;
             }
-        } else if ($result[0] >= 1) {
-            return null;
-        } else {
-            return null;
+        } else{
+            return NULL;
         }
     }
 }

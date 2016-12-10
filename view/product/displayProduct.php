@@ -23,6 +23,7 @@ EOT;
 
 if ($nbOption != 0) {
     echo "<form method = \"post\" action = \"index.php\">";
+    $i = 0;
     foreach($o as $object) {
     $pIdO = htmlspecialchars($object->getId());
         $pNameO = htmlspecialchars($object->getName());
@@ -32,10 +33,11 @@ if ($nbOption != 0) {
         echo <<<EOT
             <fieldset style="margin:5px;">
 EOT;
+        $name = "check" . $i;
+        $i++;
         
-            if(Session::is_connected()){
-               echo "<input type=\"checkbox\" name=\"$pNameO\">";
-            }
+        echo "<input type=\"checkbox\" name=\"$name\">";
+
 echo <<<EOT
                 <div class="id">ID : $pIdO</div>
                 <div class="label">Nom : $pNameO</div>
@@ -48,9 +50,9 @@ EOT;
             echo "</form>";
 }
 
-if (Session::is_connected()) {
+
     echo "<a href=\"index.php?action=addPanier&controller=product&label=$secureLabel&price=$securePrice\"><div class=\"redirect\" style=\"border:1px solid black;text-align:center;background-color:blue;\">Ajouter au panier</div></a>";
-}
+
 
 
 
