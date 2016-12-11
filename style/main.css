@@ -177,17 +177,6 @@ footer a {
     }
 }
 
-.basket {
-    display:flex;
-}
-
-.basket span {
-    color:red;
-    text-align:center;
-    width:20%;
-    height:100%;
-}
-
 .basket a {
     
 }

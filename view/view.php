@@ -22,9 +22,8 @@
                 </form> 
             </div>
             <div class='menu-buttons'>
-                <div class="menu-item basket">
-                    <span><?php echo Session::get_nbItems()?></span>
-                    <a href="index.php?controller=product&action=viewPanier">Panier</a>
+                <div class="menu-item">
+                    <a href="index.php?controller=product&action=viewPanier">Panier : <?php echo Session::get_nbItems()?></a>
                 </div>
                 <div class='menu-dropdown'>
                     <a href='index.php?controller=user&action=displaySelf'>Compte</a>
