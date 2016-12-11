@@ -37,11 +37,13 @@ class Panier {
 
     
     public static function clearPanier(){
-        if(isset($_SESSION['panier'])){
-            session_unset();     // unset $_SESSION variable for the run-time 
-            session_destroy();   // destroy session data in storage
-            setcookie(session_name(),'',time()-1);            
-        }
+            $clear =array(
+                'label' => array(),
+                'price' => array(),
+                'quantity' => array(),
+                'verrou' => false
+            );
+            $_SESSION['panier'] = $clear;
     }
 
     public static function addArticle($label,$price){

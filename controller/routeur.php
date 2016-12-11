@@ -3,6 +3,8 @@
 require_once File::build_path(array('controller','ControllerUser.php'));
 require_once File::build_path(array('controller','ControllerProduct.php'));
 require_once File::build_path(array('controller','ControllerDefault.php'));
+require_once File::build_path(array('controller','ControllerOrder.php'));
+
 require_once FIle::build_path(array('lib', 'Security.php'));
 require_once FIle::build_path(array('lib', 'Session.php'));
 require_once FIle::build_path(array('lib', 'Panier.php'));
@@ -23,13 +25,16 @@ if(isset($_GET['controller'])){
 }
 
 $controllerClass = 'Controller' . ucfirst($controller);
-
-
 if(!(class_exists($controllerClass))){
     ControllerDefault::error("FATAL ERROR");
+    
 }else{
+    
     if(!(in_array($action,  get_class_methods($controllerClass)))){
+        
         ControllerDefault::error("La fonction que vous voulez utiliser n'existe pas");
+        
+
     }else{
         $controllerClass::$action();
     }    

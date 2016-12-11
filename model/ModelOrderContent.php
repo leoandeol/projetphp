@@ -19,7 +19,31 @@ class ModelOrderContent extends Model {
 
         }
     }
+    public static function selectAllProduct($values){
+        try {
+            $sql = "SELECT P.idProduct, P.label, P.price, P.shortDesc, P.completeDesc "
+                    . "FROM Products P "
+                    . " JOIN OrderContents OC ON OC.idProduct=P.idProduct"
+                    . " JOIN Orders O ON O.idOrder=OC.idOrder "
+                    . "WHERE O.idOrder=:idOrder; ";
 
+            
+            $req_prep = Model::$pdo->prepare($sql);
+            $req_prep->execute($values);
+
+            $bite = $req_prep->setFetchMode(PDO::FETCH_CLASS, 'ModelProduct');
+            $tab_p = $req_prep->fetchAll();
+
+
+            if (empty($tab_p)) {
+                return false;
+            }
+            return $tab_p;
+
+        } catch (Exception $e) {
+            return false;
+        }
+    }
 }
 ?>
 

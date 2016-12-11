@@ -12,6 +12,10 @@ class ModelOrder extends Model{
     protected static $object = "order";
     protected static $primary = 'idOrder';
 
+    
+  public function getIDOrder(){
+    return $this->idOrder;
+  }
   public function getState(){
     return $this->state;
   }
@@ -36,9 +40,6 @@ class ModelOrder extends Model{
     $this->date = $d;
   }	
 
-  public function getIDOrder(){
-    return $this->idOrder;
-  }
 
   public function getPrice(){
     return $this->price;
@@ -78,6 +79,31 @@ class ModelOrder extends Model{
                 echo 'Une erreur est survenue <a href=""> retour a la page d\'accueil </a>';
             }
             die();
+        }
+  }
+  public static function selectAllByUserName($values){
+       try {
+
+            $sql = "SELECT * FROM Orders WHERE nickName=:nickName;";
+
+            $req_prep = Model::$pdo->prepare($sql);
+            $req_prep->execute($values);
+            $req_prep->setFetchMode(PDO::FETCH_CLASS, 'ModelOrder');
+
+            $tab_p = $req_prep->fetchAll();
+
+
+            if (empty($tab_p)) {
+                return false;
+            }
+            return $tab_p;
+        } catch (PDOException $e) {
+            if (Conf::getDebug()) {
+                echo $e->getMessage(); // affiche un message d'erreur
+            } else {
+                echo 'Une erreur est survenue <a href=""> retour a la page d\'accueil </a>';
+            }
+            return false;
         }
   }
 }

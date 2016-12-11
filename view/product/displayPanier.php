@@ -5,7 +5,7 @@
     <div> Panier de l'utilisateur <br>
     <h2><a href="index.php?controller=product&action=clearPanier">Vider le panier</a></h2><br></div>
     
-<form method="post" action="index.php?controller=product&action=orderCommand">
+<form method="post" action="index.php?controller=order&action=create">
 <table style="width: 400px">
 	<tr>
 		<td colspan="4">Votre panier</td>

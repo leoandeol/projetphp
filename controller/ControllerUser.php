@@ -152,8 +152,9 @@ class ControllerUser {
             $goodFormatDate = $date_parsed["day"]."/".$date_parsed["month"]."/".$date_parsed["year"];
             $mail = $user->getMail();
             Session::connect($nickName,$name,$lname,$goodFormatDate,$mail);
-            if(isset($orderCommand) && $orderCommand){
-                ControllerProduct::orderCommand();
+            if(isset($_SESSION['orderCommand']) && $_SESSION['orderCommand']){
+                unset($_SESSION['orderCommand']);
+                ControllerOrder::create();
             }else
                 require File::build_path(array('view', 'view.php'));
         } else {

@@ -2,8 +2,6 @@
 
 require_once File::build_path(array('model', 'ModelProduct.php'));
 require_once File::build_path(array('model', 'ModelOption.php'));
-require_once File::build_path(array('model', 'ModelOrder.php'));
-require_once File::build_path(array('lib', 'File.php'));
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -20,38 +18,6 @@ class ControllerProduct {
     protected static $object = 'product';
 
     //###Action du panier
-
-    public static function orderCommand() {
-        $view = 'listCommand';
-        if (Session::is_connected()) {
-            if( Panier::countArticles() > 0){
-                $controller = 'product';
-                $pagetitle = 'Listes des commandes précédentes';
-
-                $bDate = date('Y/m/d');
-                $state = "En cours";
-                $nickName = $_SESSION['nickName'];
-                $price = Panier::totalPrice();
-                $data = array(
-                   'nickName' => $nickName,
-                   'date' => $bDate,
-                   'state' => $state,
-                   'price' => $price
-                );
-
-                ModelOrder::save($data);
-                $idOrder = ModelOrder::get_id($data);
-                Panier::saveArticles($idOrder);
-                require File::build_path(array('view', 'view.php'));
-            }
-            else{
-                self::viewPanier();
-            }
-        } else {
-            $orderCommand = true;
-            ControllerUser::connect();
-        }
-    }
 
     public static function viewPanier() {
         $view = 'displayPanier';
