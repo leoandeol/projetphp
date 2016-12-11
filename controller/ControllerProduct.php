@@ -24,26 +24,29 @@ class ControllerProduct {
     public static function orderCommand() {
         $view = 'listCommand';
         if (Session::is_connected()) {
-            $controller = 'product';
-            $pagetitle = 'Listes des commandes précédentes';
-            
-            $bDate = date('Y/m/d');
-            $state = "En cours";
-            $nickName = $_SESSION['nickName'];
-            $data = array(
-               'nickName' => $nickName,
-               'date' => $bDate,
-               'state' => $state,
-               'price' => Panier::totalPrice()
-            );
-            
+            if( Panier::countArticles() > 0){
+                $controller = 'product';
+                $pagetitle = 'Listes des commandes précédentes';
 
-            
-            ModelOrder::save($data);
-            $idOrder = ModelOrder::get_id($nickName, $bDate, $state);
-            Panier::saveArticles($idOrder);
-            
-            require File::build_path(array('view', 'view.php'));
+                $bDate = date('Y/m/d');
+                $state = "En cours";
+                $nickName = $_SESSION['nickName'];
+                $price = Panier::totalPrice();
+                $data = array(
+                   'nickName' => $nickName,
+                   'date' => $bDate,
+                   'state' => $state,
+                   'price' => $price
+                );
+
+                ModelOrder::save($data);
+                $idOrder = ModelOrder::get_id($data);
+                Panier::saveArticles($idOrder);
+                require File::build_path(array('view', 'view.php'));
+            }
+            else{
+                self::viewPanier();
+            }
         } else {
             $orderCommand = true;
             ControllerUser::connect();

@@ -11,6 +11,7 @@ if ($tab_p != false) {
 
         $securePLabel = rawurlencode($p->getLabel());
         $secureId = rawurldecode($p->getId());
+        $securePPrice = rawurldecode($p->getPrice());
         echo <<< EOT
             <div class="product">
                 <div class="product-name-pic">
@@ -21,6 +22,7 @@ if ($tab_p != false) {
                 <div class="description">$pSDesc</div>
                 
                 <a href="index.php?controller=product&action=read&label=$securePLabel"><div class="detail">Détails</div></a>
+                <a href="index.php?controller=product&action=addPanier&label=$securePLabel&price=$securePPrice"><div class="detail">Ajouter au panier</div></a>
 EOT;
         if(Session::is_admin() && Session::is_connected()){
          echo <<<EOT

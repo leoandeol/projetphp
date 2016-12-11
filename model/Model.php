@@ -175,7 +175,7 @@ class Model {
                 $sql = $sql . $cle . ", ";
             }
             
-            $sql =  rtrim($sql, " ,") . ")VALUES(";
+            $sql =  rtrim($sql, " ,") . ") VALUES(";
 
             foreach ($data as $cle => $valeur) {
                 $sql = $sql . ":" . $cle . ", ";

@@ -30,8 +30,8 @@ class Panier {
                 );
                 ModelOrderContent::save($d);
             }
+          self::clearPanier();
         }
-        self::clearPanier();
     }
 
 

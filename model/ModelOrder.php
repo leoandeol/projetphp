@@ -54,25 +54,17 @@ class ModelOrder extends Model{
       $this->price = $p;
     }
   }
-  public static function get_id($nickName, $date, $state){
+  public static function get_id($values){
         try {
 
-
-            $sql = "SELECT * FROM Orders WHERE nickName=:a and date=:d and state=:s;";
+            $sql = "SELECT * FROM Orders WHERE nickName=:nickName and date=:date and state=:state and price=:price;";
 
             $req_prep = Model::$pdo->prepare($sql);
-
-            $values = array(
-                "a" => $nickName,
-                "d" => $date,
-                "s" => $state
-            );
 
             $req_prep->execute($values);
 
             $req_prep->setFetchMode(PDO::FETCH_CLASS, 'ModelOrder');
             $tab_p = $req_prep->fetchAll();
-
 
 
             if (empty($tab_p)) {
