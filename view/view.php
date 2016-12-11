@@ -23,6 +23,9 @@
             </div>
             <div class='menu-buttons'>
                 <div class="menu-item">
+                    <a href="index.php?controller=product&action=readAll">Produits</a>
+                </div>
+                <div class="menu-item">
                     <a href="index.php?controller=product&action=viewPanier">Panier : <?php echo Session::get_nbItems()?></a>
                 </div>
                 <div class='menu-dropdown'>

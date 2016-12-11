@@ -60,16 +60,18 @@ class ControllerProduct {
     public static function addPanier() {
         $label = $_GET['label'];
         $price = $_GET['price'];
-
-
-
         Panier::addArticle($label, $price);
         self::viewPanier();
     }
 
-    public static function deleteProductPanier() {
+    public static function deleteArticlePanier() {
         $label = $_GET['label'];
         Panier::deleteArticle($label);
+        self::viewPanier();
+    }
+    public static function deleteAllArticlesPanier() {
+        $label = $_GET['label'];
+        Panier::deleteAllArticles($label);
         self::viewPanier();
     }
 
