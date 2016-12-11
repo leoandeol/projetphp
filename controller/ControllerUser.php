@@ -110,7 +110,7 @@ class ControllerUser {
 			
             $nickNameSecure = rawurlencode($_POST['nickname']);
                 $actual_link = "http://{$_SERVER['HTTP_HOST']}{$_SERVER['PHP_SELF']}";
-            $mail = "<!DOCTYPE html><body><a href={$actual_link}?action=validate&controller=user&nickName={$nickNameSecure}&nonce=$nonce>pls click link to finalise your registeration.</a></body>";
+            $mail = "<!DOCTYPE html><body><a href={$actual_link}?action=validate&controller=user&nickName={$nickNameSecure}&nonce=$nonce>pls click link to active just do it</a></body>";
             mail($_POST['email'], "Please confirm your email", $mail);
             $view = 'registered';
             $controller = 'user';
