@@ -91,10 +91,35 @@ class ModelUser extends Model{
             $this->nonce = $nonce;
         }
     }
+	
+	public static function checkExistingUser($nickname){
+		try{	
+			$sql = "SELECT COUNT(*) FROM Users WHERE nickName=:nickname";
+			$prep = Model::$pdo->prepare($sql);
+			$values = array(
+				':nickname' => $nickname
+			);
+			$prep -> execute($values);
+			$prep -> setFetchMode(PDO::FETCH_NUM);
+			$result = $prep->fetchAll();
+			if($result[0][0]>=1){
+				return 1;
+			}else{
+				return 0;
+			}
+		} catch (PDOException $ex) {
+            if (Conf::getDebug()) {
+                echo $ex->getMessage();
+            } else {
+                echo "une erreur est survenue.";
+            }
+            return false;
+        }
+	}
     
     public static function checkPassword($nick, $pass) {
-        $query = "Select nickName,nonce From Users Where nickName=:nickn and password=:pwd";
         try {
+			$query = "Select nickName,nonce From Users Where nickName=:nickn and password=:pwd";
             $prep = Model::$pdo->prepare($query);
             $values = array(
                 ':nickn' => $nick,
@@ -117,8 +142,9 @@ class ModelUser extends Model{
 
         $result = ModelUser::checkPassword($nick, $pass);
         if ($result['nickName'] == $nick && $result['nonce'] == NULL) {
-            $query = "Select * From Users Where nickName=:nickn and password=:pwd";
+           
             try {
+			    $query = "Select * From Users Where nickName=:nickn and password=:pwd";
                 $prep = Model::$pdo->prepare($query);
                 $values = array(
                     ':nickn' => $nick,

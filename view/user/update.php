@@ -1,39 +1,38 @@
 <?php 
 
 //$cer
-if(isset($dataErr['nName'])){
-    $nName= htmlspecialchars($dataErr['nName']);
+if(isset($data['nName'])){
+    $nName= htmlspecialchars($data['nName']);
 }
 else{
     $nName = "";
 }
-if(isset($dataErr['lName'])){
-    $lName = htmlspecialchars($dataErr['lName']);
+if(isset($data['lName'])){
+    $lName = htmlspecialchars($data['lName']);
 }
 else{
     $lName = "";   
 }
-if(isset($dataErr['fName'])){
-    $fName = htmlspecialchars($dataErr['fName']);
+if(isset($data['fName'])){
+    $fName = htmlspecialchars($data['fName']);
 }else{
     $fName="";
 }
-if(isset($dataErr['mail'])){
-    $mail=$dataErr['mail'];
+if(isset($data['mail'])){
+    $mail=$data['mail'];
 }
 else{
     $mail="";
 }
-if(isset($dataErr['bDate'])){
-    $bDate = $dataErr['bDate'];
+if(isset($data['bDate'])){
+    $bDate = $data['bDate'];
 }
 else{
     $bDate = "";
 }
 
-
-if(isset($dataErr['cerise'])){
-	$cer = $dataErr['cerise'];
+if(isset($data['cerise'])){
+	$cer = $data['cerise'];
 }else{
 	$cer = $cerise;
 }
@@ -41,7 +40,7 @@ if ($cer == 'update') {
     echo "<form method = \"POST\" action = \"index.php?action=updated&controller=user\" enctype=\"multipart/form-data\">";
     echo "<input type='hidden' name='action' value='updated'>";
 } else {
-    echo "<form method = \"POST\" action = \"index.php?action=created&controller=user\" enctype=\"multipart/form-data\">";
+    echo "<form method = \"POST\" action = \"index.php?action=registered&controller=user\" enctype=\"multipart/form-data\">";
     echo "<input type='hidden' name='action' value='created'>";
 }
 echo <<<EOT
@@ -66,7 +65,13 @@ echo <<<EOT
             <input class="input-field" type="password" placeholder="Mot de passe" name="password2" id="pass_id2"/>
         </div>
 EOT;
-    }
+	if(isset($data['checkBoxAdmin'])){
+         echo $data['checkBoxAdmin'];
+	}
+	else{
+		echo $checkBoxAdmin;
+	} 
+	}
     else{
         
 echo <<<EOT
@@ -75,7 +80,7 @@ echo <<<EOT
             <input class="input-field" type="password" placeholder="Mot de passe" name="password" id="pass_id" required/>
         </div>
         <div class="input">
-            <label class="input-item" for="pass_id2">Mot de passe bis</label>
+            <label class="input-item" for="pass_id2">Confirmez le mot de passe</label>
             <input class="input-field" type="password" placeholder="Mot de passe" name="password2" id="pass_id2" required/>
         </div>
 EOT;
@@ -99,15 +104,7 @@ EOT;
             <input class="input-field" type="date" value="$bDate" placeholder="Date de naissance" name="birthdate" id="birth_id"/>
         </div>
 		<div class ="input">
-EOT;
-			if(isset($dataErr['checkBoxAdmin'])){
-                            echo $dataErr['checkBoxAdmin'];
-                        }
-                        else{
-                            echo $checkBoxAdmin;
-                        } 
-echo <<<EOT
-                </div>
+        </div>
         <div class="input">
             <input class="input-field" type="submit"  value="Envoyer"/>
         </div>

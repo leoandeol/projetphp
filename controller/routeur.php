@@ -26,13 +26,21 @@ if(isset($_GET['controller'])){
 
 $controllerClass = 'Controller' . ucfirst($controller);
 if(!(class_exists($controllerClass))){
-    ControllerDefault::error("FATAL ERROR");
+	$data = array();
+	$data['error'] = "Le controller indiqué n'existe pas";
+	$data['view'] = 'error';
+	$data['controller'] = 'default';
+    ControllerDefault::error($data);
     
 }else{
     
     if(!(in_array($action,  get_class_methods($controllerClass)))){
         
-        ControllerDefault::error("La fonction que vous voulez utiliser n'existe pas");
+       $data = array();
+		$data['error'] = "L'action indiquée n'existe pas";
+		$data['view'] = 'error';
+		$data['controller'] = 'default';
+		ControllerDefault::error($data);
         
 
     }else{
