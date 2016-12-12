@@ -19,20 +19,20 @@ if ($tab_p != false) {
                 <div class="product-text">$pPrice €</div>
                 <div class="product-text">$pSDesc</div>
                 
-                <div class="input">
+                <div class="product-text">
 					<a class="input-item" href="index.php?controller=product&action=read&label=$securePLabel">Détails</a>
 				</div>
-				<div class="input">
+				<div class="product-text">
 					<a class="input-item" href="index.php?controller=product&action=addPanier&label=$securePLabel&price=$securePPrice">Ajouter au panier</a>
 				</div>
 EOT;
         if (Session::is_admin() && Session::is_connected()) {
             echo <<<EOT
-			<div class="input">
+			<div class="product-text">
 					<a class="input-item" href="index.php?controller=product&action=update&label=$securePLabel">Modifier</a>
 				</div>
             
-			<div class="input">
+			<div class="product-text">
 					<a class="input-item" href="index.php?controller=product&action=delete&idProduct=$secureId">Supprimer</a>
 			</div>
                 
