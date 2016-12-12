@@ -61,7 +61,9 @@ class ControllerUser {
     }
 
     public static function register() {
-        $view = 'register';
+        $cerise = "create";
+        
+        $view = 'update';
         $controller = 'user';
         $pagetitle = 'Création de compte';
         require File::build_path(array('view', 'view.php'));
@@ -75,6 +77,7 @@ class ControllerUser {
 		$dataErr['fName'] = $_POST['firstname'];
 		$dataErr['mail'] = $_POST['email'];
 		$dataErr['bDate'] = $_POST['birthdate'];
+                $dataErr['cerise'] = "create";
         if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
 			$dataErr['error'] = "Email invalide";
 			$dataErr['view'] = 'register';
@@ -183,11 +186,14 @@ class ControllerUser {
             $view = 'update';
             $pagetitle = 'Update';
             $controller = 'user';
-            $nName = htmlspecialchars($_SESSION['nickName']);
-            $fName = htmlspecialchars($_SESSION['firstName']);
-            $lName = htmlspecialchars($_SESSION['lastName']);
-            $mail  = htmlspecialchars($_SESSION['mail']);
-            $bDate = htmlspecialchars($_SESSION['birthDate']);
+            $cerise = "update";
+            $dataErr = array(
+                "nName" => htmlspecialchars($_SESSION['nickName']),
+                "fName" => htmlspecialchars($_SESSION['firstName']),
+                "lName" => htmlspecialchars($_SESSION['lastName']),
+                "mail"  => htmlspecialchars($_SESSION['mail']),
+                "bDate" => htmlspecialchars($_SESSION['birthDate'])
+            );
             require File::build_path(array('view', 'view.php'));
         } else {
 			$data = array();

@@ -1,4 +1,4 @@
-<form method="POST" action="index.php">
+    <form method="POST" action="index.php">
 
     <fieldset>
         <legend>S'inscrire :</legend>
