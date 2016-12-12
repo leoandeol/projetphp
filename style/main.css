@@ -240,6 +240,15 @@ footer a {
     padding: 5px;
 }
 
+.product-detail {
+    display:flex;
+    flex-direction:column;
+    flex:1;
+    margin-bottom:25px;
+    border: 2px solid grey;
+    padding: 5px;
+}
+
 .product-text {
     display:flex;
     align-self:center;

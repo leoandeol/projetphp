@@ -11,11 +11,11 @@ $secureLabel = rawurlencode($p->getLabel());
 $securePrice = rawurldecode($p->getPrice());
 
 echo <<<EOT
-    <div class="read">
-        <div class="label">Nom : $pLabel</div>
-        <div class="price">Prix : $pPrice</div>
+    <div class="product-detail">
+        <div class="product-text">Nom : $pLabel</div>
+        <div class="product-text">Prix : $pPrice</div>
             
-        <div class="completeDesc">$pCDesc</div> 
+        <div class="product-text">$pCDesc</div> 
 EOT;
 
 
@@ -36,9 +36,9 @@ EOT;
         echo "<input type=\"checkbox\" name=\"$name\">";
 
 echo <<<EOT
-                <div class="label">Nom : $pNameO</div>
-                <div class="price">Prix : $pPriceO</div>
-                <div class="completeDesc">$pDescO</div>   
+                <div class="product-text">Nom : $pNameO</div>
+                <div class="product-text">Prix : $pPriceO</div>
+                <div class="product-text">$pDescO</div>   
             </fieldset>
         
 EOT;
