@@ -224,6 +224,11 @@ footer a {
   border-radius: 0 2px 2px 0;
 }
 
+.imgbut {
+    width:25px;
+    height:25px;
+}
+
 /* PRODUCTS */
 
 .products {
@@ -236,13 +241,29 @@ footer a {
     display:flex;
     flex:1;
     margin-bottom:25px;
+    border: 2px solid grey;
+    padding: 5px;
 }
 
-.product-name {
-    
+.product-detail {
+    display:flex;
+    flex-direction:column;
+    flex:1;
+    margin-bottom:25px;
+    border: 2px solid grey;
+    padding: 5px;
+}
+
+.product-text {
+    display:flex;
+    align-self:center;
+    margin:auto;
+    flex:1;
 }
 
 .product-pic {
     width:15em;
     height:15em;
+    border: 2px solid grey;
+    margin-right:5px;
 }

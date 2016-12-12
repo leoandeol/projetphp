@@ -14,7 +14,6 @@
 		<td>Libellé</td>
 		<td>Quantité</td>
 		<td>Prix Unitaire</td>
-		<td>Action</td>
 	</tr>
 
 EOT;
@@ -39,12 +38,16 @@ EOT;
 				<tr>
 					<td><a href="index.php?controller=product&action=read&label=$sLabel"> $pLabel </a></td>
 					<td> $pQuantity </td>
-                                        <td> $pPrice </td>
+                    <td> $pPrice </td>
 					<td>
-                                            <a href="index.php?controller=product&action=deleteArticlePanier&label=$sLabel">-</a>
-                                            <a href="index.php?controller=product&action=addPanier&label=$sLabel&price=$sPrice">+</a>
-                                            <a href="index.php?controller=product&action=deleteAllArticlesPanier&label=$sLabel">X</a>
-                                        </td>
+						<a href="index.php?controller=product&action=deleteArticlePanier&label=$sLabel"><img class='imgbut' src="res/Minus.png" /></a>
+					</td>
+					<td>
+						<a href="index.php?controller=product&action=addPanier&label=$sLabel&price=$sPrice"><img class='imgbut' src="res/Add.png" /></a>
+					</td>
+					<td>
+						<a href="index.php?controller=product&action=deleteAllArticlesPanier&label=$sLabel"><img class='imgbut' src="res/Delete.png" /></a>
+					</td>
 				</tr>
 EOT;
 

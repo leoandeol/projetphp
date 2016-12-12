@@ -1,7 +1,7 @@
 <?php
 if(isset($error))
 {
-    echo "<p>Une erreur est apparue : ".htmlspecialchars($error).".</p><p> Veuillez effectuer une nouvelle tentative, et si l'erreur se répète, veuillez contacter l'administrateur du site.</p>";
+    echo "<p>Une erreur est apparue : ".htmlspecialchars($error).".</p>";
 }
 else
 {

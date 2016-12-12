@@ -22,5 +22,14 @@ EOT;
                         echo "</div>";
     }
     echo "</div>";
+echo <<< EOT
+	                <form method="POST" action="index.php">
+                  <input type='hidden' name='action' value='displaySelf'>
+                  <input type='hidden' name='controller' value='user'>
+                  <div class="input">
+                   <input class="input-field" type="submit"  value="Retour"/>
+                  </div>
+                </form>
+EOT;
 }
 ?>

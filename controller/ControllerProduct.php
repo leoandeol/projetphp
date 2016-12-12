@@ -38,6 +38,7 @@ class ControllerProduct {
         Panier::deleteArticle($label);
         self::viewPanier();
     }
+
     public static function deleteAllArticlesPanier() {
         $label = $_GET['label'];
         Panier::deleteAllArticles($label);
@@ -67,7 +68,7 @@ class ControllerProduct {
     public static function read() {
         $label = $_GET['label'];
         $p = ModelProduct::select($label);
-        if(!is_null($p))
+        if (!is_null($p))
             $o = $p->selectAllOption();
 
         $view = 'displayProduct';
@@ -87,13 +88,21 @@ class ControllerProduct {
     }
 
     public static function create() {
-        $view = 'updateProduct';
-        $controller = 'product';
-        $pagetitle = 'Création de produit';
+        if (Session::is_admin()) {
+            $view = 'updateProduct';
+            $controller = 'product';
+            $pagetitle = 'Création de produit';
 
-        $cerise = "create";
+            $cerise = "create";
 
-        require File::build_path(array('view', 'view.php'));
+            require File::build_path(array('view', 'view.php'));
+        } else {
+            $data = array();
+            $data['error'] = "Vous n'avez pas les droits nécessaires pour effectuer cette action";
+            $data['view'] = "error";
+            $data['controller'] = "default";
+            ControllerDefault::error($data);
+        }
     }
 
     public static function update() {
@@ -109,21 +118,21 @@ class ControllerProduct {
             $pagetitle = 'Modification d\' produit';
             require File::build_path(array('view', 'view.php'));
         } else {
-			 $data = array();
-			$data['error'] =  "Vous n'avez pas les droits nécessaires pour effectuer cette action";
-			$data['view'] =	"error";
-			$data['controller'] = "default";
-			ControllerDefault::error($data);
+            $data = array();
+            $data['error'] = "Vous n'avez pas les droits nécessaires pour effectuer cette action";
+            $data['view'] = "error";
+            $data['controller'] = "default";
+            ControllerDefault::error($data);
         }
     }
 
-    public static function updated() {		
-		$dataEr = array();
-		$dataEr['pId'] = $_POST['idP'];
-		$dataEr['pLabel'] = $_POST['label'];
-		$dataEr['pPrice'] = $_POST['price'];
-		$dataEr['pSDesc'] = $_POST['shortDesc'];
-		$dataEr['pCDesc'] = $_POST['completeDesc'];
+    public static function updated() {
+        $dataEr = array();
+        $dataEr['pId'] = $_POST['idP'];
+        $dataEr['pLabel'] = $_POST['label'];
+        $dataEr['pPrice'] = $_POST['price'];
+        $dataEr['pSDesc'] = $_POST['shortDesc'];
+        $dataEr['pCDesc'] = $_POST['completeDesc'];
         if (Session::is_admin() && Session::is_connected()) {
             $pId = $_POST['idP'];
             $pLabel = $_POST['label'];
@@ -146,28 +155,27 @@ class ControllerProduct {
                 $tab_p = ModelProduct::selectAll();
                 require FILE::build_path(array('view', 'view.php'));
             } else {
-				$dataEr['error'] =  "Erreur de modification du produit";
-				$dataEr['view'] =	"updateProduct";
-				$dataEr['controller'] = "product";
-				$dataEr['cerise'] = "update";
-				ControllerDefault::error($dataEr);
+                $dataEr['error'] = "Erreur de modification du produit";
+                $dataEr['view'] = "updateProduct";
+                $dataEr['controller'] = "product";
+                $dataEr['cerise'] = "update";
+                ControllerDefault::error($dataEr);
             }
         } else {
-			$dataEr['error'] =  "Vous n'avez pas les droits nécessaires pour effectuer cette action";
-			$dataEr['view'] =	"error";
-			$dataEr['controller'] = "default";
-			ControllerDefault::error($dataEr);
-			
+            $dataEr['error'] = "Vous n'avez pas les droits nécessaires pour effectuer cette action";
+            $dataEr['view'] = "error";
+            $dataEr['controller'] = "default";
+            ControllerDefault::error($dataEr);
         }
     }
 
     public static function created() {
-		$dataEr = array();
-		$dataEr['pId'] = $_POST['idP'];
-		$dataEr['pLabel'] = $_POST['label'];
-		$dataEr['pPrice'] = $_POST['price'];
-		$dataEr['pSDesc'] = $_POST['shortDesc'];
-		$dataEr['pCDesc'] = $_POST['completeDesc'];
+        $dataEr = array();
+        $dataEr['pId'] = $_POST['idP'];
+        $dataEr['pLabel'] = $_POST['label'];
+        $dataEr['pPrice'] = $_POST['price'];
+        $dataEr['pSDesc'] = $_POST['shortDesc'];
+        $dataEr['pCDesc'] = $_POST['completeDesc'];
         if (Session::is_admin() && Session::is_connected()) {
             $pId = $_POST['idP'];
             $pLabel = $_POST['label'];
@@ -183,18 +191,17 @@ class ControllerProduct {
                 'completeDesc' => $pCDesc
             );
 
-            $extensions_valides = array('jpg','jpeg','png','gif','bmp');
+            $extensions_valides = array('jpg', 'jpeg', 'png', 'gif', 'bmp');
             $extension_upload = strtolower(substr(strrchr($_FILES['path']['name'], '.'), 1));
-            if (!in_array($extension_upload, $extensions_valides))
-            {
-				$dataEr['error'] =  "Extension incorrecte";
-				$dataEr['view'] =	"updateProduct";
-				$dataEr['controller'] = "product";
-				$dataEr['cerise'] = "create";
-				ControllerDefault::error($dataEr);
+            if (!in_array($extension_upload, $extensions_valides)) {
+                $dataEr['error'] = "Extension incorrecte";
+                $dataEr['view'] = "updateProduct";
+                $dataEr['controller'] = "product";
+                $dataEr['cerise'] = "create";
+                ControllerDefault::error($dataEr);
                 return;
             }
-            
+
             $nom = "res/upload/produit$pId.$extension_upload";
             $nom2 = "res/upload/produit$pId.jpg";
             move_uploaded_file($_FILES['path']['tmp_name'], $nom);
@@ -204,17 +211,17 @@ class ControllerProduct {
             if (ModelProduct::save($data)) {
                 ControllerProduct::readAll();
             } else {
-				$dataEr['error'] =  "Extension incorrecte";
-				$dataEr['view'] =	"updateProduct";
-				$dataEr['controller'] = "product";
-				$dataEr['cerise'] = "create";
-				ControllerDefault::error($dataEr);
+                $dataEr['error'] = "Extension incorrecte";
+                $dataEr['view'] = "updateProduct";
+                $dataEr['controller'] = "product";
+                $dataEr['cerise'] = "create";
+                ControllerDefault::error($dataEr);
             }
         } else {
-			$dataEr['error'] =  "Vous n'avez pas les droits nécessaires pour effectuer cette action";
-			$dataEr['view'] =	"error";
-			$dataEr['controller'] = "default";
-			ControllerDefault::error($dataEr);
+            $dataEr['error'] = "Vous n'avez pas les droits nécessaires pour effectuer cette action";
+            $dataEr['view'] = "error";
+            $dataEr['controller'] = "default";
+            ControllerDefault::error($dataEr);
         }
     }
 
@@ -231,10 +238,10 @@ class ControllerProduct {
             require File::build_path(array('view', 'view.php'));
         } else {
             $data = array();
-			$data['error'] =  "Vous n'avez pas les droits nécessaires pour effectuer cette action";
-			$data['view'] =	"error";
-			$data['controller'] = "default";
-			ControllerDefault::error($data);
+            $data['error'] = "Vous n'avez pas les droits nécessaires pour effectuer cette action";
+            $data['view'] = "error";
+            $data['controller'] = "default";
+            ControllerDefault::error($data);
         }
     }
 
@@ -242,23 +249,23 @@ class ControllerProduct {
 
         $data = $_GET['search'];
         $tab = ModelProduct::research($data);
-		if($tab == false){
-			$data = array();
-			$data['error'] = "Aucun article ne correspond à la recherche";
-			$data['view'] = "error";
-			$data['controller'] = "default";
-			ControllerDefault::error($data);
-		}else{	
-			$tab_p = array();
-			foreach($tab as $key){
-				array_push($tab_p,ModelProduct::Select($key['label']));
-			}
-			$view = 'displayAllProduct';
-			$controller = 'product';
-			$pagetitle = 'Description des produits';
+        if ($tab == false) {
+            $data = array();
+            $data['error'] = "Aucun article ne correspond à la recherche";
+            $data['view'] = "error";
+            $data['controller'] = "default";
+            ControllerDefault::error($data);
+        } else {
+            $tab_p = array();
+            foreach ($tab as $key) {
+                array_push($tab_p, ModelProduct::Select($key['label']));
+            }
+            $view = 'displayAllProduct';
+            $controller = 'product';
+            $pagetitle = 'Description des produits';
 
-			require File::build_path(array('view', 'view.php'));
-		}
+            require File::build_path(array('view', 'view.php'));
+        }
     }
 
 }

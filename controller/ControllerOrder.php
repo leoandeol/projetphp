@@ -31,7 +31,7 @@ class ControllerOrder {
                 );
 
                 ModelOrder::save($data);
-                $idOrder = ModelOrder::get_id($data);
+                $idOrder = ModelOrder::getLastOrder($nickName);
                 Panier::saveArticles($idOrder);
                 self::readAll();
             }

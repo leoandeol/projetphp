@@ -55,23 +55,27 @@ class ModelOrder extends Model{
       $this->price = $p;
     }
   }
-  public static function get_id($values){
+  public static function getLastOrder($nickName){
         try {
 
-            $sql = "SELECT * FROM Orders WHERE nickName=:nickName and date=:date and state=:state and price=:price;";
+            $sql = "SELECT MAX(idOrder) FROM Orders WHERE nickname=:nickname";
 
             $req_prep = Model::$pdo->prepare($sql);
-
+            
+            $values = array(
+                'nickname'=>$nickName                
+            );
+            
             $req_prep->execute($values);
-
-            $req_prep->setFetchMode(PDO::FETCH_CLASS, 'ModelOrder');
+            
+            $req_prep->setFetchMode(PDO::FETCH_NUM);
             $tab_p = $req_prep->fetchAll();
 
 
             if (empty($tab_p)) {
                 return false;
             }
-            return $tab_p[0]->getIDOrder();
+            return $tab_p[0][0];
         } catch (PDOException $e) {
             if (Conf::getDebug()) {
                 echo $e->getMessage(); // affiche un message d'erreur
