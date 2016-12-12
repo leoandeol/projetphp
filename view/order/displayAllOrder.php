@@ -18,6 +18,13 @@ if ($tab_p != false) {
                 <div class="price">Prix :  $pPrice €</div>
                 
                 <a href="index.php?controller=order&action=read&idOrder=$secureIDOrder"><div class="detail">Détails</div></a>
+                <form method="POST" action="index.php">
+                  <input type='hidden' name='action' value='displaySelf'>
+                  <input type='hidden' name='controller' value='user'>
+                  <div class="input">
+                   <input class="input-field" type="submit"  value="Retour"/>
+                  </div>
+                </form>
 EOT;
                         echo "</div>";
     }

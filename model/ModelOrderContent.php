@@ -31,7 +31,7 @@ class ModelOrderContent extends Model {
             $req_prep = Model::$pdo->prepare($sql);
             $req_prep->execute($values);
 
-            $bite = $req_prep->setFetchMode(PDO::FETCH_CLASS, 'ModelProduct');
+            $req_prep->setFetchMode(PDO::FETCH_CLASS, 'ModelProduct');
             $tab_p = $req_prep->fetchAll();
 
 
