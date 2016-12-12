@@ -40,13 +40,13 @@ EOT;
 					<td> $pQuantity </td>
                     <td> $pPrice </td>
 					<td>
-						<a href="index.php?controller=product&action=deleteArticlePanier&label=$sLabel"><img src="res/Minus.png" /></a>
+						<a href="index.php?controller=product&action=deleteArticlePanier&label=$sLabel"><img class='imgbut' src="res/Minus.png" /></a>
 					</td>
 					<td>
-						<a href="index.php?controller=product&action=addPanier&label=$sLabel&price=$sPrice"><img src="res/Add.png" /></a>
+						<a href="index.php?controller=product&action=addPanier&label=$sLabel&price=$sPrice"><img class='imgbut' src="res/Add.png" /></a>
 					</td>
 					<td>
-						<a href="index.php?controller=product&action=deleteAllArticlesPanier&label=$sLabel"><img src="res/Delete.png" /></a>
+						<a href="index.php?controller=product&action=deleteAllArticlesPanier&label=$sLabel"><img class='imgbut' src="res/Delete.png" /></a>
 					</td>
 				</tr>
 EOT;

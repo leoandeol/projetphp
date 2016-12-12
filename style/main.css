@@ -224,6 +224,11 @@ footer a {
   border-radius: 0 2px 2px 0;
 }
 
+.imgbut {
+    width:25px;
+    height:25px;
+}
+
 /* PRODUCTS */
 
 .products {

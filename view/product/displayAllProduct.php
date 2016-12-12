@@ -23,7 +23,7 @@ if ($tab_p != false) {
 					<a class="input-item" href="index.php?controller=product&action=read&label=$securePLabel">Détails</a>
 				</div>
 				<div class="product-text">
-					<a class="input-item" href="index.php?controller=product&action=addPanier&label=$securePLabel&price=$securePPrice"><img src="res/panier.png" /></a>
+					<a class="input-item" href="index.php?controller=product&action=addPanier&label=$securePLabel&price=$securePPrice"><img class='imgbut' src="res/panier.png" /></a>
 				</div>
 EOT;
         if (Session::is_admin() && Session::is_connected()) {
