@@ -19,13 +19,23 @@ if ($tab_p != false) {
                 <div class="product-text">$pPrice €</div>
                 <div class="product-text">$pSDesc</div>
                 
-                <div class="product-text"><a href="index.php?controller=product&action=read&label=$securePLabel">Détails</a></div>
-                <div class="product-text"><a href="index.php?controller=product&action=addPanier&label=$securePLabel&price=$securePPrice">Ajouter au panier</a></div>
+                <div class="input">
+					<a class="input-item" href="index.php?controller=product&action=read&label=$securePLabel">Détails</a>
+				</div>
+				<div class="input">
+					<a class="input-item" href="index.php?controller=product&action=addPanier&label=$securePLabel&price=$securePPrice">Ajouter au panier</a>
+				</div>
 EOT;
         if (Session::is_admin() && Session::is_connected()) {
             echo <<<EOT
-            <a href="index.php?controller=product&action=update&label=$securePLabel"><div class="detail">Modifier</div></a>
-                <a href="index.php?controller=product&action=delete&idProduct=$secureId"><div class="detail">Supprimer</div></a>
+			<div class="input">
+					<a class="input-item" href="index.php?controller=product&action=update&label=$securePLabel">Modifier</a>
+				</div>
+            
+			<div class="input">
+					<a class="input-item" href="index.php?controller=product&action=delete&idProduct=$secureId">Supprimer</a>
+			</div>
+                
 EOT;
         }
         echo "</div>";
