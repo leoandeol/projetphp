@@ -58,6 +58,9 @@ EOT;
         <main>
             <article>
                 <?php
+				if(isset($error)){
+					echo $error;
+				}
                 $filepath = File::build_path(array('view', $controller, $view . ".php"));
                 require $filepath;
                 ?>
