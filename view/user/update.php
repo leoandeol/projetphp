@@ -1,40 +1,36 @@
-<?php 
+<?php
 
 //$cer
-if(isset($data['nName'])){
-    $nName= htmlspecialchars($data['nName']);
-}
-else{
+if (isset($data['nName'])) {
+    $nName = htmlspecialchars($data['nName']);
+} else {
     $nName = "";
 }
-if(isset($data['lName'])){
+if (isset($data['lName'])) {
     $lName = htmlspecialchars($data['lName']);
+} else {
+    $lName = "";
 }
-else{
-    $lName = "";   
-}
-if(isset($data['fName'])){
+if (isset($data['fName'])) {
     $fName = htmlspecialchars($data['fName']);
-}else{
-    $fName="";
+} else {
+    $fName = "";
 }
-if(isset($data['mail'])){
-    $mail=$data['mail'];
+if (isset($data['mail'])) {
+    $mail = htmlspecialchars($data['mail']);
+} else {
+    $mail = "";
 }
-else{
-    $mail="";
-}
-if(isset($data['bDate'])){
-    $bDate = $data['bDate'];
-}
-else{
+if (isset($data['bDate'])) {
+    $bDate = htmlspecialchars($data['bDate']);
+} else {
     $bDate = "";
 }
 
-if(isset($data['cerise'])){
-	$cer = $data['cerise'];
-}else{
-	$cer = $cerise;
+if (isset($data['cerise'])) {
+    $cer = htmlspecialchars($data['cerise']);
+} else {
+    $cer = $cerise;
 }
 if ($cer == 'update') {
     echo "<form method = \"POST\" action = \"index.php?action=updated&controller=user\" enctype=\"multipart/form-data\">";
@@ -50,8 +46,8 @@ echo <<<EOT
             <input class="input-field" type="text" placehorlder="Pseudonyme" value="$nName" name="nickname" id="nick_id"/>
         </div>
 EOT;
-    if($cer == "update"){
-echo <<<EOT
+if ($cer == "update") {
+    echo <<<EOT
         <div class="input">
             <label class="input-item" for="pass_id">Vieux mot de passe</label>
             <input class="input-field" type="password" placeholder="Mot de passe" name="old_password" id="pass_id" required/>
@@ -65,16 +61,14 @@ echo <<<EOT
             <input class="input-field" type="password" placeholder="Mot de passe" name="password2" id="pass_id2"/>
         </div>
 EOT;
-	if(isset($data['checkBoxAdmin'])){
-         echo $data['checkBoxAdmin'];
-	}
-	else{
-		echo $checkBoxAdmin;
-	} 
-	}
-    else{
-        
-echo <<<EOT
+    if (isset($data['checkBoxAdmin'])) {
+        echo $data['checkBoxAdmin'];
+    } else {
+        echo $checkBoxAdmin;
+    }
+} else {
+
+    echo <<<EOT
         <div class="input">
             <label class="input-item" for="pass_id">Mot de passe</label>
             <input class="input-field" type="password" placeholder="Mot de passe" name="password" id="pass_id" required/>
@@ -84,9 +78,8 @@ echo <<<EOT
             <input class="input-field" type="password" placeholder="Mot de passe" name="password2" id="pass_id2" required/>
         </div>
 EOT;
-
-    }
-    echo <<<EOT
+}
+echo <<<EOT
         <div class="input">
             <label class="input-item" for="lastname_id">Nom de famille</label>
             <input class="input-field" type="text" value="$lName" placeholder="Nom de famille"name="lastname" id="lastname_id"/>
