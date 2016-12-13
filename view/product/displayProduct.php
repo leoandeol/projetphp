@@ -1,6 +1,7 @@
 
 <?php
 
+$pId = htmlspecialchars($p->getId());
 $pLabel = htmlspecialchars($p->getLabel());
 $pPrice = htmlspecialchars($p->getPrice());
 $pCDesc = htmlspecialchars($p->getCompleteDesc());
@@ -12,10 +13,10 @@ $securePrice = rawurldecode($p->getPrice());
 
 echo <<<EOT
     <div class="product-detail">
-        <div class="product-text">Nom : $pLabel</div>
-        <div class="product-text">Prix : $pPrice</div>
-            
-        <div class="product-text">$pCDesc</div> 
+        <div class="product-detail-name">$pLabel</div> 
+        <img class="product-detail-pic" src="res/upload/produit$pId.jpg" />     
+        <div class="product-detail-text">$pCDesc</div>
+        <div class="product-detail-price">$pPrice €</div>
 EOT;
 
 
@@ -27,9 +28,7 @@ if ($nbOption != 0) {
         $pPriceO = htmlspecialchars($object->getPrice());
         $pDescO = htmlspecialchars($object->getDescription());
         
-        echo <<<EOT
-            <fieldset style="margin:5px;">
-EOT;
+        echo "<fieldset>";
         $name = "check" . $i;
         $i++;
         
@@ -47,8 +46,8 @@ echo "</form>";
 }
 echo <<< EOT
     <div class = "containerbuttons">
-        <a href=\"index.php?action=readAll&controller=product\"><img class='returnbutn' src="res/Retour.png" /></a>
-        <a href=\"index.php?action=addPanier&controller=product&label=$secureLabel&price=$securePrice\"><img class='basktebutn' src="res/panier.png" /></a>
+        <a href="index.php?action=readAll&controller=product"><img class='returnbutn' src="res/Retour.png" /></a>
+        <a href="index.php?action=addPanier&controller=product&label=$secureLabel&price=$securePrice"><img class='basktebutn' src="res/panier.png" /></a>
     </div>
 EOT;
 ?>  

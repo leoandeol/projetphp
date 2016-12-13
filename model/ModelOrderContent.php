@@ -23,9 +23,8 @@ class ModelOrderContent extends Model {
         try {
             $sql = "SELECT P.idProduct, P.label, P.price, P.shortDesc, P.completeDesc "
                     . "FROM Products P "
-                    . " JOIN OrderContents OC ON OC.idProduct=P.idProduct"
-                    . " JOIN Orders O ON O.idOrder=OC.idOrder "
-                    . "WHERE O.idOrder=:idOrder; ";
+                    . " JOIN OrderContents OC ON OC.idProduct=P.idProduct "
+                    . " WHERE OC.idOrder=:idOrder; ";
 
             
             $req_prep = Model::$pdo->prepare($sql);
