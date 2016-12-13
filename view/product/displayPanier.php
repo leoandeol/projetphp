@@ -15,6 +15,8 @@ echo <<<EOT
 		<td>Libellé</td>
 		<td>Quantité</td>
 		<td>Prix Unitaire</td>
+		<td>Prix Total</td>
+		<td>Actions</td>
 	</tr>
 
 EOT;
@@ -30,8 +32,9 @@ if (Panier::createPanier()) {
             $pPrice = htmlspecialchars($_SESSION['panier']['price'][$i]);
             $pQuantity = htmlspecialchars($_SESSION['panier']['quantity'][$i]);
 
-            $sLabel = rawurldecode($_SESSION['panier']['label'][$i]);
-            $sPrice = rawurldecode($_SESSION['panier']['price'][$i]);
+            $sLabel = rawurlencode($_SESSION['panier']['label'][$i]);
+            $sPrice = rawurlencode($_SESSION['panier']['price'][$i]);
+            $pTotalLine = $pPrice*$pQuantity;
 
             /* $nbOptionArticle = count($_SESSION['panier']['option'][$i]); */
 
@@ -39,14 +42,13 @@ if (Panier::createPanier()) {
 				<tr>
 					<td><a href="index.php?controller=product&action=read&label=$sLabel"> $pLabel </a></td>
 					<td> $pQuantity </td>
-                                        <td> $pPrice </td>
-					<td>
+                                        <td> $pPrice €</td>
+                                        <td> $pTotalLine €</td>
+					<td class="td-buttons">
 						<a href="index.php?controller=product&action=deleteArticlePanier&label=$sLabel"><img class='imgbut' src="res/Minus.png" /></a>
-					</td>
-					<td>
+					
 						<a href="index.php?controller=product&action=addPanier&label=$sLabel&price=$sPrice"><img class='imgbut' src="res/Add.png" /></a>
-					</td>
-					<td>
+					
 						<a href="index.php?controller=product&action=deleteAllArticlesPanier&label=$sLabel"><img class='imgbut' src="res/Delete.png" /></a>
 					</td>
 				</tr>

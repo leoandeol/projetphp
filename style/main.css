@@ -319,6 +319,21 @@ footer a {
 
 /* panier */
 
+table {
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 5px groove black;
+}
+table {
+    width: 100%;
+}
+
 td {
-    border:2px solid black;
+    width:200px;
+}
+
+.td-buttons {
+    width:90px;
 }
