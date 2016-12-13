@@ -76,13 +76,13 @@ class ModelOrder extends Model{
                 return false;
             }
             return $tab_p[0][0];
-        } catch (PDOException $e) {
+        } catch (PDOException $ex) {
             if (Conf::getDebug()) {
-                echo $e->getMessage(); // affiche un message d'erreur
+                echo $ex->getMessage();
             } else {
-                echo 'Une erreur est survenue <a href=""> retour a la page d\'accueil </a>';
+                echo "une erreur est survenue.";
             }
-            die();
+            return false;
         }
   }
   public static function selectAllByUserName($values){
@@ -105,7 +105,7 @@ class ModelOrder extends Model{
             if (Conf::getDebug()) {
                 echo $e->getMessage(); // affiche un message d'erreur
             } else {
-                echo 'Une erreur est survenue <a href=""> retour a la page d\'accueil </a>';
+                echo 'Une erreur est survenue <a href="index.php"> retour a la page d\'accueil </a>';
             }
             return false;
         }

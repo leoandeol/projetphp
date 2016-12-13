@@ -40,7 +40,12 @@ class ModelOrderContent extends Model {
             }
             return $tab_p;
 
-        } catch (Exception $e) {
+        } catch (PDOException $ex) {
+            if (Conf::getDebug()) {
+                echo $ex->getMessage();
+            } else {
+                echo "une erreur est survenue.";
+            }
             return false;
         }
     }

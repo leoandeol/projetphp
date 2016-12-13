@@ -53,11 +53,11 @@ class Model {
             $req_prep = Model::$pdo->prepare($sql);
             $req_prep->execute($data);
             return true;
-        } catch (PDOException $e) {
+        } catch (PDOException $ex) {
             if (Conf::getDebug()) {
-                echo $e->getMessage(); // affiche un message d'erreur
+                echo $ex->getMessage();
             } else {
-                echo 'Une erreur est survenue <a href=""> retour a la page d\'accueil </a>';
+                echo "une erreur est survenue lors de la mise à jour de l'objet.";
             }
             return false;
         }
@@ -83,11 +83,11 @@ class Model {
                 return false;
             }
             return $tab_p;
-        } catch (PDOException $e) {
+        }catch (PDOException $ex) {
             if (Conf::getDebug()) {
-                echo $e->getMessage(); // affiche un message d'erreur
+                echo $ex->getMessage();
             } else {
-                echo 'Une erreur est survenue <a href=""> retour a la page d\'accueil </a>';
+                echo "une erreur est survenue lors de la sélection des objets.";
             }
             return false;
         }
@@ -130,13 +130,13 @@ class Model {
                 return false;
             }
             return $tab_p[0];
-        } catch (PDOException $e) {
+        } catch (PDOException $ex) {
             if (Conf::getDebug()) {
-                echo $e->getMessage(); // affiche un message d'erreur
+                echo $ex->getMessage();
             } else {
-                echo 'Une erreur est survenue <a href=""> retour a la page d\'accueil </a>';
+                echo "une erreur est survenue lors de la recherche de l'objet.";
             }
-            die();
+            return false;
         }
     }
 
@@ -157,7 +157,12 @@ class Model {
 
             $req_prep->execute($values);
             return true;
-        } catch (Exception $e) {
+        } catch (PDOException $ex) {
+            if (Conf::getDebug()) {
+                echo $ex->getMessage();
+            } else {
+                echo "une erreur est survenue lors de la suppression de l'objet.";
+            }
             return false;
         }
     }
@@ -184,13 +189,13 @@ class Model {
 
             //préparation de la requête
             $req_prep = Model::$pdo->prepare($sql);
-
-            return $req_prep->execute($data);
+            $req_prep->execute($data);
+            return true;
         } catch (PDOException $ex) {
             if (Conf::getDebug()) {
                 echo $ex->getMessage();
             } else {
-                echo "une erreur est survenue.";
+                echo "une erreur est survenue lors de la sauvegarde de l'objet.";
             }
             return false;
         }

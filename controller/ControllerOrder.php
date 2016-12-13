@@ -30,16 +30,24 @@ class ControllerOrder {
                    'price' => $price
                 );
 
-                ModelOrder::save($data);
+                $order = ModelOrder::save($data);
                 $idOrder = ModelOrder::getLastOrder($nickName);
-                Panier::saveArticles($idOrder);
+                $articles = Panier::saveArticles($idOrder);
+                if($order && $articles){
+                    echo "La commande a été effectuée avec succès. ";
+                }
+                else{
+                    echo "Problème lors de l'enregistrement de votre commande. <br> Si le problème persiste, merci de bien vouloir prévenir l'administrateur du site. ";
+                }
                 self::readAll();
             }
             else{
+                echo "Votre panier est vide. Pour commander, veuillez ajouter des articles à votre panier. ";
                 ControllerProduct::viewPanier();
             }
         } else {
             $_SESSION['orderCommand'] = true;
+            echo "Pour passer une commande, veuillez vous enregistrez. ";
             ControllerUser::connect();
         }
     }
