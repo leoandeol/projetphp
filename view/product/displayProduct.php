@@ -1,6 +1,7 @@
 
 <?php
 
+$pId = htmlspecialchars($p->getId());
 $pLabel = htmlspecialchars($p->getLabel());
 $pPrice = htmlspecialchars($p->getPrice());
 $pCDesc = htmlspecialchars($p->getCompleteDesc());
@@ -12,10 +13,11 @@ $securePrice = rawurldecode($p->getPrice());
 
 echo <<<EOT
     <div class="product-detail">
-        <div class="product-text">Nom : $pLabel</div>
-        <div class="product-text">Prix : $pPrice</div>
+        <div class="product-detail-name">Nom : $pLabel</div>
+        <img class="product-detail-pic" src="res/upload/produit$pId.jpg" />
+        <div class="product-detail-price">Prix : $pPrice</div>
             
-        <div class="product-text">$pCDesc</div> 
+        <div class="product-detail-text">$pCDesc</div> 
 EOT;
 
 
