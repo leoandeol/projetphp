@@ -57,6 +57,9 @@ class ControllerOrder {
                 "nickName" => $_SESSION['nickName']
             );
             $tab_p = ModelOrder::selectAllByUserName($data);
+            if(empty($tab_p)){
+                $msg = "Vous n'avez aucune commande en cours ou terminées";
+            }
             $view = 'displayAllOrder';
             $controller = 'order';
             $pagetitle = 'Historique des commandes';
