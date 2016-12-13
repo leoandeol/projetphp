@@ -15,5 +15,8 @@
         <div class="input">
             <input class="input-field" type="submit"  value="Envoyer"/>
         </div>
+        <div class="register-link">
+            <a href="index.php?controller=user&action=register">Vous n'êtes pas inscrit ? Cliquer ici. </a>
+        </div>
     </fieldset> 
 </form>
