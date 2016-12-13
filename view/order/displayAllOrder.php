@@ -13,15 +13,15 @@ if ($tab_p != false) {
             echo $msgEchap;
         }
         echo <<< EOT
-            <div class="product">
+            <div class="product listOrder">
                 <div class="product-name-pic">
                     <div class="product-name">$pIDOrder</div>
                 </div>
                 <div class="price">Prix :  $pPrice €</div>
                 
                 <a href="index.php?controller=order&action=read&idOrder=$secureIDOrder"><div class="detail">Détails</div></a>
+            </div>
 EOT;
-                        echo "</div>";
     }
     echo "</div>";
 echo <<< EOT

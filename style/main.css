@@ -247,6 +247,9 @@ footer a {
     border: 2px solid grey;
     padding: 5px;
 }
+.listOrder > * {
+    flex:1;
+}
 
 .product-name {
     text-decoration: underline;
@@ -393,4 +396,11 @@ table {
 .Media-body,
 .Media-body :last-child {
   margin-bottom: 0;
+}
+
+body .register-link a{
+    font-style: italic;
+}
+body .register-link a:hover{
+    font-style: normal;
 }
