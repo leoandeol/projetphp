@@ -7,35 +7,36 @@ $pIDOrder = htmlspecialchars($p->getIDOrder());
 
         $secureIDOrder = rawurldecode($p->getIDOrder());
         echo <<< EOT
-            <div class="product">
-                <div class="product-name-pic">
-                    <div class="product-name">$pIDOrder</div>
-                </div>
-                <div class="price">Prix :  $pPrice €</div>
-            </div>
+            <table>
+                <tr>
+                    <td>Commande ID : $pIDOrder</td>
+                <td>Prix :  $pPrice €</td>
+                </tr>
+            </table>
 EOT;
+        echo "<table>";
 foreach($tab_p as $q){
     $pLabel = htmlspecialchars($q->getLabel());
     $pPrice = htmlspecialchars($q->getPrice());
     $pCDesc = htmlspecialchars($q->getShortDesc());
-
+    $pId = htmlspecialchars($q->getId());
+    
     $secureLabel = rawurlencode($q->getLabel());
 
     echo <<<EOT
 
-        <fieldset>
-            <div class="read">
-                <div class="label">Nom : $pLabel</div>
-                <div class="price">Prix : $pPrice</div>
 
-                <div class="completeDesc">$pCDesc</div> 
-            <div><a href="index.php?controller=product&action=read&label=$secureLabel"><div class="detail">Détails</div></a>
-            </div>
+            <tr>
+                <td><img class="cart-pic" src="res/upload/produit$pId.jpg" /></td>
+                <td>Nom : $pLabel</td>
+                <td>Prix : $pPrice €</td>
 
-        </fieldset>
+                <td>$pCDesc</td> 
+                <td><a href="index.php?controller=product&action=read&label=$secureLabel">Détails</a></td>
+
 EOT;
-
 }
+echo "</table>";
 ?>  
 
 

@@ -30,7 +30,7 @@ if ($nbOption != 0) {
         $pDescO = htmlspecialchars($object->getDescription());
         
         echo <<<EOT
-            <fieldset style="margin:5px;">
+            <fieldset>
 EOT;
         $name = "check" . $i;
         $i++;
@@ -49,7 +49,7 @@ EOT;
 }
 
 
-    echo "<a href=\"index.php?action=addPanier&controller=product&label=$secureLabel&price=$securePrice\"><div class=\"redirect\" style=\"border:1px solid black;text-align:center;background-color:blue;\">Ajouter au panier</div></a>";
+    echo "<a href=\"index.php?action=addPanier&controller=product&id=$secureId&label=$secureLabel&price=$securePrice\"><div class=\"redirect\" style=\"border:1px solid black;text-align:center;background-color:blue;\">Ajouter au panier</div></a>";
 
 
 

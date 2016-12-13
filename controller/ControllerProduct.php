@@ -29,7 +29,8 @@ class ControllerProduct {
     public static function addPanier() {
         $label = $_GET['label'];
         $price = $_GET['price'];
-        Panier::addArticle($label, $price);
+        $id = $_GET['id'];
+        Panier::addArticle($label, $price, $id);
         self::viewPanier();
     }
 
