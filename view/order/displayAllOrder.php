@@ -7,9 +7,11 @@ if ($tab_p != false) {
         $pIDOrder = htmlspecialchars($p->getIDOrder());
         $pPrice = htmlspecialchars($p->getPrice());
         $pUserName = htmlspecialchars($p->getUserID());
-
         $secureIDOrder = rawurldecode($p->getIDOrder());
-
+        if(isset($msg)){
+            $msgEchap = htmlspecialchars($msg);
+            echo $msgEchap;
+        }
         echo <<< EOT
             <div class="product">
                 <div class="product-name-pic">

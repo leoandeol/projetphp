@@ -7,15 +7,17 @@ if (Panier::countArticles() > 0) {
 }
 echo <<<EOT
 <form method="post" action="index.php?controller=order&action=create" class="panier">
-<table style="width: 400px">
+<table>
 	<tr>
-		<td colspan="4">Votre panier</td>
+		<td colspan="6">Votre panier</td>
 	</tr>
 	<tr>
-                <td></td>
+                <td>Image</td>
 		<td>Libellé</td>
 		<td>Quantité</td>
 		<td>Prix Unitaire</td>
+		<td>Prix Total</td>
+		<td class="td-buttons">Actions</td>
 	</tr>
 
 EOT;
@@ -32,9 +34,10 @@ if (Panier::createPanier()) {
             $pQuantity = htmlspecialchars($_SESSION['panier']['quantity'][$i]);
             $pId = htmlspecialchars($_SESSION['panier']['id'][$i]);
 
-            $sLabel = rawurldecode($_SESSION['panier']['label'][$i]);
-            $sPrice = rawurldecode($_SESSION['panier']['price'][$i]);
-            $sId = rawurldecode($_SESSION['panier']['id'][$i]);
+            $sLabel = rawurlencode($_SESSION['panier']['label'][$i]);
+            $sPrice = rawurlencode($_SESSION['panier']['price'][$i]);
+            $pTotalLine = $pPrice*$pQuantity;
+            $sId = rawurlencode($_SESSION['panier']['id'][$i]);
 
             /* $nbOptionArticle = count($_SESSION['panier']['option'][$i]); */
 
@@ -43,17 +46,16 @@ if (Panier::createPanier()) {
                                    
 
 				<tr>
-                                        <td> <img class="product-pic" src="res/upload/produit$pId.jpg" /></td>
+                                        <td> <img class="cart-pic" src="res/upload/produit$pId.jpg" /></td>
 					<td><a href="index.php?controller=product&action=read&label=$sLabel"> $pLabel </a></td>
 					<td> $pQuantity </td>
-                                        <td> $pPrice </td>
-					<td>
+                                        <td> $pPrice €</td>
+                                        <td> $pTotalLine €</td>
+					<td class="td-buttons">
 						<a href="index.php?controller=product&action=deleteArticlePanier&label=$sLabel"><img class='imgbut' src="res/Minus.png" /></a>
-					</td>
-					<td>
+					
 						<a href="index.php?controller=product&action=addPanier&label=$sLabel&price=$sPrice&id=$sId"><img class='imgbut' src="res/Add.png" /></a>
-					</td>
-					<td>
+					
 						<a href="index.php?controller=product&action=deleteAllArticlesPanier&label=$sLabel"><img class='imgbut' src="res/Delete.png" /></a>
 					</td>
 				</tr>
@@ -77,8 +79,7 @@ EOT;
         }
         echo <<<EOT
 			<tr>
-				<td colspan="2"> </td>
-				<td colspan="2">
+				<td colspan="6">
 					Total : $totalPrice
 				</td>
 			</tr>
