@@ -10,7 +10,7 @@ $nbOption = $p->countOption();
 
 $secureLabel = rawurlencode($p->getLabel());
 $securePrice = rawurldecode($p->getPrice());
-
+$secureId = rawurlencode($p->getId());
 echo <<<EOT
     <div class="product-detail">
         <div class="product-detail-name">$pLabel</div> 
@@ -46,7 +46,7 @@ echo "</form>";
 echo <<< EOT
     <div class = "containerbuttons">
         <a href="index.php?action=readAll&controller=product"><img class='returnbutn' src="res/Retour.png" /></a>
-        <a href="index.php?action=addPanier&controller=product&label=$secureLabel&price=$securePrice"><img class='basktebutn' src="res/panier.png" /></a>
+        <a href="index.php?action=addPanier&controller=product&label=$secureLabel&price=$securePrice&id=$secureId"><img class='basktebutn' src="res/panier.png" /></a>
     </div>
 EOT;
 ?>  

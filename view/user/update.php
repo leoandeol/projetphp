@@ -43,7 +43,7 @@ echo <<<EOT
     <input type='hidden' name='controller' value='user'>
         <div class="input">
             <label class="input-item" for="nick_id">Pseudonyme</label>
-            <input class="input-field" type="text" placehorlder="Pseudonyme" value="$nName" name="nickname" id="nick_id"/>
+            <input class="input-field" type="text" placeholder="Pseudonyme" value="$nName" name="nickname" id="nick_id"/>
         </div>
 EOT;
 if ($cer == "update") {

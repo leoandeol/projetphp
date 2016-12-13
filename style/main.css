@@ -376,12 +376,21 @@ table {
 .Media {
   display: flex;
   align-items: flex-start;
+  margin-bottom: 1em;
+  border:4px groove darkgrey;
+  border-radius:5px;
+  background-color:grey;
 }
 
 .Media-figure {
   margin-right: 1em;
+  width:300px;
 }
 
 .Media-body {
   flex: 1;
+}
+.Media-body,
+.Media-body :last-child {
+  margin-bottom: 0;
 }

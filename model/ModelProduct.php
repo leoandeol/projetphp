@@ -88,7 +88,13 @@ class ModelProduct extends Model {
 
 	public static function research($data){      
         try{
-            $exploded = explode(" ",$data);
+            function multiexplode ($delimiters,$string) {
+   
+                $ready = str_replace($delimiters, $delimiters[0], $string);
+                $launch = explode($delimiters[0], $ready);
+                return  $launch;
+            }
+            $exploded = multiexplode(array(" ","'","|",",",";",":"),$data);
             
             $values = array();
             
