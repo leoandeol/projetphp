@@ -1,4 +1,4 @@
-
+ 
 <?php
 
 echo "<div> Panier de l'utilisateur <br></div>";
