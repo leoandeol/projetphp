@@ -34,21 +34,34 @@ class ControllerOrder {
                 $idOrder = ModelOrder::getLastOrder($nickName);
                 $articles = Panier::saveArticles($idOrder);
                 if($order && $articles){
-                    echo "La commande a été effectuée avec succès. ";
+                    $view = "created";
+                    $controller = "order";
+                    $pagetitle = "Commande créée";
+                    Panier::clearPanier();                            
+                    require File::build_path(array('view','view.php'));
                 }
                 else{
-                    echo "Problème lors de l'enregistrement de votre commande. <br> Si le problème persiste, merci de bien vouloir prévenir l'administrateur du site. ";
-                }
-                self::readAll();
+                    $dataError['controller']="default";
+                    $dataError['pagetitle']="Erreur";
+                    $dataError['view'] = "error";
+                    $dataError['error']= "Problème lors de l'enregistrement de votre commande. <br> Si le problème persiste, merci de bien vouloir prévenir l'administrateur du site. ";
+                    require File::build_path(array('view','view.php'));
+                 }                 
             }
             else{
-                echo "Votre panier est vide. Pour commander, veuillez ajouter des articles à votre panier. ";
-                ControllerProduct::viewPanier();
+                $dataError['controller']="product";
+                $dataError['pagetitle']="Panier";
+                $dataError['view'] = "displayPanier";
+                $dataError['error']= "Votre panier est vide. Pour commander, veuillez ajouter des articles à votre panier. ";
+                require File::build_path(array('view','view.php'));
             }
         } else {
             $_SESSION['orderCommand'] = true;
-            echo "Pour passer une commande, veuillez vous enregistrez. ";
-            ControllerUser::connect();
+            $dataError['controller']="user";
+            $dataError['pagetitle']="Connexion";
+            $dataError['view'] = "connect";
+            $dataError['error']= "Pour passer votre commande veuillez vous connecter";
+            require File::build_path(array('view','view.php'));
         }
     }
     public static function readAll() {
