@@ -142,7 +142,7 @@ class ModelProduct extends Model {
             }
             return false;
         }
-    }
+    }   
 }
 
 ?>

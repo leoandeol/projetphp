@@ -251,6 +251,11 @@ footer a {
 .product-name {
     text-decoration: underline;
     display:flex;
+    flex-direction:row;
+    flex:1;
+    margin-bottom:25px;
+    border: 2px solid grey;
+    padding: 5px;
     align-self:center;
     text-align:center;
     margin-right:20px;
@@ -260,7 +265,7 @@ footer a {
     display:flex;
     align-self:center;
     text-align:center;
-    margin-right:20px;
+    margin-right:20px
 }
 
 .product-text {
@@ -302,6 +307,7 @@ footer a {
 .product-detail-name {
     text-decoration:underline;
     margin-bottom:10px;
+    margin-left:10px;
 }
 
 .product-detail-pic {
@@ -313,11 +319,38 @@ footer a {
 
 .product-detail-price {
     font-style: italic;
-    margin-bottom:10px;
+    font-size:30px;
+    margin-bottom:30px;
+    margin-left:20px;
 }
 
 .product-detail-text {
-    margin-bottom:10px;
+    margin-bottom:30px;
+    margin-right:10px;
+    margin-top: 30px;
+    margin-left:10px;
+}
+
+.returnbutn {
+    width:5em;
+    height:5em;
+}
+
+.basktebutn{
+    width:5em;
+    height:5em;
+}
+
+.containerbuttons{
+    display:flex;
+    flex-direction:row;
+    flex:1;
+    width:100%;
+    justify-content:space-around;
+}
+
+.returnbutn,.basktebutn {
+    flex:1;
 }
 
 /* panier */

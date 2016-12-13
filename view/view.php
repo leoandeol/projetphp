@@ -26,7 +26,7 @@
                     <a href="index.php?controller=product&action=readAll">Produits</a>
                 </div>
                 <div class="menu-item">
-                    <a href="index.php?controller=product&action=viewPanier">Panier : <?php echo Session::get_nbItems()?></a>
+                    <a href="index.php?controller=product&action=viewPanier">Panier : <?php echo htmlspecialchars(Session::get_nbItems()) ?></a>
                 </div>
                 <div class='menu-dropdown'>
                     <a href='index.php?controller=user&action=displaySelf'>Compte</a>
@@ -43,7 +43,7 @@ EOT;
                      <div class='menu-dropdown-content'>
                         <a href='index.php?action=update&controller=user'>Paramètres</a>
 EOT;
-                        if(Session::is_admin()){
+                        if (Session::is_admin()) {
                             echo "<a href='index.php?action=create&controller=product'>Ajouter un Produit</a>";
                         }
                         echo <<< EOT
@@ -58,9 +58,9 @@ EOT;
         <main>
             <article>
                 <?php
-				if(isset($error)){
-					echo $error;
-				}
+                if (isset($error)) {
+                    echo $error;
+                }
                 $filepath = File::build_path(array('view', $controller, $view . ".php"));
                 require $filepath;
                 ?>

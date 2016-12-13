@@ -2,8 +2,8 @@
 <?php
 
 $pIDOrder = htmlspecialchars($p->getIDOrder());
-        $pPrice = htmlspecialchars($p->getPrice());
-        $pUserName = htmlspecialchars($p->getUserID());
+$pPrice = htmlspecialchars($p->getPrice());
+$pUserName = htmlspecialchars($p->getUserID());
 
         $secureIDOrder = rawurldecode($p->getIDOrder());
         echo <<< EOT
@@ -31,8 +31,10 @@ foreach($tab_p as $q){
                 <td>Nom : $pLabel</td>
                 <td>Prix : $pPrice €</td>
 
+
                 <td>$pCDesc</td> 
                 <td><a href="index.php?controller=product&action=read&label=$secureLabel">Détails</a></td>
+
 
 EOT;
 }
