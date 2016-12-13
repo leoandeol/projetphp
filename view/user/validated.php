@@ -1,3 +1,3 @@
 <?php
-    echo "<p> Bienvenue parmi nous htmlspecialchars.</p>";
+    echo "<p> Bienvenue parmi nous </p>";
 ?>

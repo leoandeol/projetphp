@@ -45,7 +45,7 @@ class ControllerOrder {
                     $dataError['pagetitle']="Erreur";
                     $dataError['view'] = "error";
                     $dataError['error']= "Problème lors de l'enregistrement de votre commande. <br> Si le problème persiste, merci de bien vouloir prévenir l'administrateur du site. ";
-                    require File::build_path(array('view','view.php'));
+                    ControllerDefault::error($dataError);
                  }                 
             }
             else{
@@ -53,7 +53,7 @@ class ControllerOrder {
                 $dataError['pagetitle']="Panier";
                 $dataError['view'] = "displayPanier";
                 $dataError['error']= "Votre panier est vide. Pour commander, veuillez ajouter des articles à votre panier. ";
-                require File::build_path(array('view','view.php'));
+                ControllerDefault::error($dataError);
             }
         } else {
             $_SESSION['orderCommand'] = true;
@@ -61,7 +61,7 @@ class ControllerOrder {
             $dataError['pagetitle']="Connexion";
             $dataError['view'] = "connect";
             $dataError['error']= "Pour passer votre commande veuillez vous connecter";
-            require File::build_path(array('view','view.php'));
+            ControllerDefault::error($dataError);
         }
     }
     public static function readAll() {
