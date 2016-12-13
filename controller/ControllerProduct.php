@@ -209,7 +209,10 @@ class ControllerProduct {
             //TODO setfacl for rights to apache
 
             if (ModelProduct::save($data)) {
-                ControllerProduct::readAll();
+                $view = 'createdProduct';
+                $controller = 'product';
+                $pagetitle = 'Produit créé';
+                require File::build_path(array('view','view.php'));
             } else {
                 $dataEr['error'] = "Extension incorrecte";
                 $dataEr['view'] = "updateProduct";
