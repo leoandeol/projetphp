@@ -43,20 +43,14 @@ echo <<<EOT
         
 EOT;
     }
-            echo "</form>";
+echo "</form>";
 }
-
-
-    echo "<a href=\"index.php?action=addPanier&controller=product&label=$secureLabel&price=$securePrice\"><div class=\"redirect\" style=\"border:1px solid black;text-align:center;background-color:blue;\">Ajouter au panier</div></a>";
-
-
-
-
-
-echo <<<EOT
-        <a href="index.php?action=readAll&controller=product"><div class=redirect>Voir l'ensemble des produits</div></a>
+echo <<< EOT
+    <div class = "containerbuttons">
+        <a href=\"index.php?action=readAll&controller=product\"><img class='returnbutn' src="res/Retour.png" /></a>
+        <a href=\"index.php?action=addPanier&controller=product&label=$secureLabel&price=$securePrice\"><img class='basktebutn' src="res/panier.png" /></a>
+    </div>
 EOT;
-//changer le redirect classique par un $_POST
 ?>  
 
 

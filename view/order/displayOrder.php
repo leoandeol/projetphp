@@ -2,11 +2,11 @@
 <?php
 
 $pIDOrder = htmlspecialchars($p->getIDOrder());
-        $pPrice = htmlspecialchars($p->getPrice());
-        $pUserName = htmlspecialchars($p->getUserID());
+$pPrice = htmlspecialchars($p->getPrice());
+$pUserName = htmlspecialchars($p->getUserID());
 
-        $secureIDOrder = rawurldecode($p->getIDOrder());
-        echo <<< EOT
+$secureIDOrder = rawurldecode($p->getIDOrder());
+echo <<< EOT
             <div class="product">
                 <div class="product-name-pic">
                     <div class="product-name">$pIDOrder</div>
@@ -14,7 +14,7 @@ $pIDOrder = htmlspecialchars($p->getIDOrder());
                 <div class="price">Prix :  $pPrice €</div>
             </div>
 EOT;
-foreach($tab_p as $q){
+foreach ($tab_p as $q) {
     $pLabel = htmlspecialchars($q->getLabel());
     $pPrice = htmlspecialchars($q->getPrice());
     $pCDesc = htmlspecialchars($q->getShortDesc());
@@ -34,7 +34,6 @@ foreach($tab_p as $q){
 
         </fieldset>
 EOT;
-
 }
 ?>  
 

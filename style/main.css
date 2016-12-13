@@ -247,7 +247,7 @@ footer a {
 
 .product-detail {
     display:flex;
-    flex-direction:column;
+    flex-direction:row;
     flex:1;
     margin-bottom:25px;
     border: 2px solid grey;
@@ -266,4 +266,19 @@ footer a {
     height:15em;
     border: 2px solid grey;
     margin-right:5px;
+}
+
+.returnbutn {
+    width:5em;
+    height:5em;
+}
+
+.basktebutn{
+    width:5em;
+    height:5em;
+}
+
+.containerbuttons{
+    display:flex;
+    flex-direction:column;
 }
