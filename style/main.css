@@ -355,6 +355,18 @@ footer a {
 
 /* panier */
 
-td {
-    border:2px solid black;
+table {
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 5px groove black;
+}
+table {
+    width: 100%;
+}
+
+.cart-pic {
+    width:100px;
+    height:100px;
 }
