@@ -62,6 +62,9 @@ article>form{
     margin:0 auto;
     margin-top:25%;
 }
+article>form.panier{
+    margin-top:0%;
+}
 
 a {
     color:white;

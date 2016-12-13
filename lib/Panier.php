@@ -8,6 +8,7 @@ class Panier {
         if(!isset($_SESSION['panier'])){
             
             $_SESSION['panier']=array(
+                'id' => array(),
                 'label' => array(),
                 'price' => array(),
                 'quantity' => array(),
@@ -38,6 +39,7 @@ class Panier {
     
     public static function clearPanier(){
             $clear =array(
+                'id' => array(),
                 'label' => array(),
                 'price' => array(),
                 'quantity' => array(),
@@ -46,7 +48,7 @@ class Panier {
             $_SESSION['panier'] = $clear;
     }
 
-    public static function addArticle($label,$price){
+    public static function addArticle($label,$price, $id){
         if(self::createPanier() && !self::is_verouille()){
             $exist = in_array($label, $_SESSION['panier']['label']);
             //si le produit existe on ne fait rien
@@ -55,6 +57,7 @@ class Panier {
                 $_SESSION['panier']['quantity'][$i]++;
             }
             else{
+                array_push($_SESSION['panier']['id'], $id);
                 array_push($_SESSION['panier']['label'], $label);
                 array_push($_SESSION['panier']['price'], $price);
                 $q = 1;
@@ -68,6 +71,7 @@ class Panier {
     public static function deleteArticle($label){
         if(self::createPanier() && !self::is_verouille()){
             $panierTmp = array(
+                'id' => array(),
                 'label'=> array(),
                 'price' => array(),
                 'quantity' => array(),
@@ -76,11 +80,13 @@ class Panier {
 
             for($i = 0; $i < self::countDiffArticles();$i++){
                  if($_SESSION['panier']['label'][$i] == $label && $_SESSION['panier']['quantity'][$i] > 1){
+                     array_push( $panierTmp['id'],$_SESSION['panier']['id'][$i]);
                     array_push( $panierTmp['label'],$_SESSION['panier']['label'][$i]);
                     array_push( $panierTmp['price'],$_SESSION['panier']['price'][$i]);
                     array_push( $panierTmp['quantity'],$_SESSION['panier']['quantity'][$i]-1);
                 }
                 if($_SESSION['panier']['label'][$i] != $label){
+                    array_push( $panierTmp['id'],$_SESSION['panier']['id'][$i]);
                     array_push( $panierTmp['label'],$_SESSION['panier']['label'][$i]);
                     array_push( $panierTmp['price'],$_SESSION['panier']['price'][$i]);
                     array_push( $panierTmp['quantity'],$_SESSION['panier']['quantity'][$i]);
@@ -93,6 +99,7 @@ class Panier {
     public static function deleteAllArticles($label){
         if(self::createPanier() && !self::is_verouille()){
             $panierTmp = array(
+                'id' => array(),
                 'label'=> array(),
                 'price' => array(),
                 'quantity' => array(),
@@ -101,6 +108,7 @@ class Panier {
 
             for($i = 0; $i < self::countDiffArticles();$i++){
                 if($_SESSION['panier']['label'][$i] != $label){
+                    array_push( $panierTmp['id'],$_SESSION['panier']['id'][$i]);
                     array_push( $panierTmp['label'],$_SESSION['panier']['label'][$i]);
                     array_push( $panierTmp['price'],$_SESSION['panier']['price'][$i]);
                     array_push( $panierTmp['quantity'],$_SESSION['panier']['quantity'][$i]);

@@ -6,12 +6,13 @@ if (Panier::countArticles() > 0) {
     echo "<h2><a href=\"index.php?controller=product&action=clearPanier\">Vider le panier</a></h2><br>";
 }
 echo <<<EOT
-<form method="post" action="index.php?controller=order&action=create">
+<form method="post" action="index.php?controller=order&action=create" class="panier">
 <table style="width: 400px">
 	<tr>
 		<td colspan="4">Votre panier</td>
 	</tr>
 	<tr>
+                <td></td>
 		<td>Libellé</td>
 		<td>Quantité</td>
 		<td>Prix Unitaire</td>
@@ -29,14 +30,20 @@ if (Panier::createPanier()) {
             $pLabel = htmlspecialchars($_SESSION['panier']['label'][$i]);
             $pPrice = htmlspecialchars($_SESSION['panier']['price'][$i]);
             $pQuantity = htmlspecialchars($_SESSION['panier']['quantity'][$i]);
+            $pId = htmlspecialchars($_SESSION['panier']['id'][$i]);
 
             $sLabel = rawurldecode($_SESSION['panier']['label'][$i]);
             $sPrice = rawurldecode($_SESSION['panier']['price'][$i]);
+            $sId = rawurldecode($_SESSION['panier']['id'][$i]);
 
             /* $nbOptionArticle = count($_SESSION['panier']['option'][$i]); */
 
             echo <<<EOT
+
+                                   
+
 				<tr>
+                                        <td> <img class="product-pic" src="res/upload/produit$pId.jpg" /></td>
 					<td><a href="index.php?controller=product&action=read&label=$sLabel"> $pLabel </a></td>
 					<td> $pQuantity </td>
                                         <td> $pPrice </td>
@@ -44,7 +51,7 @@ if (Panier::createPanier()) {
 						<a href="index.php?controller=product&action=deleteArticlePanier&label=$sLabel"><img class='imgbut' src="res/Minus.png" /></a>
 					</td>
 					<td>
-						<a href="index.php?controller=product&action=addPanier&label=$sLabel&price=$sPrice"><img class='imgbut' src="res/Add.png" /></a>
+						<a href="index.php?controller=product&action=addPanier&label=$sLabel&price=$sPrice&id=$sId"><img class='imgbut' src="res/Add.png" /></a>
 					</td>
 					<td>
 						<a href="index.php?controller=product&action=deleteAllArticlesPanier&label=$sLabel"><img class='imgbut' src="res/Delete.png" /></a>
