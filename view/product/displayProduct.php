@@ -27,14 +27,9 @@ if ($nbOption != 0) {
         $pNameO = htmlspecialchars($object->getName());
         $pPriceO = htmlspecialchars($object->getPrice());
         $pDescO = htmlspecialchars($object->getDescription());
-        
-<<<<<<< HEAD
-        echo <<<EOT
-            <fieldset>
-EOT;
-=======
+
         echo "<fieldset>";
->>>>>>> 897a2c23fd6d37c36728ec3275acd08b1d5a1cfe
+
         $name = "check" . $i;
         $i++;
         

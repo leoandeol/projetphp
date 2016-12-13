@@ -29,7 +29,7 @@ class Panier {
                   'idProduct' => $idArticle,
                   'quantity'  => $q
                 );
-                ModelOrderContent::save($d);
+                return ModelOrderContent::save($d);
             }
           self::clearPanier();
         }
