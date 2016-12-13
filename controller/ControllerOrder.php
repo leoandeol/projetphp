@@ -30,17 +30,38 @@ class ControllerOrder {
                    'price' => $price
                 );
 
-                ModelOrder::save($data);
+                $order = ModelOrder::save($data);
                 $idOrder = ModelOrder::getLastOrder($nickName);
-                Panier::saveArticles($idOrder);
-                self::readAll();
+                $articles = Panier::saveArticles($idOrder);
+                if($order && $articles){
+                    $view = "created";
+                    $controller = "order";
+                    $pagetitle = "Commande créée";
+                    Panier::clearPanier();                            
+                    require File::build_path(array('view','view.php'));
+                }
+                else{
+                    $dataError['controller']="default";
+                    $dataError['pagetitle']="Erreur";
+                    $dataError['view'] = "error";
+                    $dataError['error']= "Problème lors de l'enregistrement de votre commande. <br> Si le problème persiste, merci de bien vouloir prévenir l'administrateur du site. ";
+                    ControllerDefault::error($dataError);
+                 }                 
             }
             else{
-                ControllerProduct::viewPanier();
+                $dataError['controller']="product";
+                $dataError['pagetitle']="Panier";
+                $dataError['view'] = "displayPanier";
+                $dataError['error']= "Votre panier est vide. Pour commander, veuillez ajouter des articles à votre panier. ";
+                ControllerDefault::error($dataError);
             }
         } else {
             $_SESSION['orderCommand'] = true;
-            ControllerUser::connect();
+            $dataError['controller']="user";
+            $dataError['pagetitle']="Connexion";
+            $dataError['view'] = "connect";
+            $dataError['error']= "Pour passer votre commande veuillez vous connecter";
+            ControllerDefault::error($dataError);
         }
     }
     public static function readAll() {
@@ -49,6 +70,9 @@ class ControllerOrder {
                 "nickName" => $_SESSION['nickName']
             );
             $tab_p = ModelOrder::selectAllByUserName($data);
+            if(empty($tab_p)){
+                $msg = "Vous n'avez aucune commande en cours ou terminées";
+            }
             $view = 'displayAllOrder';
             $controller = 'order';
             $pagetitle = 'Historique des commandes';

@@ -50,61 +50,59 @@ echo "<fieldset>";
 if ($cer == 'update') {
     echo <<<EOT
         <legend>Modification de $pId</legend>
-        <input type = 'hidden' name = 'action' value = 'updated'>
+        <input class="input-field"  type = 'hidden' name = 'action' value = 'updated'>
 EOT;
 } else {
     echo <<<EOT
         <legend>Nouveau produit</legend>
         <input type = 'hidden' name = 'action' value = 'created'>
-        <p>
-            <label for = "id_produit">ID</label> :
-            <input type = "text" pattern="^(0|[1-9][0-9]*)$" value="$pId" name = "idP" id = "id_produit" required/>
-        </p>
+        <div class="input">
+            <label class="input-item"  for = "id_produit">ID</label> 
+            <input class="input-field"  type = "text" pattern="^(0|[1-9][0-9]*)$" value="$pId" name = "idP" id = "id_produit" required/>
+        </div>
 EOT;
 }
 
 echo <<<EOT
 
-        <p>
-            <label for = "label_produit">Label du produit</label> :
-            <input type = "text" placeholder="Création d'un site web" value = "$pLabel" name = "label" id = "label_produit" required/>
-        </p>
-        <p>
-            <label for = "prix_produit">Prix du produit</label> :
-            <input type = "text" pattern="^(0|[1-9][0-9]*)$" placeholder="69" value = "$pPrice" name = "price" id = "prix_produit" required/>
-        </p>
-        <p>
-            <label for = "sDesc_produit">Résumé descriptif</label> :
-            <textarea type = "text" placeholder = "Description résumé de mon produit" name = "shortDesc" id = "sDesc_produit" required>
+        <div class="input">
+            <label class="input-item"  for = "label_produit">Label du produit</label>
+            <input class="input-field"  type = "text" value = "$pLabel" name = "label" id = "label_produit" required/>
+        </div>
+        <div class="input">
+            <label class="input-item"  for = "prix_produit">Prix du produit</label>
+            <input class="input-field"  type = "text" pattern="^(0|[1-9][0-9]*)$" value = "$pPrice" name = "price" id = "prix_produit" required/>
+        </div>
+        <div class="input">
+            <label class="input-item"  for = "sDesc_produit">Résumé descriptif</label>
+            <textarea class="input-field"  type = "text" placeholder = "Description résumé de mon produit" name = "shortDesc" id = "sDesc_produit" required>
             $pSDesc
             </textarea>
-        </p>
-        <p>
-            <label for = "cDesc_produit">Description détaillé</label> :
-            <textarea placeholder = "Description détaillé de mon produit" name = "completeDesc" id = "cDesc_produit" required>
+        </div>
+        <div class="input">
+            <label class="input-item"  for = "cDesc_produit">Description détaillé</label>   
+            <textarea class="input-field"  placeholder = "Description détaillé de mon produit" name = "completeDesc" id = "cDesc_produit" required>
         $pCDesc
             </textarea>
-        </p>
-                <p>
-                    <input type="file" name="path" />
-                </p>
-        <p>
+        </div>
+            <input class="input-field"  type="file" name="path" />
+        <div class="input">
             VOIR OPTION
-        </p>
+        </div>
 EOT;
 if ($cer == 'update') {
     echo <<<EOT
-    <p>
+    <div class="input">
             <input type = "submit" value = "Modifier" />
-        </p>
+        </div>
     </fieldset>
 </form>
 EOT;
 } else {
     echo <<<EOT
-    <p>
+    <div class="input">
             <input type = "submit" value = "Créer" />
-        </p>
+        </div>
     </fieldset>
 </form>
 EOT;

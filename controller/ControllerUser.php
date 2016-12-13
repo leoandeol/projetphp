@@ -61,26 +61,43 @@ class ControllerUser {
     }
 
     public static function register() {
-        $view = 'register';
+        $cerise = "create";        
+        $view = 'update';
         $controller = 'user';
         $pagetitle = 'Création de compte';
         require File::build_path(array('view', 'view.php'));
     }
 
     public static function registered() {
-//TODO comparer les 2 mots de passes + verifier si utilisateur existe deja
 		$dataErr = array();
 		$dataErr['nName'] = $_POST['nickname'];
 		$dataErr['lName'] = $_POST['lastname'];
 		$dataErr['fName'] = $_POST['firstname'];
 		$dataErr['mail'] = $_POST['email'];
 		$dataErr['bDate'] = $_POST['birthdate'];
+		$dataErr['cerise'] = "create";
         if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
 			$dataErr['error'] = "Email invalide";
 			$dataErr['view'] = 'register';
 			$dataErr['controller'] = 'user';
             ControllerDefault::error($dataErr);
+			return;
         }
+		if(ModelUser::checkExistingUser($_POST['nickname'])==1){
+			$dataErr['error'] = "Cet utilisateur existe déjà";
+			$dataErr['view'] = 'register';
+			$dataErr['controller'] = 'user';
+            ControllerDefault::error($dataErr);
+			return;
+		}
+		if($_POST['password'] != $_POST['password2']){
+			$dataErr['error'] = "Les mots de passes ne correspondent pas";
+			$dataErr['view'] = 'register';
+			$dataErr['controller'] = 'user';
+            ControllerDefault::error($dataErr);
+			return;
+		}
+		
         $hashpass = Security::encrypt($_POST['password']);
         $nonce = Security::generateRandomHex();
         $bDate = $_POST['birthdate'];
@@ -95,8 +112,7 @@ class ControllerUser {
                       'mail'     => $_POST['email'],
                       'birthDate'=> $goodFormatDate,
                       'isAdmin'  => 0
-                );
-        
+                );        
         if(ModelUser::save($data)){
 			// REGISTERING INFO INTO $_SESSION
 			$_SESSION['nickName'] = $data['nickName'];
@@ -183,11 +199,14 @@ class ControllerUser {
             $view = 'update';
             $pagetitle = 'Update';
             $controller = 'user';
-            $nName = htmlspecialchars($_SESSION['nickName']);
-            $fName = htmlspecialchars($_SESSION['firstName']);
-            $lName = htmlspecialchars($_SESSION['lastName']);
-            $mail  = htmlspecialchars($_SESSION['mail']);
-            $bDate = htmlspecialchars($_SESSION['birthDate']);
+            $cerise = "update";
+            $data = array(
+                "nName" => htmlspecialchars($_SESSION['nickName']),
+                "fName" => htmlspecialchars($_SESSION['firstName']),
+                "lName" => htmlspecialchars($_SESSION['lastName']),
+                "mail"  => htmlspecialchars($_SESSION['mail']),
+                "bDate" => htmlspecialchars($_SESSION['birthDate'])
+            );
             require File::build_path(array('view', 'view.php'));
         } else {
 			$data = array();
@@ -247,18 +266,21 @@ class ControllerUser {
 						$dataError['error'] = "Problème de mofications des données";
 						$dataError['view'] = 'update';
 						$dataError['controller'] = 'user';
+						$dataError['cerise'] = "update";
 						ControllerDefault::error($dataError);
                     }
                 } else {					
 					$dataError['error'] = "Les nouveaux mots de passes ne coïncident pas";
 					$dataError['view'] = 'update';
-					$dataError['controller'] = 'user';
+					$dataError['controller'] = 'user';					
+					$dataError['cerise'] = "update";
 					ControllerDefault::error($dataError);
                 }
             } else {
 				$dataError['error'] = "Mot de passe actuel invalide";
 				$dataError['view'] = 'update';
 				$dataError['controller'] = 'user';
+				$dataError['cerise'] = "update";
 				ControllerDefault::error($dataError);
             }
         } else {

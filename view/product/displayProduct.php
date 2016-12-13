@@ -1,6 +1,7 @@
 
 <?php
 
+$pId = htmlspecialchars($p->getId());
 $pLabel = htmlspecialchars($p->getLabel());
 $pPrice = htmlspecialchars($p->getPrice());
 $pCDesc = htmlspecialchars($p->getCompleteDesc());
@@ -9,13 +10,13 @@ $nbOption = $p->countOption();
 
 $secureLabel = rawurlencode($p->getLabel());
 $securePrice = rawurldecode($p->getPrice());
-
+$secureId = rawurlencode($p->getId());
 echo <<<EOT
     <div class="product-detail">
-        <div class="product-text">Nom : $pLabel</div>
-        <div class="product-text">Prix : $pPrice</div>
-            
-        <div class="product-text">$pCDesc</div> 
+        <div class="product-detail-name">$pLabel</div> 
+        <img class="product-detail-pic" src="res/upload/produit$pId.jpg" />     
+        <div class="product-detail-text">$pCDesc</div>
+        <div class="product-detail-price">$pPrice €</div>
 EOT;
 
 
@@ -26,10 +27,7 @@ if ($nbOption != 0) {
         $pNameO = htmlspecialchars($object->getName());
         $pPriceO = htmlspecialchars($object->getPrice());
         $pDescO = htmlspecialchars($object->getDescription());
-        
-        echo <<<EOT
-            <fieldset style="margin:5px;">
-EOT;
+        echo "<fieldset>";
         $name = "check" . $i;
         $i++;
         
@@ -43,20 +41,14 @@ echo <<<EOT
         
 EOT;
     }
-            echo "</form>";
+echo "</form>";
 }
-
-
-    echo "<a href=\"index.php?action=addPanier&controller=product&label=$secureLabel&price=$securePrice\"><div class=\"redirect\" style=\"border:1px solid black;text-align:center;background-color:blue;\">Ajouter au panier</div></a>";
-
-
-
-
-
-echo <<<EOT
-        <a href="index.php?action=readAll&controller=product"><div class=redirect>Voir l'ensemble des produits</div></a>
+echo <<< EOT
+    <div class = "containerbuttons">
+        <a href="index.php?action=readAll&controller=product"><img class='returnbutn' src="res/Retour.png" /></a>
+        <a href="index.php?action=addPanier&controller=product&label=$secureLabel&price=$securePrice&id=$secureId"><img class='basktebutn' src="res/panier.png" /></a>
+    </div>
 EOT;
-//changer le redirect classique par un $_POST
 ?>  
 
 

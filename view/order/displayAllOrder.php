@@ -7,19 +7,21 @@ if ($tab_p != false) {
         $pIDOrder = htmlspecialchars($p->getIDOrder());
         $pPrice = htmlspecialchars($p->getPrice());
         $pUserName = htmlspecialchars($p->getUserID());
-
         $secureIDOrder = rawurldecode($p->getIDOrder());
-
+        if(isset($msg)){
+            $msgEchap = htmlspecialchars($msg);
+            echo $msgEchap;
+        }
         echo <<< EOT
-            <div class="product">
+            <div class="product listOrder">
                 <div class="product-name-pic">
                     <div class="product-name">$pIDOrder</div>
                 </div>
                 <div class="price">Prix :  $pPrice €</div>
                 
                 <a href="index.php?controller=order&action=read&idOrder=$secureIDOrder"><div class="detail">Détails</div></a>
+            </div>
 EOT;
-                        echo "</div>";
     }
     echo "</div>";
 echo <<< EOT

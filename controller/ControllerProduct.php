@@ -29,7 +29,8 @@ class ControllerProduct {
     public static function addPanier() {
         $label = $_GET['label'];
         $price = $_GET['price'];
-        Panier::addArticle($label, $price);
+        $id = $_GET['id'];
+        Panier::addArticle($label, $price, $id);
         self::viewPanier();
     }
 
@@ -191,7 +192,8 @@ class ControllerProduct {
                 'completeDesc' => $pCDesc
             );
 
-            $extensions_valides = array('jpg', 'jpeg', 'png', 'gif', 'bmp');
+            /*$extensions_valides = array('jpg', 'jpeg', 'png', 'gif', 'bmp');*/
+            $extensions_valides = array('jpg');
             $extension_upload = strtolower(substr(strrchr($_FILES['path']['name'], '.'), 1));
             if (!in_array($extension_upload, $extensions_valides)) {
                 $dataEr['error'] = "Extension incorrecte";
@@ -202,14 +204,16 @@ class ControllerProduct {
                 return;
             }
 
-            $nom = "res/upload/produit$pId.$extension_upload";
+            //$nom = "res/upload/produit$pId.$extension_upload";
             $nom2 = "res/upload/produit$pId.jpg";
-            move_uploaded_file($_FILES['path']['tmp_name'], $nom);
-            File::convertImage($nom, $nom2, 100);
-            //TODO setfacl for rights to apache
+            move_uploaded_file($_FILES['path']['tmp_name'], $nom2); // gotta put back just nom if converting
+            //File::convertImage($nom, $nom2, 100);
 
             if (ModelProduct::save($data)) {
-                ControllerProduct::readAll();
+                $view = 'createdProduct';
+                $controller = 'product';
+                $pagetitle = 'Produit créé';
+                require File::build_path(array('view','view.php'));
             } else {
                 $dataEr['error'] = "Extension incorrecte";
                 $dataEr['view'] = "updateProduct";
